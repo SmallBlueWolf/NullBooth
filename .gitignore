@@ -1,0 +1,34 @@
+# Model outputs
+dreambooth-lora-model/
+dataset/*
+sd1-4/*
+sd1-5/*
+outputs/*
+inference_results/*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+step_*
+epoch_*

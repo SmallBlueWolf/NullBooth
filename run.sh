@@ -1,0 +1,1 @@
+python train.py configs/config.yaml && python inference.py --config configs/config.yaml
