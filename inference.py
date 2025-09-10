@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-DreamBooth LoRA Inference Script
-Load and run inference with trained DreamBooth LoRA models.
+DreamBooth Inference Script
+Load and run inference with trained DreamBooth models (LoRA or full fine-tuned).
 """
 
 import sys
 import torch
 from pathlib import Path
 from typing import List, Optional
+from datetime import datetime
 
 # Add src to path
 sys.path.append(str(Path(__file__).parent / "src"))
@@ -15,6 +16,145 @@ sys.path.append(str(Path(__file__).parent / "src"))
 from src import load_config
 from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler
 from peft import PeftModel
+
+
+def is_lora_model(model_path: str) -> bool:
+    """
+    Check if the model is a LoRA model by looking for adapter_config.json files.
+    
+    Args:
+        model_path: Path to the model directory
+    
+    Returns:
+        True if it's a LoRA model, False if it's a full fine-tuned model
+    """
+    model_path = Path(model_path)
+    
+    # Check for LoRA adapter config files
+    unet_adapter_config = model_path / "unet" / "adapter_config.json"
+    text_encoder_adapter_config = model_path / "text_encoder" / "adapter_config.json"
+    
+    return unet_adapter_config.exists() or text_encoder_adapter_config.exists()
+
+
+def is_full_finetuned_model(model_path: str) -> bool:
+    """
+    Check if the model is a full fine-tuned model by looking for model_index.json.
+    
+    Args:
+        model_path: Path to the model directory
+    
+    Returns:
+        True if it's a full fine-tuned model
+    """
+    model_path = Path(model_path)
+    return (model_path / "model_index.json").exists()
+
+
+def create_output_directory(config_path: str, base_dir: str = "inference_results") -> Path:
+    """
+    Create timestamped output directory with config file name.
+    
+    Args:
+        config_path: Path to the config file
+        base_dir: Base directory for outputs
+    
+    Returns:
+        Path to the created output directory
+    """
+    # Get current timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    # Extract config file name (without extension)
+    config_name = Path(config_path).stem
+    
+    # Create directory name: timestamp_configname
+    dir_name = f"{timestamp}_{config_name}"
+    
+    # Create full output path
+    output_dir = Path(base_dir) / dir_name
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    return output_dir
+
+
+def load_pipeline(
+    base_model_path: str,
+    model_path: str,
+    device: str = "cuda",
+    torch_dtype=torch.float16
+) -> DiffusionPipeline:
+    """
+    Load a DiffusionPipeline, automatically detecting whether it's LoRA or full fine-tuned.
+    
+    Args:
+        base_model_path: Path to the base model
+        model_path: Path to the fine-tuned model directory (LoRA or full)
+        device: Device to load the model on
+        torch_dtype: Torch dtype for the model
+    
+    Returns:
+        DiffusionPipeline with fine-tuned weights applied
+    """
+    model_path = Path(model_path)
+    
+    # Check if it's a full fine-tuned model
+    if is_full_finetuned_model(model_path):
+        print(f"Detected full fine-tuned model at: {model_path}")
+        print("Loading full fine-tuned pipeline...")
+        pipeline = DiffusionPipeline.from_pretrained(
+            str(model_path),
+            torch_dtype=torch_dtype,
+            safety_checker=None,
+            requires_safety_checker=False,
+        )
+    
+    # Check if it's a LoRA model
+    elif is_lora_model(model_path):
+        print(f"Detected LoRA model at: {model_path}")
+        print("Loading base pipeline and applying LoRA weights...")
+        
+        # Load the base pipeline
+        pipeline = DiffusionPipeline.from_pretrained(
+            base_model_path,
+            torch_dtype=torch_dtype,
+            safety_checker=None,
+            requires_safety_checker=False,
+        )
+        
+        # Load LoRA weights for UNet
+        unet_lora_path = model_path / "unet"
+        if unet_lora_path.exists() and (unet_lora_path / "adapter_config.json").exists():
+            print(f"Loading UNet LoRA from: {unet_lora_path}")
+            pipeline.unet = PeftModel.from_pretrained(pipeline.unet, str(unet_lora_path))
+            # Merge LoRA weights for faster inference
+            pipeline.unet = pipeline.unet.merge_and_unload()
+        
+        # Load LoRA weights for text encoder if available
+        text_encoder_lora_path = model_path / "text_encoder"
+        if text_encoder_lora_path.exists() and (text_encoder_lora_path / "adapter_config.json").exists():
+            print(f"Loading Text Encoder LoRA from: {text_encoder_lora_path}")
+            pipeline.text_encoder = PeftModel.from_pretrained(pipeline.text_encoder, str(text_encoder_lora_path))
+            # Merge LoRA weights for faster inference
+            pipeline.text_encoder = pipeline.text_encoder.merge_and_unload()
+    
+    else:
+        print(f"Could not determine model type at: {model_path}")
+        print("Falling back to loading as base model...")
+        pipeline = DiffusionPipeline.from_pretrained(
+            base_model_path,
+            torch_dtype=torch_dtype,
+            safety_checker=None,
+            requires_safety_checker=False,
+        )
+    
+    # Use DPM Solver for faster inference
+    pipeline.scheduler = DPMSolverMultistepScheduler.from_config(pipeline.scheduler.config)
+    
+    # Move to device
+    pipeline = pipeline.to(device)
+    
+    return pipeline
 
 
 def load_lora_pipeline(
@@ -25,6 +165,7 @@ def load_lora_pipeline(
 ) -> DiffusionPipeline:
     """
     Load a DiffusionPipeline with LoRA weights applied.
+    DEPRECATED: Use load_pipeline() instead for automatic model type detection.
     
     Args:
         base_model_path: Path to the base model
@@ -35,37 +176,8 @@ def load_lora_pipeline(
     Returns:
         DiffusionPipeline with LoRA weights applied
     """
-    # Load the base pipeline
-    pipeline = DiffusionPipeline.from_pretrained(
-        base_model_path,
-        torch_dtype=torch_dtype,
-        safety_checker=None,
-        requires_safety_checker=False,
-    )
-    
-    # Load LoRA weights for UNet
-    unet_lora_path = Path(lora_model_path) / "unet"
-    if unet_lora_path.exists():
-        print(f"Loading UNet LoRA from: {unet_lora_path}")
-        pipeline.unet = PeftModel.from_pretrained(pipeline.unet, unet_lora_path)
-        # Merge LoRA weights for faster inference
-        pipeline.unet = pipeline.unet.merge_and_unload()
-    
-    # Load LoRA weights for text encoder if available
-    text_encoder_lora_path = Path(lora_model_path) / "text_encoder"
-    if text_encoder_lora_path.exists():
-        print(f"Loading Text Encoder LoRA from: {text_encoder_lora_path}")
-        pipeline.text_encoder = PeftModel.from_pretrained(pipeline.text_encoder, text_encoder_lora_path)
-        # Merge LoRA weights for faster inference
-        pipeline.text_encoder = pipeline.text_encoder.merge_and_unload()
-    
-    # Use DPM Solver for faster inference
-    pipeline.scheduler = DPMSolverMultistepScheduler.from_config(pipeline.scheduler.config)
-    
-    # Move to device
-    pipeline = pipeline.to(device)
-    
-    return pipeline
+    print("Warning: load_lora_pipeline() is deprecated. Use load_pipeline() for better model type detection.")
+    return load_pipeline(base_model_path, lora_model_path, device, torch_dtype)
 
 
 def generate_images(
@@ -124,7 +236,7 @@ def main(config_path: str = "configs/config.yaml"):
     lora_model_path = config.output_dir
     
     print(f"Base model: {base_model_path}")
-    print(f"LoRA model path: {lora_model_path}")
+    print(f"Fine-tuned model path: {lora_model_path}")
     
     # Determine device and dtype
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -146,15 +258,15 @@ def main(config_path: str = "configs/config.yaml"):
     
     print(f"Will generate images for {len(prompts)} prompts")
     
-    # Setup output directory
-    output_dir = Path(inference_config.output_dir) if hasattr(inference_config, 'output_dir') else Path("generated_images")
-    output_dir.mkdir(exist_ok=True)
+    # Create timestamped output directory
+    output_dir = create_output_directory(config_path)
+    print(f"Output directory: {output_dir}")
     
-    # Load LoRA pipeline
-    print("Loading LoRA pipeline...")
-    lora_pipeline = load_lora_pipeline(
+    # Load fine-tuned pipeline (auto-detect LoRA vs full fine-tuned)
+    print("Loading fine-tuned pipeline...")
+    pipeline = load_pipeline(
         base_model_path=base_model_path,
-        lora_model_path=lora_model_path,
+        model_path=lora_model_path,
         device=device,
         torch_dtype=torch_dtype
     )
@@ -175,10 +287,10 @@ def main(config_path: str = "configs/config.yaml"):
     for prompt_idx, prompt in enumerate(prompts):
         print(f"\n[{prompt_idx+1}/{len(prompts)}] Generating images for prompt: '{prompt}'")
         
-        # Generate with LoRA model
-        print("  -> Generating with LoRA model...")
-        lora_images, generator = generate_images(
-            pipeline=lora_pipeline,
+        # Generate with fine-tuned model
+        print("  -> Generating with fine-tuned model...")
+        finetuned_images, generator = generate_images(
+            pipeline=pipeline,
             prompt=prompt,
             negative_prompt=inference_config.negative_prompt,
             num_inference_steps=inference_config.num_inference_steps,
@@ -189,9 +301,9 @@ def main(config_path: str = "configs/config.yaml"):
             generator_seed=inference_config.generator_seed,
         )
         
-        # Save LoRA images
-        for img_idx, image in enumerate(lora_images):
-            filename = f"lora_prompt{prompt_idx:02d}_img{img_idx:02d}.png"
+        # Save fine-tuned model images
+        for img_idx, image in enumerate(finetuned_images):
+            filename = f"finetuned_prompt{prompt_idx:02d}_img{img_idx:02d}.png"
             output_path = output_dir / filename
             image.save(output_path)
             print(f"     Saved: {output_path}")
@@ -229,7 +341,7 @@ def main(config_path: str = "configs/config.yaml"):
         f.write(f"Image Generation Summary\n")
         f.write(f"======================\n\n")
         f.write(f"Base Model: {base_model_path}\n")
-        f.write(f"LoRA Model: {lora_model_path}\n")
+        f.write(f"Fine-tuned Model: {lora_model_path}\n")
         f.write(f"Device: {device}\n")
         f.write(f"Torch dtype: {torch_dtype}\n\n")
         f.write(f"Generation Settings:\n")
@@ -245,7 +357,7 @@ def main(config_path: str = "configs/config.yaml"):
         
         if base_pipeline:
             f.write(f"\nComparison with base model: Yes\n")
-            f.write(f"- lora_promptXX_imgXX.png: Images generated with LoRA model\n")
+            f.write(f"- finetuned_promptXX_imgXX.png: Images generated with fine-tuned model\n")
             f.write(f"- base_promptXX_imgXX.png: Images generated with base model\n")
         else:
             f.write(f"\nComparison with base model: No\n")
@@ -265,17 +377,18 @@ def interactive_mode(config_path: str = "configs/config.yaml"):
     torch_dtype = torch.float16 if device == "cuda" else torch.float32
     
     print("Loading pipeline...")
-    pipeline = load_lora_pipeline(
+    pipeline = load_pipeline(
         base_model_path=base_model_path,
-        lora_model_path=lora_model_path,
+        model_path=lora_model_path,
         device=device,
         torch_dtype=torch_dtype
     )
     
     print("Pipeline loaded! Enter prompts to generate images (type 'quit' to exit):")
     
-    output_dir = Path("generated_images")
-    output_dir.mkdir(exist_ok=True)
+    # Create timestamped output directory for interactive mode
+    output_dir = create_output_directory(config_path, "inference_results/interactive")
+    print(f"Output directory: {output_dir}")
     
     image_counter = 0
     
@@ -290,7 +403,7 @@ def interactive_mode(config_path: str = "configs/config.yaml"):
             
             print(f"Generating image for: '{prompt}'")
             
-            images = generate_images(
+            images, _ = generate_images(
                 pipeline=pipeline,
                 prompt=prompt,
                 negative_prompt=config.inference.negative_prompt,
@@ -319,7 +432,7 @@ def interactive_mode(config_path: str = "configs/config.yaml"):
 if __name__ == "__main__":
     import argparse
     
-    parser = argparse.ArgumentParser(description="DreamBooth LoRA Inference")
+    parser = argparse.ArgumentParser(description="DreamBooth Inference (LoRA and Full Fine-tuned)")
     parser.add_argument("--interactive", "-i", action="store_true", help="Run in interactive mode")
     parser.add_argument("--config", "-c", default="configs/config.yaml", help="Path to config file")
     
