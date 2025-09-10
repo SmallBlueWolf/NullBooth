@@ -142,13 +142,40 @@ class Config:
                 'compare_with_base_model': False
             }
             object.__setattr__(self, 'inference', Config._create_simple_config(default_inference))
+        
+        # Create nullbooth sub-config
+        if 'nullbooth' in config_dict:
+            object.__setattr__(self, 'nullbooth', Config._create_simple_config(config_dict['nullbooth']))
+        else:
+            # Default nullbooth config
+            default_nullbooth = {
+                'enable': False,
+                'original_knowledge_prompts': './dataset/prompts.txt',
+                'cov_matrices_output_dir': './cov_matrices',
+                'visual_attention_map': False,
+                'num_denoising_steps': 50,
+                'nullspace_threshold': 2e-2,
+                'collect_features': {
+                    'q_features': True,
+                    'k_features': True,
+                    'v_features': True,
+                    'out_features': True
+                },
+                'cross_attention_layers': 'all'
+            }
+            object.__setattr__(self, 'nullbooth', Config._create_simple_config(default_nullbooth))
     
     @staticmethod
     def _create_simple_config(config_dict):
         """Create a simple config object that allows attribute access."""
         class SimpleConfig:
             def __init__(self, d):
-                self.__dict__.update(d)
+                for key, value in d.items():
+                    if isinstance(value, dict):
+                        # Handle nested dictionaries
+                        setattr(self, key, Config._create_simple_config(value))
+                    else:
+                        setattr(self, key, value)
             def __getattr__(self, key):
                 return None
         return SimpleConfig(config_dict)
@@ -160,7 +187,7 @@ class Config:
             return None
     
     def __setattr__(self, key, value):
-        if key.startswith('_') or key in ['lora', 'inference']:
+        if key.startswith('_') or key in ['lora', 'inference', 'nullbooth']:
             object.__setattr__(self, key, value)
         else:
             self._config[key] = value

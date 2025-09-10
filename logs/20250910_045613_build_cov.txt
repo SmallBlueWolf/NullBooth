@@ -1,0 +1,371 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov
+Start Time: 2025-09-10 04:56:13
+Log File: logs/20250910_045613_build_cov.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov' script
+📝 Output will be saved to: logs/20250910_045613_build_cov.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+Output directory: cov_matrices/run_20250910_045613
+Loaded 1000 prompts for covariance matrix computation
+Using device: cuda
+Loading diffusion models...
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 8184.01it/s]
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:223: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 0,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ is outdated. `steps_offset` should be set to 1 instead of 0. Please make sure to update the config accordingly as leaving `steps_offset` might led to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("steps_offset!=1", "1.0.0", deprecation_message, standard_warn=False)
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:236: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 1,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ has not set the configuration `clip_sample`. `clip_sample` should be set to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
+Registered hook for layer: down_blocks.0.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.0.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.1.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.1.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.2.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.2.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.1.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.1.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.1.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.2.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.2.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.2.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.3.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.3.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.3.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: mid_block.attentions.0.transformer_blocks.0.attn2
+Total 16 cross-attention hooks registered.
+Processing prompts to collect features...
+Processing prompts:   0%|          | 0/1000 [00:00<?, ?it/s]
+Processing prompt 1/1000: 'a photo of dog...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 0 to disk and cleared memory cache.
+Completed processing and caching prompt 1/1000
+Processing prompts:   0%|          | 1/1000 [06:51<114:18:38, 411.93s/it]
+Processing prompt 2/1000: 'a Airedale Terrier puppy exploring on a sunny beac...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 1 to disk and cleared memory cache.
+Completed processing and caching prompt 2/1000
+Processing prompts:   0%|          | 2/1000 [13:38<113:14:53, 408.51s/it]
+Processing prompt 3/1000: 'a Akita dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 2 to disk and cleared memory cache.
+Completed processing and caching prompt 3/1000
+Processing prompts:   0%|          | 3/1000 [20:24<112:49:26, 407.39s/it]
+Processing prompt 4/1000: 'a Akita puppy exploring beside a crackling firepla...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 3 to disk and cleared memory cache.
+Completed processing and caching prompt 4/1000
+Processing prompts:   0%|          | 4/1000 [27:10<112:35:47, 406.98s/it]
+Processing prompt 5/1000: 'a Akita puppy exploring under a starry night sky...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 4 to disk and cleared memory cache.
+Completed processing and caching prompt 5/1000
+Processing prompts:   0%|          | 5/1000 [33:54<112:12:33, 405.98s/it]
+Processing prompt 6/1000: 'a Australian Cattle Dog dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 5 to disk and cleared memory cache.
+Completed processing and caching prompt 6/1000
+Processing prompts:   1%|          | 6/1000 [40:37<111:48:32, 404.94s/it]
+Processing prompt 7/1000: 'a Australian Cattle Dog puppy exploring in a field...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 6 to disk and cleared memory cache.
+Completed processing and caching prompt 7/1000
+Processing prompts:   1%|          | 7/1000 [47:19<111:24:39, 403.91s/it]
+Processing prompt 8/1000: 'a Australian Cattle Dog puppy exploring on top of ...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 7 to disk and cleared memory cache.
+Completed processing and caching prompt 8/1000
+Processing prompts:   1%|          | 8/1000 [54:03<111:20:34, 404.07s/it]
+Processing prompt 9/1000: 'a Australian Shepherd dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 8 to disk and cleared memory cache.
+Completed processing and caching prompt 9/1000
+Processing prompts:   1%|          | 9/1000 [1:00:48<111:15:03, 404.14s/it]
+Processing prompt 10/1000: 'a Australian Shepherd puppy exploring in a snowy l...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 9 to disk and cleared memory cache.
+Completed processing and caching prompt 10/1000
+Processing prompts:   1%|1         | 10/1000 [1:07:39<111:43:56, 406.30s/it]
+Processing prompt 11/1000: 'a Australian Shepherd puppy exploring on a bustlin...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 10 to disk and cleared memory cache.
+Completed processing and caching prompt 11/1000
+Processing prompts:   1%|1         | 11/1000 [1:14:35<112:29:26, 409.47s/it]
+Processing prompt 12/1000: 'a Basset Hound dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 11 to disk and cleared memory cache.
+Completed processing and caching prompt 12/1000
+Processing prompts:   1%|1         | 12/1000 [1:21:26<112:30:13, 409.93s/it]
+Processing prompt 13/1000: 'a Beagle dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 12 to disk and cleared memory cache.
+Completed processing and caching prompt 13/1000
+Processing prompts:   1%|1         | 13/1000 [1:28:16<112:21:01, 409.79s/it]
+Processing prompt 14/1000: 'a Beagle puppy exploring beside a crackling firepl...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 13 to disk and cleared memory cache.
+Completed processing and caching prompt 14/1000
+Processing prompts:   1%|1         | 14/1000 [1:35:05<112:12:29, 409.69s/it]
+Processing prompt 15/1000: 'a Beagle puppy exploring in a field of tall grass...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 14 to disk and cleared memory cache.
+Completed processing and caching prompt 15/1000
+Processing prompts:   2%|1         | 15/1000 [1:41:52<111:51:37, 408.83s/it]
+Processing prompt 16/1000: 'a Beagle puppy exploring on a boat...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 15 to disk and cleared memory cache.
+Completed processing and caching prompt 16/1000
+Processing prompts:   2%|1         | 16/1000 [1:48:47<112:12:52, 410.54s/it]
+Processing prompt 17/1000: 'a Beagle puppy exploring under a starry night sky...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 16 to disk and cleared memory cache.
+Completed processing and caching prompt 17/1000
+Processing prompts:   2%|1         | 17/1000 [1:55:38<112:11:34, 410.88s/it]
+Processing prompt 18/1000: 'a Bernese Mountain Dog dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 17 to disk and cleared memory cache.
+Completed processing and caching prompt 18/1000
+Processing prompts:   2%|1         | 18/1000 [2:02:37<112:41:37, 413.13s/it]
+Processing prompt 19/1000: 'a Bernese Mountain Dog puppy exploring under a sta...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 18 to disk and cleared memory cache.
+Completed processing and caching prompt 19/1000
+Processing prompts:   2%|1         | 19/1000 [2:09:25<112:12:10, 411.75s/it]
+Processing prompt 20/1000: 'a Bichon Frise dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 19 to disk and cleared memory cache.
+Completed processing and caching prompt 20/1000
+Processing prompts:   2%|2         | 20/1000 [2:16:13<111:45:17, 410.53s/it]
+Processing prompt 21/1000: 'a Bloodhound dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 20 to disk and cleared memory cache.
+Completed processing and caching prompt 21/1000
+Processing prompts:   2%|2         | 21/1000 [2:23:05<111:44:27, 410.90s/it]
+Processing prompt 22/1000: 'a Bloodhound puppy exploring deep in a magical for...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 21 to disk and cleared memory cache.
+Completed processing and caching prompt 22/1000
+Processing prompts:   2%|2         | 22/1000 [2:29:52<111:22:19, 409.96s/it]
+Processing prompt 23/1000: 'a Bloodhound puppy exploring in a field of tall gr...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 22 to disk and cleared memory cache.
+Completed processing and caching prompt 23/1000
+Processing prompts:   2%|2         | 23/1000 [2:36:45<111:29:08, 410.80s/it]
+Processing prompt 24/1000: 'a Bloodhound puppy exploring in the back of a vint...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 23 to disk and cleared memory cache.
+Completed processing and caching prompt 24/1000
+Processing prompts:   2%|2         | 24/1000 [2:43:31<110:58:27, 409.33s/it]
+Processing prompt 25/1000: 'a Bloodhound puppy exploring on a sunny beach...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 24 to disk and cleared memory cache.
+Completed processing and caching prompt 25/1000
+Processing prompts:   2%|2         | 25/1000 [2:50:23<111:02:34, 410.00s/it]
+Processing prompt 26/1000: 'a Border Collie dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 25 to disk and cleared memory cache.
+Completed processing and caching prompt 26/1000
+Processing prompts:   3%|2         | 26/1000 [2:57:07<110:30:25, 408.45s/it]
+Processing prompt 27/1000: 'a Border Collie puppy exploring deep in a magical ...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 26 to disk and cleared memory cache.
+Completed processing and caching prompt 27/1000
+Processing prompts:   3%|2         | 27/1000 [3:03:52<110:05:52, 407.35s/it]
+Processing prompt 28/1000: 'a Border Collie puppy exploring on a cozy sofa...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 27 to disk and cleared memory cache.
+Completed processing and caching prompt 28/1000
+Processing prompts:   3%|2         | 28/1000 [3:10:38<109:52:58, 406.97s/it]
+Processing prompt 29/1000: 'a Boston Terrier dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 28 to disk and cleared memory cache.
+Completed processing and caching prompt 29/1000
+Processing prompts:   3%|2         | 29/1000 [3:17:24<109:39:04, 406.53s/it]
+Processing prompt 30/1000: 'a Boston Terrier puppy exploring in a lush green p...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 29 to disk and cleared memory cache.
+Completed processing and caching prompt 30/1000
+Processing prompts:   3%|3         | 30/1000 [3:24:09<109:26:12, 406.16s/it]
+Processing prompt 31/1000: 'a Boston Terrier puppy exploring in the back of a ...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 30 to disk and cleared memory cache.
+Completed processing and caching prompt 31/1000
+Processing prompts:   3%|3         | 31/1000 [3:30:55<109:15:39, 405.92s/it]
+Processing prompt 32/1000: 'a Boxer dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 31 to disk and cleared memory cache.
+Completed processing and caching prompt 32/1000
+Processing prompts:   3%|3         | 32/1000 [3:37:41<109:12:09, 406.13s/it]
+Processing prompt 33/1000: 'a Boxer puppy exploring in a field of tall grass...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 32 to disk and cleared memory cache.
+Completed processing and caching prompt 33/1000
+Processing prompts:   3%|3         | 33/1000 [3:44:27<109:04:24, 406.06s/it]
+Processing prompt 34/1000: 'a Boxer puppy exploring in the back of a vintage t...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 33 to disk and cleared memory cache.
+Completed processing and caching prompt 34/1000
+Processing prompts:   3%|3         | 34/1000 [3:51:14<109:03:40, 406.44s/it]
+Processing prompt 35/1000: 'a Boxer puppy exploring under a starry night sky...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 34 to disk and cleared memory cache.
+Completed processing and caching prompt 35/1000
+Processing prompts:   4%|3         | 35/1000 [3:58:00<108:53:37, 406.24s/it]
+Processing prompt 36/1000: 'a Brittany dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 35 to disk and cleared memory cache.
+Completed processing and caching prompt 36/1000
+Processing prompts:   4%|3         | 36/1000 [4:04:46<108:46:28, 406.21s/it]
+Processing prompt 37/1000: 'a Brittany puppy exploring deep in a magical fores...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 36 to disk and cleared memory cache.
+Completed processing and caching prompt 37/1000
+Processing prompts:   4%|3         | 37/1000 [4:11:31<108:32:35, 405.77s/it]
+Processing prompt 38/1000: 'a Brittany puppy exploring in a lush green park...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 37 to disk and cleared memory cache.
+Completed processing and caching prompt 38/1000
+Processing prompts:   4%|3         | 38/1000 [4:18:16<108:21:39, 405.51s/it]
+Processing prompt 39/1000: 'a Bulldog dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 38 to disk and cleared memory cache.
+Completed processing and caching prompt 39/1000
+Processing prompts:   4%|3         | 39/1000 [4:25:07<108:40:08, 407.08s/it]
+Processing prompt 40/1000: 'a Bulldog puppy exploring in a flower garden...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 39 to disk and cleared memory cache.
+Completed processing and caching prompt 40/1000
+Processing prompts:   4%|4         | 40/1000 [4:31:59<108:56:30, 408.53s/it]
+Processing prompt 41/1000: 'a Bulldog puppy exploring in a lush green park...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 40 to disk and cleared memory cache.
+Completed processing and caching prompt 41/1000
+Processing prompts:   4%|4         | 41/1000 [4:38:49<108:58:52, 409.11s/it]
+Processing prompt 42/1000: 'a Bulldog puppy exploring in the back of a vintage...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 41 to disk and cleared memory cache.
+Completed processing and caching prompt 42/1000
+Processing prompts:   4%|4         | 42/1000 [4:45:35<108:37:14, 408.18s/it]
+Processing prompt 43/1000: 'a Bullmastiff dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 42 to disk and cleared memory cache.
+Completed processing and caching prompt 43/1000
+Processing prompts:   4%|4         | 43/1000 [4:52:22<108:22:44, 407.70s/it]
+Processing prompt 44/1000: 'a Bullmastiff puppy exploring on a sunny beach...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 43 to disk and cleared memory cache.
+Completed processing and caching prompt 44/1000
+Processing prompts:   4%|4         | 44/1000 [4:59:08<108:07:27, 407.16s/it]
+Processing prompt 45/1000: 'a Cane Corso dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 44 to disk and cleared memory cache.
+Completed processing and caching prompt 45/1000
+Processing prompts:   4%|4         | 45/1000 [5:05:53<107:53:07, 406.69s/it]
+Processing prompt 46/1000: 'a Cavalier King Charles Spaniel dressed as a super...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 45 to disk and cleared memory cache.
+Completed processing and caching prompt 46/1000
+Processing prompts:   5%|4         | 46/1000 [5:12:37<107:33:43, 405.89s/it]
+Processing prompt 47/1000: 'a Cavalier King Charles Spaniel puppy exploring in...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 46 to disk and cleared memory cache.
+Completed processing and caching prompt 47/1000
+Processing prompts:   5%|4         | 47/1000 [5:19:23<107:27:05, 405.90s/it]
+Processing prompt 48/1000: 'a Cavalier King Charles Spaniel puppy exploring in...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 47 to disk and cleared memory cache.
+Completed processing and caching prompt 48/1000
+Processing prompts:   5%|4         | 48/1000 [5:26:08<107:13:34, 405.48s/it]
+Processing prompt 49/1000: 'a Cavalier King Charles Spaniel puppy exploring on...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
