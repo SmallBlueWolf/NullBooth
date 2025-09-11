@@ -369,3 +369,43 @@ Completed processing and caching prompt 48/1000
 Processing prompt 49/1000: 'a Cavalier King Charles Spaniel puppy exploring on...'
 Sampling 50 timesteps from range [0, 1000]
 Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 48 to disk and cleared memory cache.
+Completed processing and caching prompt 49/1000
+Processing prompts:   5%|4         | 49/1000 [5:32:52<107:02:44, 405.22s/it]
+Processing prompt 50/1000: 'a Chihuahua dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 49 to disk and cleared memory cache.
+Completed processing and caching prompt 50/1000
+Processing prompts:   5%|5         | 50/1000 [5:39:38<107:00:11, 405.49s/it]
+Processing prompt 51/1000: 'a Chihuahua puppy exploring in a snowy landscape...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 50 to disk and cleared memory cache.
+Completed processing and caching prompt 51/1000
+Processing prompts:   5%|5         | 51/1000 [5:46:25<106:57:58, 405.77s/it]
+Processing prompt 52/1000: 'a Chihuahua puppy exploring on a boat...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 51 to disk and cleared memory cache.
+Completed processing and caching prompt 52/1000
+Processing prompts:   5%|5         | 52/1000 [5:53:10<106:47:09, 405.52s/it]
+Processing prompt 53/1000: 'a Cocker Spaniel dressed as a superhero...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Saved features for prompt 52 to disk and cleared memory cache.
+Completed processing and caching prompt 53/1000
+Processing prompts:   5%|5         | 53/1000 [5:59:55<106:40:09, 405.50s/it]
+Processing prompt 54/1000: 'a Cocker Spaniel puppy exploring deep in a magical...'
+Sampling 50 timesteps from range [0, 1000]
+Selected timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Processing prompts:   5%|5         | 53/1000 [6:01:28<107:38:42, 409.21s/it]
+Hooks removed successfully.
+
+❌ Script failed with exception: KeyboardInterrupt: 
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-09-10 10:57:42
+Log saved to: logs/20250910_045613_build_cov.txt
+================================================================================
+
