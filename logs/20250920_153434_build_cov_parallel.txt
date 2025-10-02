@@ -1,0 +1,476 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-20 15:34:34
+Log File: logs/20250920_153434_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250920_153434_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+Using output directory: /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K
+   Cache scan found: 1 prompts, 1 completed timesteps
+✅ Loaded compatible progress from /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/computation_progress.json
+   Phase 1: 1 prompts completed
+   Phase 2: 0 timesteps completed
+Total prompts loaded: 1000
+Using 1 GPUs: ['cuda:0']
+Timestep generation strategy: Uniform
+Timestep mode: avg
+
+============================================================
+PHASE 1: FEATURE COLLECTION
+============================================================
+Processing 50/50 remaining timesteps
+Skipping 0 completed timesteps
+Loading diffusion models...
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 13888.42it/s]
+/home/bluewolf/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:223: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 0,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ is outdated. `steps_offset` should be set to 1 instead of 0. Please make sure to update the config accordingly as leaving `steps_offset` might led to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("steps_offset!=1", "1.0.0", deprecation_message, standard_warn=False)
+/home/bluewolf/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:236: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 1,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ has not set the configuration `clip_sample`. `clip_sample` should be set to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
+Initialized ParallelAttentionFeatureCollector on 1 processes
+Registered hook for layer: down_blocks.0.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.0.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.1.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.1.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.2.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: down_blocks.2.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.1.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.1.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.1.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.2.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.2.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.2.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.3.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.3.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: up_blocks.3.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: mid_block.attentions.0.transformer_blocks.0.attn2
+Total 16 cross-attention hooks registered.
+Total 16 cross-attention hooks registered.
+Distributing 1000 prompts across 1 processes
+  Process 0: 1000 prompts (indices 0-999)
+Process 0: Processing 1000 prompts
+Processing prompts to collect features in parallel...
+Processing timesteps:   0%|          | 0/50 [00:00<?, ?it/s]
+Processing timestep 999 (1/50)
+
+GPU 0 processing prompts:   0%|          | 0/1000 [00:00<?, ?it/s][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   0%|          | 1/1000 [00:05<1:39:30,  5.98s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   0%|          | 2/1000 [00:11<1:35:48,  5.76s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   0%|          | 3/1000 [00:17<1:34:56,  5.71s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   0%|          | 4/1000 [00:22<1:34:19,  5.68s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   0%|          | 5/1000 [00:28<1:33:47,  5.66s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|          | 6/1000 [00:34<1:33:43,  5.66s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|          | 7/1000 [00:39<1:33:40,  5.66s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|          | 8/1000 [00:45<1:33:12,  5.64s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|          | 9/1000 [00:51<1:33:06,  5.64s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|1         | 10/1000 [00:56<1:33:05,  5.64s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|1         | 11/1000 [01:02<1:32:47,  5.63s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|1         | 12/1000 [01:07<1:32:45,  5.63s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|1         | 13/1000 [01:13<1:32:37,  5.63s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   1%|1         | 14/1000 [01:19<1:32:30,  5.63s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   2%|1         | 15/1000 [01:24<1:32:05,  5.61s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   2%|1         | 16/1000 [01:30<1:31:50,  5.60s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   2%|1         | 17/1000 [01:35<1:31:48,  5.60s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   2%|1         | 18/1000 [01:41<1:31:37,  5.60s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   2%|1         | 19/1000 [01:47<1:31:18,  5.58s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+
+GPU 0 processing prompts:   2%|2         | 20/1000 [01:52<1:31:10,  5.58s/it][ADebug: Initialized feature cache for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.0.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from down_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from mid_block.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.1.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.2.attentions.2.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.0.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.1.transformer_blocks.0.attn2 for timestep_0999
+Debug: Collected 4 features from up_blocks.3.attentions.2.transformer_blocks.0.attn2 for timestep_0999

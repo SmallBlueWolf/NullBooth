@@ -1,0 +1,76 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-27 02:13:38
+Log File: logs/20250927_021338_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250927_021338_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+\n============================================================
+SYSTEM CONFIGURATION VERIFICATION
+============================================================
+🔍 GPU Memory Check: 7 GPUs detected
+  ✅ GPU 0: 47.5GB memory available
+  ✅ GPU 1: 47.5GB memory available
+  ✅ GPU 2: 47.5GB memory available
+  ✅ GPU 3: 47.5GB memory available
+  ✅ GPU 4: 47.5GB memory available
+  ✅ GPU 5: 47.5GB memory available
+  ✅ GPU 6: 47.5GB memory available
+🔍 Configuration Check:
+  GPU batch size: 1500
+  Covariance batch size: 70
+  Number of processes: 7
+✅ Output directory writable: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+✅ Prompts file valid: 1000 prompts loaded from ./dataset/dog_prompts_1000.txt
+🔍 NCCL Configuration:
+  NCCL_DEBUG: INFO
+  NCCL_SOCKET_IFNAME: lo
+  NCCL_P2P_DISABLE: 1
+  NCCL_SHM_DISABLE: 1
+✅ Disk space sufficient: 257315.2GB available
+\n============================================================
+✅ All system checks passed!
+============================================================\n
+Using output directory: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+⚠️  Detected corrupted/invalid cache file: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K/cache/prompt_0699/alpha_00_9e2.tmp.npz
+    Error: File is not a zip file
+    Moved corrupted file to: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K/cache/prompt_0699/.corrupted_backups/alpha_00_9e2.tmp.npz.backup_20250927_021343
+   Cache scan found: 96 prompts, 0 completed timesteps
+✅ Loaded compatible progress from /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K/computation_progress.json
+   Phase 1: 0 prompts completed
+   Phase 2: 0 timesteps completed
+Total prompts loaded: 1000
+Using 7 GPUs: ['cuda:0', 'cuda:1', 'cuda:2', 'cuda:3', 'cuda:4', 'cuda:5', 'cuda:6']
+Timestep generation strategy: DPM++ 2M Karras
+Timestep mode: avg
+Computing timesteps using DPM++ 2M Karras sampler...
+Averaging timesteps across 1000 prompts...
+  Processing prompt 1/1000 for timestep calculation...
+  Processing prompt 101/1000 for timestep calculation...
+  Processing prompt 201/1000 for timestep calculation...
+  Processing prompt 301/1000 for timestep calculation...
+  Processing prompt 401/1000 for timestep calculation...
+  Processing prompt 501/1000 for timestep calculation...
+  Processing prompt 601/1000 for timestep calculation...
+  Processing prompt 701/1000 for timestep calculation...
+  Processing prompt 801/1000 for timestep calculation...
+  Processing prompt 901/1000 for timestep calculation...
+  Completed timestep averaging across 1000 prompts
+Timesteps computed: [989, 986, 983, 979, 975]...
+Using alpha naming scheme for 30 timesteps
+
+============================================================
+PHASE 1: FEATURE COLLECTION
+============================================================
+Processing 30/30 remaining timesteps
+Skipping 0 completed timesteps
+Loading diffusion models...
+🧹 Final cleanup synchronization (attempt 1/3)...
+🧹 Cleaning up distributed process group...

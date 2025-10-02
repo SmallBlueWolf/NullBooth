@@ -1,1 +1,1 @@
-python train.py configs/config.yaml && python inference.py --config configs/config.yaml
+python train.py configs/nullbooth.yaml && python inference.py --config configs/nullbooth.yaml

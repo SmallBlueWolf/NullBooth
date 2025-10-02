@@ -1,0 +1,24 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-27 13:38:41
+Log File: logs/20250927_133841_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250927_133841_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+usage: build_cov_parallel.py [-h] [--config CONFIG] [--phase {1,2,both}]
+                             [--resume]
+build_cov_parallel.py: error: unrecognized arguments: configs/nullbooth.yaml
+
+❌ Script failed with exception: SystemExit: 2
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-09-27 13:38:41
+Log saved to: logs/20250927_133841_build_cov_parallel.txt
+================================================================================
+

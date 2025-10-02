@@ -3,6 +3,7 @@ dreambooth-lora-model/
 dataset/*
 sd1-4/*
 sd1-5/*
+LCM/*
 outputs/*
 inference_results/*
 cov_matrices/*

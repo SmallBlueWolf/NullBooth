@@ -1,0 +1,36 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-27 13:40:59
+Log File: logs/20250927_134059_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250927_134059_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+\n============================================================
+SYSTEM CONFIGURATION VERIFICATION
+============================================================
+🔍 GPU Memory Check: 7 GPUs detected
+  ✅ GPU 0: 47.5GB memory available
+  ✅ GPU 1: 47.5GB memory available
+  ✅ GPU 2: 47.5GB memory available
+  ✅ GPU 3: 47.5GB memory available
+  ✅ GPU 4: 47.5GB memory available
+  ✅ GPU 5: 47.5GB memory available
+  ✅ GPU 6: 47.5GB memory available
+🔍 Configuration Check:
+  GPU batch size: 1500
+  Covariance batch size: 70
+  Number of processes: 1
+✅ Output directory writable: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+✅ Prompts file valid: 1000 prompts loaded from ./dataset/dog_prompts_1000.txt
+✅ Disk space sufficient: 254389.1GB available
+\n============================================================
+✅ All system checks passed!
+============================================================\n
+Using output directory: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K

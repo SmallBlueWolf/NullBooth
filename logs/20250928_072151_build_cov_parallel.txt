@@ -1,0 +1,67 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-28 07:21:51
+Log File: logs/20250928_072151_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250928_072151_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 4125.54it/s]
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:223: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 0,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ is outdated. `steps_offset` should be set to 1 instead of 0. Please make sure to update the config accordingly as leaving `steps_offset` might led to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("steps_offset!=1", "1.0.0", deprecation_message, standard_warn=False)
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:236: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 1,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ has not set the configuration `clip_sample`. `clip_sample` should be set to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
+Process 5: Processing 143 prompts
+Process 6: Processing 2 timesteps
+⚠️  Process 6: Timestep 901 not found in cache. Skipping.
+⚠️  Process 6: Timestep 884 not found in cache. Skipping.
+Process 5: Failed timesteps: [928, 916]
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-09-28 16:01:26
+Log saved to: logs/20250928_072151_build_cov_parallel.txt
+================================================================================
+

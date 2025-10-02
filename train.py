@@ -89,7 +89,7 @@ def main():
         
         # Setup learning rate scheduler
         lr_scheduler = setup_lr_scheduler(config, optimizer)
-        
+
         # Prepare everything with accelerator
         if config.train_text_encoder:
             unet, text_encoder, optimizer, train_dataloader, lr_scheduler = accelerator.prepare(
@@ -99,7 +99,7 @@ def main():
             unet, optimizer, train_dataloader, lr_scheduler = accelerator.prepare(
                 unet, optimizer, train_dataloader, lr_scheduler
             )
-        
+
         # Move models to device with appropriate dtype
         weight_dtype = accelerator.mixed_precision
         if weight_dtype == "fp16":

@@ -1,0 +1,45 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-25 15:31:07
+Log File: logs/20250925_153107_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250925_153107_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+Using output directory: /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K
+   Cache scan found: 1000 prompts, 49 completed timesteps
+✅ Loaded compatible progress from /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/computation_progress.json
+   Phase 1: 1000 prompts completed
+   Phase 2: 0 timesteps completed
+Total prompts loaded: 1000
+Using 1 GPUs: ['cuda:0']
+Timestep generation strategy: Uniform
+Timestep mode: avg
+Phase 2: Detecting timesteps from completed Phase 1 cache...
+Phase 2: Found 49 completed timesteps from Phase 1
+Timesteps: [978, 958, 937, 917, 897]...
+
+============================================================
+PHASE 2: PARALLEL COVARIANCE MATRIX COMPUTATION
+============================================================
+DEBUG: Received timesteps: [978, 958, 937, 917, 897, 876, 856, 835, 815, 795]...
+DEBUG: Total timesteps to process: 49
+DEBUG: Use alpha naming: False
+DEBUG: Remaining timesteps after filtering: [978, 958, 937, 917, 897, 876, 856, 835, 815, 795]...
+Processing 49/49 remaining timesteps
+Skipping 0 completed timesteps
+Using 1 GPUs for parallel covariance computation
+Timestep distribution across processes:
+  Process 0: 24 timesteps [978, 958, 937]...
+Process 0: Processing 24 timesteps
+Gathering cache structure...
+Analyzing unified cache directory...
+Found unified cache directory: /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/cache
+Scanning 1000 prompt directories for cache structure...
+Analyzing cache structure:   0%|          | 0/1000 [00:00<?, ?prompts/s]Analyzing cache structure:   0%|          | 3/1000 [00:00<00:54, 18.23prompts/s]Analyzing cache structure:   0%|          | 5/1000 [00:00<01:07, 14.67prompts/s]Analyzing cache structure:   1%|          | 7/1000 [00:00<01:13, 13.59prompts/s]Analyzing cache structure:   1%|          | 9/1000 [00:00<01:17, 12.71prompts/s]Analyzing cache structure:   1%|1         | 11/1000 [00:00<01:18, 12.54prompts/s]Analyzing cache structure:   1%|1         | 13/1000 [00:00<01:20, 12.28prompts/s]Analyzing cache structure:   2%|1         | 15/1000 [00:01<01:20, 12.27prompts/s]Analyzing cache structure:   2%|1         | 17/1000 [00:01<01:20, 12.28prompts/s]Analyzing cache structure:   2%|1         | 19/1000 [00:01<01:20, 12.17prompts/s]Analyzing cache structure:   2%|2         | 21/1000 [00:01<01:22, 11.83prompts/s]Analyzing cache structure:   2%|2         | 23/1000 [00:01<01:25, 11.40prompts/s]Analyzing cache structure:   2%|2         | 25/1000 [00:02<01:25, 11.43prompts/s]Analyzing cache structure:   3%|2         | 27/1000 [00:02<01:24, 11.54prompts/s]Analyzing cache structure:   3%|2         | 29/1000 [00:02<01:25, 11.40prompts/s]Analyzing cache structure:   3%|3         | 31/1000 [00:07<12:57,  1.25prompts/s]Analyzing cache structure:   3%|3         | 32/1000 [00:10<19:47,  1.23s/prompts]Analyzing cache structure:   3%|3         | 33/1000 [00:13<25:03,  1.55s/prompts]Analyzing cache structure:   3%|3         | 34/1000 [00:16<30:04,  1.87s/prompts]Analyzing cache structure:   4%|3         | 35/1000 [00:19<33:19,  2.07s/prompts]Analyzing cache structure:   4%|3         | 36/1000 [00:22<37:20,  2.32s/prompts]Analyzing cache structure:   4%|3         | 37/1000 [00:24<39:37,  2.47s/prompts]Analyzing cache structure:   4%|3         | 38/1000 [00:27<39:53,  2.49s/prompts]Analyzing cache structure:   4%|3         | 39/1000 [00:30<40:56,  2.56s/prompts]Analyzing cache structure:   4%|4         | 40/1000 [00:33<44:35,  2.79s/prompts]Analyzing cache structure:   4%|4         | 41/1000 [00:36<44:52,  2.81s/prompts]Analyzing cache structure:   4%|4         | 42/1000 [00:39<46:52,  2.94s/prompts]Analyzing cache structure:   4%|4         | 43/1000 [00:42<47:05,  2.95s/prompts]Analyzing cache structure:   4%|4         | 44/1000 [00:45<46:32,  2.92s/prompts]Analyzing cache structure:   4%|4         | 45/1000 [00:48<45:04,  2.83s/prompts]Analyzing cache structure:   5%|4         | 46/1000 [00:50<44:19,  2.79s/prompts]Analyzing cache structure:   5%|4         | 47/1000 [00:53<45:20,  2.86s/prompts]Analyzing cache structure:   5%|4         | 48/1000 [00:56<44:24,  2.80s/prompts]Analyzing cache structure:   5%|4         | 49/1000 [00:58<42:03,  2.65s/prompts]Analyzing cache structure:   5%|5         | 50/1000 [01:01<42:06,  2.66s/prompts]Analyzing cache structure:   5%|5         | 51/1000 [01:04<42:51,  2.71s/prompts]Analyzing cache structure:   5%|5         | 52/1000 [01:06<42:06,  2.67s/prompts]Analyzing cache structure:   5%|5         | 53/1000 [01:09<41:02,  2.60s/prompts]Analyzing cache structure:   5%|5         | 54/1000 [01:12<41:56,  2.66s/prompts]Analyzing cache structure:   6%|5         | 55/1000 [01:15<43:24,  2.76s/prompts]Analyzing cache structure:   6%|5         | 56/1000 [01:18<44:26,  2.82s/prompts]Analyzing cache structure:   6%|5         | 57/1000 [01:20<43:30,  2.77s/prompts]Analyzing cache structure:   6%|5         | 58/1000 [01:23<43:26,  2.77s/prompts]Analyzing cache structure:   6%|5         | 59/1000 [01:26<42:28,  2.71s/prompts]Analyzing cache structure:   6%|6         | 60/1000 [01:28<41:54,  2.67s/prompts]Analyzing cache structure:   6%|6         | 61/1000 [01:31<43:22,  2.77s/prompts]Analyzing cache structure:   6%|6         | 62/1000 [01:34<43:39,  2.79s/prompts]Analyzing cache structure:   6%|6         | 63/1000 [01:37<43:47,  2.80s/prompts]Analyzing cache structure:   6%|6         | 64/1000 [01:40<45:02,  2.89s/prompts]Analyzing cache structure:   6%|6         | 65/1000 [01:43<45:45,  2.94s/prompts]Analyzing cache structure:   7%|6         | 66/1000 [01:46<44:36,  2.87s/prompts]Analyzing cache structure:   7%|6         | 67/1000 [01:49<44:58,  2.89s/prompts]Analyzing cache structure:   7%|6         | 68/1000 [01:52<46:37,  3.00s/prompts]Analyzing cache structure:   7%|6         | 69/1000 [01:55<45:56,  2.96s/prompts]Analyzing cache structure:   7%|7         | 70/1000 [01:58<45:06,  2.91s/prompts]Analyzing cache structure:   7%|7         | 71/1000 [02:00<43:05,  2.78s/prompts]Analyzing cache structure:   7%|7         | 72/1000 [02:03<42:56,  2.78s/prompts]Analyzing cache structure:   7%|7         | 73/1000 [02:05<42:34,  2.76s/prompts]Analyzing cache structure:   7%|7         | 74/1000 [02:08<43:42,  2.83s/prompts]Analyzing cache structure:   8%|7         | 75/1000 [02:11<44:06,  2.86s/prompts]Analyzing cache structure:   8%|7         | 76/1000 [02:14<43:03,  2.80s/prompts]Analyzing cache structure:   8%|7         | 77/1000 [02:17<42:21,  2.75s/prompts]Analyzing cache structure:   8%|7         | 78/1000 [02:20<42:43,  2.78s/prompts]Analyzing cache structure:   8%|7         | 79/1000 [02:22<42:36,  2.78s/prompts]Analyzing cache structure:   8%|8         | 80/1000 [02:25<44:12,  2.88s/prompts]Analyzing cache structure:   8%|8         | 81/1000 [02:28<44:21,  2.90s/prompts]Analyzing cache structure:   8%|8         | 82/1000 [02:31<43:30,  2.84s/prompts]Analyzing cache structure:   8%|8         | 83/1000 [02:34<43:31,  2.85s/prompts]Analyzing cache structure:   8%|8         | 84/1000 [02:37<45:03,  2.95s/prompts]Analyzing cache structure:   8%|8         | 85/1000 [02:40<45:12,  2.96s/prompts]Analyzing cache structure:   9%|8         | 86/1000 [02:43<43:29,  2.86s/prompts]Analyzing cache structure:   9%|8         | 87/1000 [02:46<44:00,  2.89s/prompts]Analyzing cache structure:   9%|8         | 88/1000 [02:49<43:31,  2.86s/prompts]Analyzing cache structure:   9%|8         | 89/1000 [02:52<44:03,  2.90s/prompts]

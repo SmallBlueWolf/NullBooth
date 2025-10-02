@@ -1,0 +1,50 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-27 01:48:43
+Log File: logs/20250927_014843_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250927_014843_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+Using output directory: home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K_new
+   Cache scan found: 1000 prompts, 50 completed timesteps
+✅ Loaded compatible progress from home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K_new/computation_progress.json
+   Phase 1: 1000 prompts completed
+   Phase 2: 0 timesteps completed
+Total prompts loaded: 1000
+Using 1 GPUs: ['cuda:0']
+Timestep generation strategy: Uniform
+Timestep mode: avg
+Phase 2: Detecting timesteps from completed Phase 1 cache...
+Phase 2: Found 50 completed timesteps from Phase 1
+Timesteps: [999, 978, 958, 937, 917]...
+
+============================================================
+PHASE 2: PARALLEL COVARIANCE MATRIX COMPUTATION
+============================================================
+DEBUG: Received timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+DEBUG: Total timesteps to process: 50
+DEBUG: Use alpha naming: False
+DEBUG: Remaining timesteps after filtering: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Processing 50/50 remaining timesteps
+Skipping 0 completed timesteps
+Using 1 GPUs for parallel covariance computation
+Timestep distribution across processes:
+  Process 0: 25 timesteps [999, 978, 958]...
+Process 0: Processing 25 timesteps
+Gathering cache structure...
+Analyzing unified cache directory...
+Found unified cache directory: home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K_new/cache
+Analyzing cache structure from prompt_0177 (assuming uniform structure)...
+Found 1000 prompt directories
+Found 1 unique timesteps
+Found 64 unique layer/feature combinations
+Found 1 timesteps in cache
+Found 64 layer/feature combinations
+GPU 0 computing covariance:   0%|          | 0/25 [00:00<?, ?it/s]⚠️  Process 0: Timestep 999 not found in cache. Skipping.

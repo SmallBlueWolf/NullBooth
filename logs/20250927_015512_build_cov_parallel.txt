@@ -1,0 +1,146 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-27 01:55:12
+Log File: logs/20250927_015512_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250927_015512_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+Using output directory: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+Total prompts loaded: 1000
+Using 3 GPUs: ['cuda:0', 'cuda:1', 'cuda:2']
+Timestep generation strategy: DPM++ 2M Karras
+Timestep mode: avg
+Computing timesteps using DPM++ 2M Karras sampler...
+Averaging timesteps across 1000 prompts...
+  Processing prompt 1/1000 for timestep calculation...
+  Processing prompt 101/1000 for timestep calculation...
+  Processing prompt 201/1000 for timestep calculation...
+  Processing prompt 301/1000 for timestep calculation...
+  Processing prompt 401/1000 for timestep calculation...
+  Processing prompt 501/1000 for timestep calculation...
+  Processing prompt 601/1000 for timestep calculation...
+  Processing prompt 701/1000 for timestep calculation...
+  Processing prompt 801/1000 for timestep calculation...
+  Processing prompt 901/1000 for timestep calculation...
+  Completed timestep averaging across 1000 prompts
+Timesteps computed: [989, 986, 983, 979, 975]...
+Using alpha naming scheme for 30 timesteps
+
+============================================================
+PHASE 1: FEATURE COLLECTION
+============================================================
+Processing 30/30 remaining timesteps
+Skipping 0 completed timesteps
+Loading diffusion models...
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 6682.37it/s]
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:223: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 0,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ is outdated. `steps_offset` should be set to 1 instead of 0. Please make sure to update the config accordingly as leaving `steps_offset` might led to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("steps_offset!=1", "1.0.0", deprecation_message, standard_warn=False)
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:236: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 1,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ has not set the configuration `clip_sample`. `clip_sample` should be set to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
+Initialized ParallelAttentionFeatureCollector on 3 processes
+Registered hook for layer: module.down_blocks.0.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.0.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.1.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.1.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.2.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.2.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.1.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.1.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.1.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.2.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.2.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.2.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.3.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.3.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.3.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: module.mid_block.attentions.0.transformer_blocks.0.attn2
+Total 16 cross-attention hooks registered.
+Total 16 cross-attention hooks registered.
+Distributing 1000 prompts across 3 processes
+  Process 0: 334 prompts (indices 0-333)
+  Process 1: 334 prompts (indices 334-667)
+  Process 2: 332 prompts (indices 668-999)
+Process 0: Processing 334 prompts
+Processing prompts to collect features in parallel...
+Processing timesteps:   0%|          | 0/30 [00:00<?, ?it/s]
+Processing timestep 989 (1/30)
+
+GPU 0 processing prompts:   0%|          | 0/334 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   0%|          | 1/334 [00:06<36:57,  6.66s/it][A
+GPU 0 processing prompts:   1%|          | 2/334 [00:12<34:14,  6.19s/it][A
+GPU 0 processing prompts:   1%|          | 3/334 [00:18<33:15,  6.03s/it][A
+GPU 0 processing prompts:   1%|1         | 4/334 [00:24<32:39,  5.94s/it][A
+GPU 0 processing prompts:   1%|1         | 5/334 [00:29<32:13,  5.88s/it][A
+GPU 0 processing prompts:   2%|1         | 6/334 [00:35<31:47,  5.81s/it][A
+GPU 0 processing prompts:   2%|2         | 7/334 [00:41<31:36,  5.80s/it][A
+GPU 0 processing prompts:   2%|2         | 8/334 [00:47<31:26,  5.79s/it][A
+GPU 0 processing prompts:   3%|2         | 9/334 [00:52<31:18,  5.78s/it][A
+GPU 0 processing prompts:   3%|2         | 10/334 [00:58<31:10,  5.77s/it][A
+GPU 0 processing prompts:   3%|3         | 11/334 [01:04<31:08,  5.78s/it][A
+GPU 0 processing prompts:   4%|3         | 12/334 [01:10<31:00,  5.78s/it][A
+GPU 0 processing prompts:   4%|3         | 13/334 [01:16<30:58,  5.79s/it][A
+GPU 0 processing prompts:   4%|4         | 14/334 [01:21<30:55,  5.80s/it][A
+GPU 0 processing prompts:   4%|4         | 15/334 [01:27<30:50,  5.80s/it][A
+GPU 0 processing prompts:   5%|4         | 16/334 [01:33<30:45,  5.80s/it][A
+GPU 0 processing prompts:   5%|5         | 17/334 [01:39<30:38,  5.80s/it][A
+GPU 0 processing prompts:   5%|5         | 18/334 [01:45<31:01,  5.89s/it][A
+GPU 0 processing prompts:   6%|5         | 19/334 [01:51<30:43,  5.85s/it][A
+GPU 0 processing prompts:   6%|5         | 20/334 [01:56<30:29,  5.83s/it][A
+GPU 0 processing prompts:   6%|6         | 21/334 [02:02<30:32,  5.86s/it][A
+GPU 0 processing prompts:   7%|6         | 22/334 [02:08<30:26,  5.85s/it][A
+GPU 0 processing prompts:   7%|6         | 23/334 [02:14<30:17,  5.84s/it][A
+GPU 0 processing prompts:   7%|7         | 24/334 [02:20<30:19,  5.87s/it][A
+GPU 0 processing prompts:   7%|7         | 25/334 [02:26<30:10,  5.86s/it][A
+GPU 0 processing prompts:   8%|7         | 26/334 [02:32<30:01,  5.85s/it][A
+GPU 0 processing prompts:   8%|8         | 27/334 [02:37<29:50,  5.83s/it][A
+GPU 0 processing prompts:   8%|8         | 28/334 [02:43<29:39,  5.82s/it][A
+GPU 0 processing prompts:   9%|8         | 29/334 [02:49<29:28,  5.80s/it][A
+GPU 0 processing prompts:   9%|8         | 30/334 [02:55<29:16,  5.78s/it][A
+GPU 0 processing prompts:   9%|9         | 31/334 [03:01<29:18,  5.81s/it][AGPU 0 processing prompts:   9%|9         | 31/334 [03:04<30:06,  5.96s/it]
+Processing timesteps:   0%|          | 0/30 [03:04<?, ?it/s]
+🧹 Cleaning up distributed process group...

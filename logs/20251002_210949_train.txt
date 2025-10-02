@@ -1,0 +1,86 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-02 21:09:49
+Log File: logs/20251002_210949_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251002_210949_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+/root/bluewolf/NullBooth/src/training_utils.py:141: UserWarning: You need not use class_data_dir without with_prior_preservation.
+  warnings.warn("You need not use class_data_dir without with_prior_preservation.")
+/root/bluewolf/NullBooth/src/training_utils.py:143: UserWarning: You need not use class_prompt without with_prior_preservation.
+  warnings.warn("You need not use class_prompt without with_prior_preservation.")
+10/02/2025 21:09:49 - INFO - src.training_utils - Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cuda
+
+Mixed precision type: no
+
+
+============================================================
+🎯 Initializing NullBooth (AlphaEdit) Training
+============================================================
+  Detected new structure: scanning layer directories...
+  Loaded 30 timesteps
+  Including 30 alpha-named timesteps
+  Timestep range: 989 to 0
+CovarianceMatrixManager initialized:
+  Directory: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+  Available timesteps: 30
+  Nullspace threshold: 1e-4
+  Use interpolation: True
+✅ NullBooth initialized successfully
+  Covariance dir: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+  Available timesteps: 30
+============================================================
+
+10/02/2025 21:09:51 - INFO - src.trainer - 
+============================================================
+10/02/2025 21:09:51 - INFO - src.trainer - 🎯 Initializing AlphaEdit NullBooth Training
+10/02/2025 21:09:51 - INFO - src.trainer - ============================================================
+AlphaEditOptimizer initialized:
+  Tracked cross-attention parameters: 80
+  Projection enabled: True
+10/02/2025 21:09:51 - INFO - src.trainer - ✅ AlphaEdit optimizer wrapper initialized successfully
+10/02/2025 21:09:51 - INFO - src.trainer -   - Mode: Projecting weight UPDATES (Δ = W_new - W_old)
+10/02/2025 21:09:51 - INFO - src.trainer -   - NOT projecting gradients or features (correct implementation)
+10/02/2025 21:09:51 - INFO - src.trainer -   - Covariance matrices: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+10/02/2025 21:09:51 - INFO - src.trainer -   - Available timesteps: 30
+10/02/2025 21:09:51 - INFO - src.trainer - ============================================================
+
+10/02/2025 21:09:51 - INFO - src.trainer - ***** Running training *****
+10/02/2025 21:09:51 - INFO - src.trainer -   Num examples = 8
+10/02/2025 21:09:51 - INFO - src.trainer -   Num batches each epoch = 8
+10/02/2025 21:09:51 - INFO - src.trainer -   Num Epochs = 13
+10/02/2025 21:09:51 - INFO - src.trainer -   Instantaneous batch size per device = 1
+10/02/2025 21:09:51 - INFO - src.trainer -   Total train batch size (w. parallel, distributed & accumulation) = 1
+10/02/2025 21:09:51 - INFO - src.trainer -   Gradient Accumulation steps = 1
+10/02/2025 21:09:51 - INFO - src.trainer -   Total optimization steps = 100
+10/02/2025 21:09:51 - INFO - src.trainer -   🎯 NullBooth Mode: AlphaEdit null-space projection ACTIVE
+10/02/2025 21:09:51 - INFO - src.trainer -   📊 Covariance matrices dir: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+10/02/2025 21:09:51 - INFO - src.trainer -   🔍 Nullspace threshold: 1e-4
+  0%|          | 0/100 [00:00<?, ?it/s]Steps:   0%|          | 0/100 [00:00<?, ?it/s]10/02/2025 21:09:51 - INFO - src.trainer - 
+============================================================
+10/02/2025 21:09:51 - INFO - src.trainer - 📊 AlphaEdit NullBooth Training Summary
+10/02/2025 21:09:51 - INFO - src.trainer - ============================================================
+10/02/2025 21:09:51 - INFO - src.trainer - ✅ Successfully applied null-space projection to weight updates
+10/02/2025 21:09:51 - INFO - src.trainer - ✅ Original knowledge preserved through K₀K₀ᵀ null-space constraint
+10/02/2025 21:09:51 - INFO - src.trainer - ============================================================
+🧹 Cleaning up NullBooth trainer...
+10/02/2025 21:09:51 - INFO - src.trainer - NullBooth trainer cleaned up
+
+❌ Script failed with exception: TypeError: training_step() takes 8 positional arguments but 9 were given
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-02 21:09:51
+Log saved to: logs/20251002_210949_train.txt
+================================================================================
+

@@ -1,0 +1,574 @@
+╭───────────────────────────────────────────────────╮
+│ ✻ Welcome to Claude Code!                         │
+│                                                   │
+│   /help for help, /status for your current setup  │
+│                                                   │
+│   cwd: /home/bluewolf/NullBooth                   │
+│                                                   │
+│   ─────────────────────────────────────────────── │
+│                                                   │
+│   Overrides (via env):                            │
+│                                                   │
+│   • API Base URL: https://relay01.yhlxj.com       │
+╰───────────────────────────────────────────────────╯
+
+> /clear 
+  ⎿  (no content)
+
+> 作为一位资深的代码专家, 请你首先仔细查看 @build_cov.py  和 @build_cov_parallel.py  两个代码文件, 详细查看它们构建的 cov 矩阵的格式, 参考文献 @refer/AlphaEdit.md  中 AlphaEdit 方法构建协方差矩阵的方法, 然后请你再查看当前我们用于 train 和 inference 的脚本 @train.py  和 @inference.py  以及对应的一个配置文件 
+  @configs/nullbooth.yaml . 在 nullbooth 模式开启时, 用户会先通过 build_cov.py 代码或 build_cov_parallel.py 代码构建一个原有知识的协方差矩阵, 保存在指定路径下. 我需要你为 @train.py 构建对应使用的代码——先不要做任何操作, 只是查看现有的所有代码和文献, 然后仔细理解并分析, 给出一套具体的实现思路和方案
+  ⎿  Read build_cov.py (742 lines)
+  ⎿  Read build_cov_parallel.py (1114 lines)
+  ⎿  Read refer/AlphaEdit.md (761 lines)
+  ⎿  Read train.py (155 lines)
+  ⎿  Read inference.py (449 lines)
+  ⎿  Read configs/nullbooth.yaml (117 lines)
+
+● 我已经仔细查看了所有相关代码文件和文献，现在来分析整个系统的架构和实现方案：
+
+  代码架构分析
+
+  1. 协方差矩阵构建（build_cov.py & build_cov_parallel.py）
+
+  - 目标：构建原有知识的协方差矩阵，遵循AlphaEdit论文中的K₀K₀ᵀ方法
+  - 输出格式：
+  cov_matrices/
+  ├── timestep_0000/
+  │   ├── layer_name/
+  │   │   ├── q_covariance.npy
+  │   │   ├── q_projection.npy  
+  │   │   ├── q_metadata.json
+  │   │   └── ... (k, v, out features)
+  - 关键组件：
+    - AttentionFeatureCollector: 收集cross-attention层的Q、K、V、Out特征
+    - CovarianceMatrixComputer: 计算协方差矩阵和null space投影矩阵P = ŮŮᵀ
+    - 支持timestep级别的特征收集和处理
+
+  2. AlphaEdit方法核心
+
+  根据论文，AlphaEdit的核心是：
+  - Null Space Projection: Δ' = ΔP，其中P是投影矩阵
+  - 数学原理: (W + Δ')K₀ = WK₀ = V₀，确保保持原有知识
+  - 优化目标: 最小化更新误差，同时通过null space投影保护原有知识
+
+  实现方案
+
+  方案概述
+
+  为train.py集成NullBooth模式，需要实现以下核心功能：
+
+  1. 协方差矩阵加载器 - 加载预构建的协方差矩阵和投影矩阵
+  2. AlphaEdit损失函数 - 实现null space约束的损失计算
+  3. 特征拦截器 - 在训练过程中拦截cross-attention特征
+  4. 投影应用器 - 将梯度投影到null space
+
+  详细实现思路
+
+  1. 协方差矩阵管理器
+
+  class CovarianceMatrixManager:
+      def __init__(self, cov_matrices_dir, device):
+          # 加载所有timestep的投影矩阵
+          # 建立timestep -> layer -> feature_type的映射
+          # 缓存常用的投影矩阵到GPU内存
+
+  2. AlphaEdit训练策略
+
+  - 时机选择: 在UNet前向传播时拦截cross-attention特征
+  - 投影应用: 对收集的特征应用对应的投影矩阵
+  - 损失计算:
+  # 原有目标: minimize ||W·K₁ - V₁||²
+  # AlphaEdit目标: minimize ||(W + ΔP)·K₁ - V₁||² + ||ΔP||²
+
+  3. 训练流程集成
+
+  1. 初始化阶段: 加载协方差矩阵，设置hook
+  2. 训练循环:
+    - 正常的diffusion训练流程
+    - 在cross-attention层拦截特征
+    - 应用AlphaEdit约束
+    - 计算增强的损失函数
+  3. 梯度更新: 确保参数更新遵循null space约束
+
+  4. 配置扩展
+
+  在nullbooth配置中添加：
+  nullbooth:
+    enable: true
+    training_mode: true  # 新增：标识是否在训练中应用AlphaEdit
+    projection_strength: 1.0  # 新增：投影强度控制
+    feature_cache_size: 100  # 新增：特征缓存大小
+
+  技术挑战与解决方案
+
+  1. 内存管理: 投影矩阵可能很大，需要智能缓存策略
+  2. 计算效率: 在训练循环中应用投影不能显著影响性能
+  3. timestep匹配: 训练时的timestep需要与预构建的协方差矩阵对应
+  4. 梯度流: 确保AlphaEdit约束不会阻断正常的梯度反向传播
+
+  实现优先级
+
+  1. Phase 1: 基础的协方差矩阵加载和管理
+  2. Phase 2: 特征拦截和投影应用
+  3. Phase 3: 损失函数增强和训练集成
+  4. Phase 4: 性能优化和内存管理
+
+  这个方案将原本用于LLM知识编辑的AlphaEdit方法适配到Diffusion模型的DreamBooth训练中，通过null space约束来保护原有的生成知识，同时学习新的个性化概念。
+
+  你希望我开始实现哪个部分？
+
+> 好的, 然后请你查看 alphaedit 的源代码 '/home/bluewolf/NullBooth/alphaedit_src', 仔细查看它们具体是在什么地方应用投影矩阵, 如何根据协方差矩阵计算投影矩阵
+  然后听听我的想法: 对于 Diffusion 模型来说, 现在的采样器都很智能, 它们不会从 1000 的噪声步连续降噪到 0, 而是选择性跳过, 最终只需要去噪 50 步,即可达到一个很好的效果. 由于 inference 时我的设置是 50 步, 因此我取了 0-1000 之间 50 个均匀距离的时间步, 分别对每个时间步来采集完整的协方差矩阵. cross_attention 是 Diffusion
+   模型中, 关联文本模态和图像模态的关键组件, 其中 Q 来自 img, K 和 V 来自 text, 分别都要有一个中间计算结果, 和 K V Q  OUT 的参数矩阵进行计算, 得到 K V Q OUT. 由于整体来看, 输入一个 cross_attention 层的输入要完整地经过且只经过 K V Q OUT 四个权重参数运算, 才能得到最后的输出, 因此这四个权重参数计算时的 feature 
+  我认为都需要进行投影保护. 因此在计算协方差矩阵时, 我会计算并保存, 对应时间步下, 每一个 cross_attention 的 K V Q OUT 的 feature 并计算协方差矩阵. 请你详细考虑一下, 我应该怎么应用投影矩阵, 根据 alphaedit 的官方方法, 具体应该怎么做? 仍然只是提出一个完整完善, 包含所有细节且正确的方案, 先不做任何代码修改
+
+✻ Thinking…
+
+  用户让我查看alphaedit的源代码，然后基于用户的想法来详细分析如何应用投影矩阵。让我先查看alphaedit_src目录下的代码。
+
+  用户的思考很有道理：
+  1. Diffusion模型inference时只需要50步，从1000步中均匀采样50个timestep
+  2. Cross-attention是文本和图像模态的关键连接点
+  3. Q来自image，K和V来自text
+  4. 输入需要完整经过K、V、Q、OUT四个权重参数运算
+  5. 因此这四个权重参数对应的feature都需要投影保护
+
+  我需要查看alphaedit的源代码来理解：
+  1. 投影矩阵是如何从协方差矩阵计算得来的
+  2. 投影矩阵具体在什么地方应用
+  3. 如何将这个方法适配到Diffusion模型的cross-attention上
+
+● 让我先查看AlphaEdit的源代码来理解具体实现：
+
+● Read(alphaedit_src)
+  ⎿  Error: EISDIR: illegal operation on a directory, read
+
+✻ Thinking…
+
+  让我看看alphaedit_src目录下有什么文件。
+
+● Bash(ls -la /home/bluewolf/NullBooth/alphaedit_src/)
+  ⎿  total 64                                    
+     drwxr-xr-x 14 root root 4096 Sep 10 01:21 .
+     drwxr-xr-x 16 root root 4096 Sep 15 07:41 ..
+     … +14 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  看到alphaedit_src下有几个关键目录，我需要查看主要的实现代码。让我先看看AlphaEdit目录：
+
+● Bash(find /home/bluewolf/NullBooth/alphaedit_src -name "*.py" | head -20)
+  ⎿  /home/bluewolf/NullBooth/alphaedit_src/experiments/evaluate.py          
+     /home/bluewolf/NullBooth/alphaedit_src/experiments/py/demo.py
+     /home/bluewolf/NullBooth/alphaedit_src/experiments/py/eval_utils_zsre.py
+     … +17 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  让我查看主要的AlphaEdit实现文件：
+
+● Bash(find /home/bluewolf/NullBooth/alphaedit_src/AlphaEdit -name "*.py")
+  ⎿  /home/bluewolf/NullBooth/alphaedit_src/AlphaEdit/compute_ks.py       
+     /home/bluewolf/NullBooth/alphaedit_src/AlphaEdit/compute_z.py
+     /home/bluewolf/NullBooth/alphaedit_src/AlphaEdit/AlphaEdit_hparams.py
+     … +2 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  看到AlphaEdit的主要文件，让我查看核心实现，特别是AlphaEdit_main.py：
+
+● Read(alphaedit_src/AlphaEdit/AlphaEdit_main.py)
+  ⎿  Read 229 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  关键在第131行，这里应用了投影矩阵P：
+
+  upd_matrix = torch.linalg.solve(
+      P[i,:,:].cuda() @ (layer_ks @ layer_ks.T + cache_c[i,:,:].cuda()) + hparams.L2*torch.eye(layer_ks.shape[0], dtype=torch.float,device="cuda"), 
+      P[i,:,:].cuda() @ layer_ks @ resid.T
+  )
+
+  这里的 P[i,:,:] 就是投影矩阵。让我查看compute_ks.py和compute_z.py来理解具体如何计算投影矩阵：
+
+● Read(alphaedit_src/AlphaEdit/compute_ks.py)
+  ⎿  Read 51 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  接下来查看compute_z.py，看看它如何计算特征和目标：
+
+● Read(alphaedit_src/AlphaEdit/compute_z.py)
+  ⎿  Read 279 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  现在让我查看层统计计算部分，特别是协方差矩阵是如何构建的：
+
+● Read(alphaedit_src/rome/layer_stats.py)
+  ⎿  Read 200 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  最后，让我查看具体如何使用投影矩阵。我需要找到具体的实验代码来看如何使用P矩阵：
+
+● Bash(grep -r "P\[" /home/bluewolf/NullBooth/alphaedit_src --include="*.py" | head -10)
+  ⎿  /home/bluewolf/NullBooth/alphaedit_src/experiments/evaluate.py:            P[i,:,:] = get_project(model,tok,layer,hparams)                                                                                                                     
+     /home/bluewolf/NullBooth/alphaedit_src/glue_eval/sentiment_analysis_eval.py:        remaining_token_length = MODEL_NAME_TO_MAXIMUM_CONTEXT_LENGTH_MAP[self.model.config._name_or_path.lower().split('/')[-1]] - question_token_length - gen_len
+     /home/bluewolf/NullBooth/alphaedit_src/glue_eval/mrpc_eval.py:        remaining_token_length = MODEL_NAME_TO_MAXIMUM_CONTEXT_LENGTH_MAP[self.model.config._name_or_path.lower().split('/')[-1]] - question_token_length - gen_len
+     … +7 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  看到关键线索，让我查看experiments/evaluate.py中的get_project函数：
+
+● Read(alphaedit_src/experiments/evaluate.py)
+  ⎿  Read 150 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  我需要找到get_project函数的具体实现。让我搜索这个函数：
+
+● Bash(grep -r "def get_project" /home/bluewolf/NullBooth/alphaedit_src --include="*.py")
+  ⎿  /home/bluewolf/NullBooth/alphaedit_src/experiments/evaluate.py:def get_project(model, tok, layer, hparams):
+
+✻ Thinking…
+
+  现在让我查看这个函数的完整实现：
+
+● Read(alphaedit_src/experiments/evaluate.py)
+  ⎿  Read 100 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  让我继续搜索get_project函数的完整定义：
+
+● Bash(grep -A 50 "def get_project" /home/bluewolf/NullBooth/alphaedit_src/experiments/evaluate.py)
+  ⎿  def get_project(model, tok, layer, hparams):
+         force_recompute = False
+         cov = get_cov(
+     … +48 lines (ctrl+o to expand)
+
+✻ Thinking…
+
+  太好了！现在我找到了关键的投影矩阵计算代码。让我整理一下我从AlphaEdit源代码中学到的关键信息：
+
+  AlphaEdit的核心实现原理
+
+  1. 投影矩阵P的计算 (get_project函数)
+
+  def get_project(model, tok, layer, hparams):
+      # 1. 获取协方差矩阵 K₀K₀ᵀ
+      cov = get_cov(model, tok, layer_name, ...)
+      
+      # 2. 对协方差矩阵进行SVD分解
+      U, S, _ = torch.linalg.svd(cov, full_matrices=False)
+      
+      # 3. 找到小奇异值对应的索引（null space）
+      threshold = hparams.nullspace_threshold
+      small_singular_indices = (S < threshold).nonzero(as_tuple=True)[0]
+      
+      # 4. 构建投影矩阵 P = ŮŮᵀ
+      return U[:, small_singular_indices] @ U[:, small_singular_indices].T
+
+  2. 在训练中应用投影矩阵 (AlphaEdit_main.py)
+
+  # 在每个层进行编辑时：
+  upd_matrix = torch.linalg.solve(
+      P[i,:,:].cuda() @ (layer_ks @ layer_ks.T + cache_c[i,:,:].cuda()) + hparams.L2*torch.eye(...), 
+      P[i,:,:].cuda() @ layer_ks @ resid.T
+
+
+  )
+
+  这是AlphaEdit的核心数学变换。通过SVD分解和投影矩阵，我们可以在保持模型整体性能的同时，精确地定位和修改特定知识表示。关键在于找到协方差矩阵的零空间，并利用投影矩阵进行精确的参数更新。
+
+● 基于我对AlphaEdit源代码的深入分析和你的思考，我现在可以给出一个完整、详细的实现方案：
+
+  AlphaEdit在Diffusion模型中的完整实现方案
+
+  1. 核心原理总结
+
+  AlphaEdit的数学基础：
+  - 协方差矩阵构建：K₀K₀ᵀ，其中K₀是原有知识的键矩阵
+  - SVD分解：K₀K₀ᵀ = UΣUᵀ
+  - Null Space投影矩阵：P = Ů_nullŮ_nullᵀ，其中Ů_null是对应小奇异值的特征向量
+  - 约束更新：Δ' = ΔP，确保(W + Δ')K₀ = WK₀
+
+  2. 适配到Diffusion模型的具体方案
+
+  2.1 协方差矩阵管理器
+
+  class DiffusionCovarianceManager:
+      def __init__(self, cov_matrices_dir, device, nullspace_threshold=2e-2):
+          self.cov_matrices_dir = Path(cov_matrices_dir)
+          self.device = device
+          self.nullspace_threshold = nullspace_threshold
+          self.projection_matrices = {}  # 缓存投影矩阵
+
+      def load_projection_matrix(self, timestep: int, layer_name: str, feature_type: str):
+          """加载或计算投影矩阵P = ŮŮᵀ"""
+          key = f"timestep_{timestep:04d}_{layer_name}_{feature_type}"
+
+          if key not in self.projection_matrices:
+              # 加载协方差矩阵
+              cov_path = self.cov_matrices_dir / f"timestep_{timestep:04d}" / layer_name.replace(".", "_") / f"{feature_type}_covariance.npy"
+              cov_matrix = torch.from_numpy(np.load(cov_path)).to(self.device)
+
+              # SVD分解
+              U, S, _ = torch.linalg.svd(cov_matrix, full_matrices=False)
+
+              # 找到null space（小奇异值对应的特征向量）
+              small_singular_indices = (S < self.nullspace_threshold).nonzero(as_tuple=True)[0]
+
+              if len(small_singular_indices) > 0:
+                  # 构建投影矩阵 P = ŮŮᵀ
+                  U_null = U[:, small_singular_indices]
+                  projection_matrix = torch.mm(U_null, U_null.T)
+              else:
+                  # 如果没有null space，使用零矩阵（不进行投影）
+                  projection_matrix = torch.zeros_like(cov_matrix)
+
+              self.projection_matrices[key] = projection_matrix
+
+          return self.projection_matrices[key]
+
+  2.2 Cross-Attention特征拦截器
+
+  class CrossAttentionProjector:
+      def __init__(self, cov_manager: DiffusionCovarianceManager):
+          self.cov_manager = cov_manager
+          self.current_timestep = None
+          self.hooks = []
+
+      def register_hooks(self, unet):
+          """在所有cross-attention层注册hooks"""
+          for name, module in unet.named_modules():
+              if isinstance(module, Attention) and "attn2" in name:
+                  # 为Q、K、V、OUT四个组件分别注册hooks
+                  hook = module.register_forward_hook(
+                      self.create_projection_hook(name)
+                  )
+                  self.hooks.append(hook)
+
+      def create_projection_hook(self, layer_name: str):
+          def projection_hook(module, input_data, output_data):
+              if self.current_timestep is None:
+                  return output_data
+
+              # 只处理cross-attention层
+              if "attn2" not in layer_name:
+                  return output_data
+
+              with torch.no_grad():
+                  # 获取输入特征
+                  hidden_states = input_data[0] if isinstance(input_data, tuple) else input_data
+                  encoder_hidden_states = input_data[1] if len(input_data) > 1 else None
+
+                  if encoder_hidden_states is None:
+                      return output_data
+
+                  # 计算Q、K、V、OUT特征并应用投影
+                  projected_features = {}
+
+                  # Query (from image features)
+                  q = module.to_q(hidden_states)
+                  q = module.head_to_batch_dim(q)
+                  projected_features['q'] = self.apply_projection(
+                      q, self.current_timestep, layer_name, 'q'
+                  )
+
+                  # Key (from text features)  
+                  k = module.to_k(encoder_hidden_states)
+                  k = module.head_to_batch_dim(k)
+                  projected_features['k'] = self.apply_projection(
+                      k, self.current_timestep, layer_name, 'k'
+                  )
+
+                  # Value (from text features)
+                  v = module.to_v(encoder_hidden_states)
+                  v = module.head_to_batch_dim(v)
+                  projected_features['v'] = self.apply_projection(
+                      v, self.current_timestep, layer_name, 'v'
+                  )
+
+                  # 使用投影后的特征重新计算attention
+                  projected_output = self.compute_attention_with_projection(
+                      module, projected_features['q'], projected_features['k'], projected_features['v']
+                  )
+
+                  # 对输出特征也应用投影
+                  projected_output = self.apply_projection(
+                      projected_output, self.current_timestep, layer_name, 'out'
+                  )
+
+                  return projected_output
+
+          return projection_hook
+
+      def apply_projection(self, feature: torch.Tensor, timestep: int, layer_name: str, feature_type: str):
+          """对特征应用null space投影"""
+          try:
+              # 获取投影矩阵
+              P = self.cov_manager.load_projection_matrix(timestep, layer_name, feature_type)
+
+              # 重塑特征维度以匹配投影矩阵
+              original_shape = feature.shape
+              feature_flat = feature.view(-1, feature.shape[-1])
+
+              # 应用投影: feature' = feature @ P
+              projected_feature = torch.mm(feature_flat, P)
+
+              # 恢复原始形状
+              return projected_feature.view(original_shape)
+
+          except Exception as e:
+              print(f"Projection failed for {layer_name}/{feature_type}: {e}")
+              return feature  # 如果投影失败，返回原始特征
+
+  2.3 训练流程集成
+
+  class NullBoothTrainer:
+      def __init__(self, config, unet, text_encoder):
+          self.config = config
+          self.unet = unet
+          self.text_encoder = text_encoder
+
+          # 初始化协方差管理器和投影器
+          if config.nullbooth.enable and config.nullbooth.get('training_mode', False):
+              self.cov_manager = DiffusionCovarianceManager(
+                  config.nullbooth.cov_matrices_output_dir,
+                  device=unet.device,
+                  nullspace_threshold=config.nullbooth.nullspace_threshold
+              )
+              self.projector = CrossAttentionProjector(self.cov_manager)
+              self.projector.register_hooks(unet)
+          else:
+              self.projector = None
+
+      def training_step(self, batch, noise_scheduler, timesteps):
+          """训练步骤，集成AlphaEdit约束"""
+          # 设置当前timestep（用于投影矩阵选择）
+          if self.projector:
+              # 使用当前batch的timestep（需要映射到预构建的50个timestep之一）
+              current_timestep = self.map_to_cached_timestep(timesteps[0].item())
+              self.projector.current_timestep = current_timestep
+
+          # 正常的diffusion训练流程
+          with torch.no_grad():
+              latents = self.vae.encode(batch["pixel_values"]).latent_dist.sample()
+              latents = latents * self.vae.config.scaling_factor
+
+          # 添加噪声
+          noise = torch.randn_like(latents)
+          noisy_latents = noise_scheduler.add_noise(latents, noise, timesteps)
+
+          # 编码文本
+          encoder_hidden_states = self.text_encoder(batch["input_ids"])[0]
+
+          # UNet前向传播（会触发projection hooks）
+          model_pred = self.unet(noisy_latents, timesteps, encoder_hidden_states).sample
+
+          # 计算损失（包含AlphaEdit约束）
+          if noise_scheduler.config.prediction_type == "epsilon":
+              target = noise
+          elif noise_scheduler.config.prediction_type == "v_prediction":
+              target = noise_scheduler.get_velocity(latents, noise, timesteps)
+
+          # 基础MSE损失
+          loss = F.mse_loss(model_pred.float(), target.float(), reduction="mean")
+
+          # 添加AlphaEdit正则化项（可选）
+          if self.projector and self.config.nullbooth.get('regularization_weight', 0) > 0:
+              reg_loss = self.compute_projection_regularization()
+              loss += self.config.nullbooth.regularization_weight * reg_loss
+
+          return loss
+
+      def map_to_cached_timestep(self, current_timestep: int) -> int:
+          """将当前timestep映射到预缓存的50个timestep之一"""
+          cached_timesteps = torch.linspace(999, 0, 50, dtype=torch.long).tolist()
+          # 找到最接近的cached timestep
+          return min(cached_timesteps, key=lambda x: abs(x - current_timestep))
+
+  3. 关键实现细节
+
+  3.1 Timestep映射策略
+
+  由于训练时的timestep是随机采样的（0-1000），而我们只预构建了50个timestep的协方差矩阵，需要映射策略：
+  def create_timestep_mapping(num_cached_timesteps=50):
+      """创建训练timestep到缓存timestep的映射"""
+      cached_timesteps = torch.linspace(999, 0, num_cached_timesteps, dtype=torch.long)
+
+      def map_timestep(t):
+          # 找到最接近的cached timestep
+          distances = torch.abs(cached_timesteps - t)
+          return cached_timesteps[torch.argmin(distances)].item()
+
+      return map_timestep
+
+  3.2 内存管理策略
+
+  class ProjectionMatrixCache:
+      def __init__(self, max_cache_size=100):
+          self.cache = {}
+          self.access_count = {}
+          self.max_cache_size = max_cache_size
+
+      def get_projection_matrix(self, key, loader_func):
+          if key not in self.cache:
+              if len(self.cache) >= self.max_cache_size:
+                  # LRU eviction
+                  lru_key = min(self.access_count.keys(), key=self.access_count.get)
+                  del self.cache[lru_key]
+                  del self.access_count[lru_key]
+
+              self.cache[key] = loader_func()
+
+          self.access_count[key] = self.access_count.get(key, 0) + 1
+          return self.cache[key]
+
+  3.3 梯度投影确保
+
+  def apply_gradient_projection(self, gradients, projection_matrices):
+      """确保梯度更新也遵循null space约束"""
+      projected_gradients = {}
+
+      for param_name, grad in gradients.items():
+          if param_name in projection_matrices:
+              P = projection_matrices[param_name]
+              # 梯度投影: grad' = P @ grad @ Pᵀ (对于权重矩阵)
+              projected_grad = torch.mm(torch.mm(P, grad), P.T)
+              projected_gradients[param_name] = projected_grad
+          else:
+              projected_gradients[param_name] = grad
+
+      return projected_gradients
+
+  4. 配置文件扩展
+
+  在nullbooth.yaml中添加训练相关配置：
+  nullbooth:
+    enable: true
+    training_mode: true  # 新增：启用训练时的AlphaEdit约束
+    cov_matrices_output_dir: "./cov_matrices"
+    projection_strength: 1.0  # 新增：投影强度
+    regularization_weight: 0.01  # 新增：正则化权重
+    cache_size: 100  # 新增：投影矩阵缓存大小
+    gradient_projection: true  # 新增：是否对梯度也应用投影
+
+  5. 实现优先级和风险控制
+
+  Phase 1: 基础投影矩阵加载和管理
+  Phase 2: Cross-attention特征拦截和投影
+  Phase 3: 训练流程集成和测试
+  Phase 4: 性能优化和内存管理
+
+  风险控制：
+  1. 提供投影开关，可以随时关闭AlphaEdit约束
+  2. 投影失败时fallback到原始特征
+  3. 内存使用监控和自动清理
+  4. 详细的日志记录用于调试
+
+  这个方案完全基于AlphaEdit的官方实现原理，将null space投影约束适配到Diffusion模型的cross-attention机制中，确保在学习新概念的同时保护原有的生成知识。
+

@@ -1,0 +1,2317 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-27 14:32:00
+Log File: logs/20250927_143200_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250927_143200_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 4173.44it/s]
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:223: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 0,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ is outdated. `steps_offset` should be set to 1 instead of 0. Please make sure to update the config accordingly as leaving `steps_offset` might led to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("steps_offset!=1", "1.0.0", deprecation_message, standard_warn=False)
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:236: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 1,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ has not set the configuration `clip_sample`. `clip_sample` should be set to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
+Process 5: Processing 143 prompts
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-09-27 15:36:47
+Log saved to: logs/20250927_143200_build_cov_parallel.txt
+================================================================================
+
+nvs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:223: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 0,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ is outdated. `steps_offset` should be set to 1 instead of 0. Please make sure to update the config accordingly as leaving `steps_offset` might led to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("steps_offset!=1", "1.0.0", deprecation_message, standard_warn=False)
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:236: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 1,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ has not set the configuration `clip_sample`. `clip_sample` should be set to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
+Initialized ParallelAttentionFeatureCollector on 7 processes
+Registered hook for layer: module.down_blocks.0.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.0.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.1.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.1.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.2.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.down_blocks.2.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.1.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.1.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.1.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.2.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.2.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.2.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.3.attentions.0.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.3.attentions.1.transformer_blocks.0.attn2
+Registered hook for layer: module.up_blocks.3.attentions.2.transformer_blocks.0.attn2
+Registered hook for layer: module.mid_block.attentions.0.transformer_blocks.0.attn2
+Total 16 cross-attention hooks registered.
+Total 16 cross-attention hooks registered.
+Distributing 1000 prompts across 7 processes
+  Process 0: 143 prompts (indices 0-142)
+  Process 1: 143 prompts (indices 143-285)
+  Process 2: 143 prompts (indices 286-428)
+  Process 3: 143 prompts (indices 429-571)
+  Process 4: 143 prompts (indices 572-714)
+  Process 5: 143 prompts (indices 715-857)
+  Process 6: 142 prompts (indices 858-999)
+Process 0: Processing 143 prompts
+Processing prompts to collect features in parallel...
+Processing timesteps:   0%|          | 0/28 [00:00<?, ?it/s]
+Processing timestep 989 (1/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<02:14,  1.05it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:01<00:42,  3.32it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:01<00:24,  5.71it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:01<00:17,  7.93it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:01<00:13, 10.02it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:01<00:11, 11.83it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:01<00:09, 13.31it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:01<00:08, 14.48it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:08, 15.38it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:02<00:07, 16.05it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:02<00:07, 16.56it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:02<00:07, 16.91it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:02<00:06, 17.13it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:02<00:06, 17.22it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:02<00:06, 17.39it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:02<00:06, 17.45it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:02<00:06, 17.57it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.63it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:03<00:05, 17.67it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:03<00:05, 17.68it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:03<00:05, 17.58it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:03<00:05, 17.59it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:03<00:05, 17.66it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:03<00:05, 17.71it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:03<00:05, 17.76it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:03<00:05, 16.26it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.96it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:04<00:05, 16.48it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:04<00:05, 16.85it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:04<00:04, 17.14it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:04<00:04, 17.32it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:04<00:04, 17.43it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:04<00:04, 17.50it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:04<00:04, 17.57it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.65it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.57it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:05<00:04, 17.36it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:05<00:03, 17.50it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:05<00:03, 17.57it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:05<00:03, 17.59it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:05<00:03, 17.58it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:05<00:03, 17.56it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:05<00:03, 17.57it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.64it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:06<00:03, 17.66it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:06<00:02, 17.71it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:06<00:02, 17.70it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:06<00:02, 17.73it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:06<00:02, 17.76it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:06<00:02, 17.13it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:06<00:02, 15.16it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:06<00:02, 15.18it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:07<00:02, 15.88it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:07<00:02, 16.40it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:07<00:02, 16.79it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:07<00:01, 17.10it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:07<00:01, 17.29it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:07<00:01, 17.40it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:07<00:01, 17.51it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:07<00:01, 17.60it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:07<00:01, 17.67it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:08<00:01, 17.75it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:08<00:01, 17.74it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:08<00:00, 17.68it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:08<00:00, 17.70it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:08<00:00, 17.71it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:08<00:00, 17.75it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:08<00:00, 17.75it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:08<00:00, 17.76it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 17.75it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:09<00:00, 17.75it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:09<00:00, 17.73it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:09<00:00, 15.64it/s]
+✅ Timestep 989 completed successfully
+Processing timesteps:   4%|3         | 1/28 [00:09<04:23,  9.77s/it]
+Processing timestep 986 (2/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:16,  8.54it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 11.69it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.22it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.54it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.30it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.78it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.09it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.27it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.37it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.47it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.58it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.66it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.72it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.74it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.73it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.58it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.64it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.65it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:06, 17.65it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.69it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.69it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.70it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.69it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.68it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.69it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:03<00:05, 16.12it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.87it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.40it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.68it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.00it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.22it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.37it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.44it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.52it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.60it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.62it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.65it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.69it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.73it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.73it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.72it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.74it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.71it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.69it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.72it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.71it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.72it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.73it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.76it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.76it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.22it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:06<00:02, 15.94it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.46it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.86it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.11it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.25it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.36it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.47it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.37it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 16.80it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:07<00:01, 17.00it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.13it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 16.45it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 16.31it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 16.56it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 16.83it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.08it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.15it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:08<00:00, 16.66it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 16.83it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 17.06it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.23it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.11it/s]
+✅ Timestep 986 completed successfully
+Processing timesteps:   7%|7         | 2/28 [00:18<03:58,  9.18s/it]
+Processing timestep 983 (3/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:15,  9.11it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.08it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.47it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.66it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.42it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.90it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.16it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.33it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 16.74it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.05it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:07, 17.25it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.42it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.52it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.65it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.71it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.77it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.78it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.80it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.79it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.81it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.78it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.79it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.80it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.81it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.78it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:03<00:05, 16.13it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.71it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.30it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.76it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.07it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.31it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.36it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.46it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.54it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.65it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.68it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.74it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:04, 16.53it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 16.76it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 16.94it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.18it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.32it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.46it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.53it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.59it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.65it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.66it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.38it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.43it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.47it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 15.93it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:06<00:02, 15.57it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.11it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.28it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:02, 16.67it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 16.96it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.17it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.33it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.40it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.49it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:07<00:01, 17.57it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.62it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.62it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.62it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.64it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.66it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.64it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.68it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.69it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 17.70it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 17.70it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.70it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.17it/s]
+✅ Timestep 983 completed successfully
+Processing timesteps:  11%|#         | 3/28 [00:27<03:47,  9.11s/it]
+Processing timestep 979 (4/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:16,  8.69it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 11.80it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.19it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.47it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.23it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.74it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.08it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.23it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.34it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.48it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.65it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.80it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.90it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.94it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.98it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.02it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.02it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.00it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.00it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.99it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.98it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.98it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.03it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.03it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.03it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.52it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.10it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.65it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.07it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:05, 16.66it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.03it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.34it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.57it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.74it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.87it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.94it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.97it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.00it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.02it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.05it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.02it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 16.99it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 16.38it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 15.96it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 15.66it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:03, 15.48it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:03, 15.34it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:03, 15.28it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:03, 15.23it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 15.19it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:06<00:03, 13.98it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:06<00:02, 13.58it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 14.01it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 14.29it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:02, 14.43it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:02, 14.58it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:02, 14.02it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:07<00:02, 13.88it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:07<00:01, 14.18it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:07<00:01, 14.41it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:07<00:01, 14.42it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 14.56it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 14.68it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:01, 14.81it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 14.84it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:08<00:00, 14.90it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:08<00:00, 14.93it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:08<00:00, 14.98it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:08<00:00, 15.02it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 15.08it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 15.12it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 15.14it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 16.07it/s]
+✅ Timestep 979 completed successfully
+Processing timesteps:  14%|#4        | 4/28 [00:36<03:36,  9.04s/it]
+Processing timestep 975 (5/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:16,  8.51it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:12, 11.32it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:10, 12.98it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:09, 13.79it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:09, 14.23it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:09, 14.50it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:08, 14.67it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:01<00:08, 14.78it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:08, 14.87it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:08, 14.93it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:08, 14.97it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:08, 15.00it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:07, 15.02it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:07, 15.04it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:02<00:07, 15.05it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:02<00:07, 15.05it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:02<00:07, 15.04it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:07, 15.03it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:07, 15.03it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:06, 15.02it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:06, 15.03it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:06, 15.04it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:03<00:06, 15.06it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:03<00:06, 15.09it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:03<00:06, 15.07it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:03<00:06, 13.92it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:06, 13.68it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:06, 14.07it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 14.35it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:04<00:05, 14.56it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:04<00:05, 14.71it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:04<00:05, 14.84it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:04<00:04, 15.67it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:04<00:04, 16.33it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 16.81it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.16it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:04, 17.39it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.57it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:05<00:03, 17.64it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:05<00:03, 17.74it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:05<00:03, 17.82it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:05<00:03, 17.88it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:05<00:03, 17.92it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.95it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.98it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.00it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.03it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:06<00:02, 17.99it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:06<00:02, 18.04it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:06<00:02, 18.04it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:06<00:02, 16.47it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:06<00:02, 16.28it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.76it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.13it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.39it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:07<00:01, 17.60it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:07<00:01, 17.76it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:07<00:01, 17.85it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:07<00:01, 17.91it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:07<00:01, 17.98it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:07<00:01, 18.01it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 18.01it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 18.00it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.01it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:08<00:00, 17.98it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:08<00:00, 17.97it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:08<00:00, 17.99it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:08<00:00, 18.02it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:08<00:00, 18.04it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 18.10it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 18.15it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.18it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 16.25it/s]
+✅ Timestep 975 completed successfully
+Processing timesteps:  18%|#7        | 5/28 [00:45<03:26,  8.96s/it]
+Processing timestep 970 (6/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.58it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.48it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.86it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.09it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.80it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.21it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.48it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.67it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.82it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 17.91it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.95it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.99it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.99it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.97it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.98it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.01it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.65it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 16.90it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:06, 17.22it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:06, 17.22it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.47it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.49it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.64it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.68it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.80it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.36it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.99it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.56it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.00it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.31it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.55it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.73it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.85it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.92it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 17.95it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.98it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.02it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.06it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.10it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.11it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.10it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.09it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.08it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.09it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.09it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.11it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.97it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.95it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.01it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.05it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.49it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.28it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.82it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.21it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.49it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.68it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.82it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.91it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.99it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.04it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.07it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 18.11it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.26it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.47it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.66it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.80it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.89it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.98it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.05it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 18.09it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.12it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.55it/s]
+✅ Timestep 970 completed successfully
+Processing timesteps:  21%|##1       | 6/28 [00:53<03:14,  8.84s/it]
+Processing timestep 964 (7/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:15,  9.30it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:10, 12.79it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 15.09it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.29it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.97it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.39it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.66it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.81it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.93it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.65it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.78it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.90it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.00it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.33it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.47it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.70it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.84it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.95it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.95it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.99it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.04it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.07it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.09it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.11it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.12it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.52it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.93it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.53it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.99it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.31it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.55it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.72it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.78it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.88it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 17.93it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.99it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.01it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.03it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.06it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.93it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.97it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.00it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.01it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.05it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.08it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.10it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.10it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.09it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.09it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.10it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.56it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.25it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.81it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.16it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.44it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.65it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.79it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.89it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.94it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.01it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.06it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 18.07it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.11it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.12it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.23it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.48it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.66it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.81it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.93it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.02it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 18.07it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.10it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.60it/s]
+✅ Timestep 964 completed successfully
+Processing timesteps:  25%|##5       | 7/28 [01:02<03:05,  8.82s/it]
+Processing timestep 957 (8/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:15,  9.23it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.64it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.95it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.13it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.80it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.23it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.52it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.69it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.83it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 17.92it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.96it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.99it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.03it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 18.06it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 18.09it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.10it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.12it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.09it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.10it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.09it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.12it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.14it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.54it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.28it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.83it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:04, 17.22it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.49it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.70it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.84it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.94it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 18.02it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.08it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.10it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.18it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.19it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.53it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:03, 17.01it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.32it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.51it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.64it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.72it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.34it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.05it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.61it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.05it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.38it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.60it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.73it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.84it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.96it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.04it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.01it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 18.04it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.08it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.10it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 18.11it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 18.12it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.17it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.18it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.18it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.18it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.65it/s]
+✅ Timestep 957 completed successfully
+Processing timesteps:  29%|##8       | 8/28 [01:11<02:55,  8.76s/it]
+Processing timestep 949 (9/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.70it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.60it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.96it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.16it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.80it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.24it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.54it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.74it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.86it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 17.93it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.97it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 18.03it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.07it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 18.10it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 18.10it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.09it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.10it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.10it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.07it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.07it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.08it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.09it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.09it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.09it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.12it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.54it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.26it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.80it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:04, 17.20it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.48it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.69it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.81it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.91it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.99it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.04it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.08it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.14it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.14it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.11it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.14it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.15it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.15it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.13it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.14it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.16it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.61it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.36it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:05<00:02, 16.87it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.26it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.53it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.72it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.85it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.95it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 18.02it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.07it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.09it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 18.10it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.09it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.18it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.31it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.55it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.69it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.76it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.86it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 17.93it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 17.99it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.02it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.67it/s]
+✅ Timestep 949 completed successfully
+Processing timesteps:  32%|###2      | 9/28 [01:20<02:46,  8.77s/it]
+Processing timestep 939 (10/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:15,  9.23it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:10, 12.79it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 15.09it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.26it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.94it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.37it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.65it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.82it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.93it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.29it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:07, 17.02it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.31it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.55it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.75it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.87it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.96it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.01it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.99it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.98it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.05it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.08it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.10it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.11it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.11it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.11it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.52it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.93it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.55it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.00it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.34it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.56it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.72it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.79it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.91it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 17.98it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.03it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.08it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.05it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.06it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.10it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.15it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.18it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.18it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.60it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.35it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.89it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.26it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.53it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.72it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.75it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.86it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.96it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.02it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.08it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 18.10it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.12it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.73it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.87it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.96it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.01it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.02it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.08it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.10it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.09it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.10it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.64it/s]
+✅ Timestep 939 completed successfully
+Processing timesteps:  36%|###5      | 10/28 [01:28<02:36,  8.70s/it]
+Processing timestep 928 (11/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:15,  9.09it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.14it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.61it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.93it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.73it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.22it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.54it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.73it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.84it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 17.95it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 18.01it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 18.05it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.08it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 18.11it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 18.13it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.14it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.14it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.14it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.18it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.18it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.58it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.29it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.82it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:04, 17.20it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.46it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.67it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.83it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.93it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 18.00it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.05it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.09it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.14it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.14it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.14it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.14it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.06it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.06it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.08it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.09it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.12it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.56it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.34it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:05<00:02, 16.87it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.26it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.52it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.73it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.81it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.91it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.99it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.04it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.07it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 18.11it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.17it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.18it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.72it/s]
+✅ Timestep 928 completed successfully
+Processing timesteps:  39%|###9      | 11/28 [01:37<02:27,  8.68s/it]
+Processing timestep 916 (12/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.68it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.60it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.98it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.20it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.89it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.33it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.62it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.79it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.92it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 17.99it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 18.03it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 18.07it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.10it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 18.13it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 18.12it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.12it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.15it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.18it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.54it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.27it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.81it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.19it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.49it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.70it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.85it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.94it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 18.00it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.06it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.09it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.11it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.16it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.14it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.14it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.16it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.18it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.59it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.33it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:05<00:02, 16.87it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.26it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.53it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.71it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.83it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.92it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 18.00it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.06it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.08it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 18.11it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.12it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.12it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.14it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.75it/s]
+✅ Timestep 916 completed successfully
+Processing timesteps:  43%|####2     | 12/28 [01:45<02:18,  8.65s/it]
+Processing timestep 901 (13/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:17,  8.23it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:12, 11.28it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 13.94it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.39it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.27it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.81it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.18it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.37it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.49it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.58it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.64it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.72it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.75it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.77it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.81it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.84it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.87it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.88it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.88it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.77it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.81it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.85it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.86it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.87it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.87it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.26it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.74it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.33it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.76it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.06it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.29it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.45it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.57it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.03it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.22it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.40it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.52it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.64it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.72it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.77it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.81it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.84it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.86it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.83it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.84it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.84it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.86it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.88it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.86it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.86it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.28it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:06<00:02, 15.99it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.51it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.90it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:02, 16.93it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 16.85it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.14it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.36it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.51it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.63it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:07<00:01, 17.70it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.74it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.78it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.80it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.83it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.10it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 16.78it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.03it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.25it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 17.43it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 17.54it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.61it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.25it/s]
+✅ Timestep 901 completed successfully
+Processing timesteps:  46%|####6     | 13/28 [01:54<02:09,  8.65s/it]
+Processing timestep 884 (14/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:16,  8.36it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 11.75it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.16it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.39it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.25it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.72it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.01it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.24it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.42it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.55it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.64it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.71it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.73it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.86it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.98it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.04it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.08it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.14it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.20it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.21it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.99it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.90it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.86it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.35it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.79it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.35it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.77it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.08it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.27it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 16.78it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.09it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.29it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.47it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.57it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.66it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.71it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.76it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.77it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.81it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.84it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.87it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.88it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.89it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.89it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.89it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.93it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.02it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.07it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.40it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.13it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.64it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.05it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.38it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.60it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.76it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.87it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.96it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.02it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.06it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 18.10it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.12it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.06it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.10it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 18.14it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.15it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.47it/s]
+✅ Timestep 884 completed successfully
+Processing timesteps:  50%|#####     | 14/28 [02:03<02:01,  8.66s/it]
+Processing timestep 864 (15/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.51it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.51it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.88it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.14it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.87it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.33it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.61it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.78it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.89it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 17.96it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 18.02it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 18.04it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.07it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 18.10it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 18.15it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.16it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.15it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.13it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.13it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.57it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.25it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.80it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.19it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.46it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.68it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.86it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.98it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 18.08it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.16it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.19it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.21it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.22it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.22it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.24it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.27it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.29it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.28it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.28it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.28it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.28it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.27it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.28it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.27it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.24it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.66it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.45it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:05<00:02, 16.97it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.35it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.61it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.79it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.93it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 18.03it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 18.11it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.15it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.17it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 18.18it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.20it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.21it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 18.23it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 18.26it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.27it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.26it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.24it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.24it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.25it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.26it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.80it/s]
+✅ Timestep 864 completed successfully
+Processing timesteps:  54%|#####3    | 15/28 [02:11<01:52,  8.65s/it]
+Processing timestep 842 (16/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.72it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.35it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.66it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.81it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.52it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.99it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.30it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.49it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.60it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.69it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.72it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.77it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.78it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.80it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.84it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.86it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.86it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.88it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.88it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.88it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.89it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.88it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.89it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.91it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.92it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.23it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.67it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.27it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.70it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.05it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.27it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.43it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.54it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.64it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.71it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.76it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.80it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.82it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.84it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.84it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.85it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.85it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.86it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.84it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.83it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:03, 17.11it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.33it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.47it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.58it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.67it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.20it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 15.88it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.42it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.84it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.14it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.35it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.50it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.60it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.57it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.63it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 17.70it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.78it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.81it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 16.99it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.22it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.41it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.55it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.64it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.71it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 17.78it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 17.82it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.84it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.35it/s]
+✅ Timestep 842 completed successfully
+Processing timesteps:  57%|#####7    | 16/28 [02:20<01:43,  8.67s/it]
+Processing timestep 817 (17/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.62it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:10, 13.23it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 15.29it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.28it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.87it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.21it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 16.62it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 16.96it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.21it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.40it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.53it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.62it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.69it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.77it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.75it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.73it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.68it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.67it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.69it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.74it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.79it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.79it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.80it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.83it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.83it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 15.97it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.71it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.32it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.76it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.05it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.29it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.46it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.59it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.69it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.75it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.79it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.82it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.84it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.78it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.79it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.75it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.77it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.79it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.79it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.80it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.82it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.84it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.86it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.85it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.82it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.20it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 15.83it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.38it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.82it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.14it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.36it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.50it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.62it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.70it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.74it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 17.72it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.13it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.45it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.69it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.82it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.88it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.98it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.03it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.08it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.11it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 18.15it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.18it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.40it/s]
+✅ Timestep 817 completed successfully
+Processing timesteps:  61%|######    | 17/28 [02:29<01:35,  8.66s/it]
+Processing timestep 788 (18/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.54it/s][A
+GPU 0 processing prompts:   1%|1         | 2/143 [00:00<00:15,  9.32it/s][A
+GPU 0 processing prompts:   3%|2         | 4/143 [00:00<00:10, 13.24it/s][A
+GPU 0 processing prompts:   4%|4         | 6/143 [00:00<00:09, 15.12it/s][A
+GPU 0 processing prompts:   6%|5         | 8/143 [00:00<00:08, 16.21it/s][A
+GPU 0 processing prompts:   7%|6         | 10/143 [00:00<00:07, 16.88it/s][A
+GPU 0 processing prompts:   8%|8         | 12/143 [00:00<00:07, 17.32it/s][A
+GPU 0 processing prompts:  10%|9         | 14/143 [00:00<00:07, 17.55it/s][A
+GPU 0 processing prompts:  11%|#1        | 16/143 [00:01<00:07, 16.91it/s][A
+GPU 0 processing prompts:  13%|#2        | 18/143 [00:01<00:07, 17.14it/s][A
+GPU 0 processing prompts:  14%|#3        | 20/143 [00:01<00:07, 17.43it/s][A
+GPU 0 processing prompts:  15%|#5        | 22/143 [00:01<00:06, 17.63it/s][A
+GPU 0 processing prompts:  17%|#6        | 24/143 [00:01<00:06, 17.80it/s][A
+GPU 0 processing prompts:  18%|#8        | 26/143 [00:01<00:06, 17.88it/s][A
+GPU 0 processing prompts:  20%|#9        | 28/143 [00:01<00:06, 17.97it/s][A
+GPU 0 processing prompts:  21%|##        | 30/143 [00:01<00:06, 18.02it/s][A
+GPU 0 processing prompts:  22%|##2       | 32/143 [00:01<00:06, 18.06it/s][A
+GPU 0 processing prompts:  24%|##3       | 34/143 [00:02<00:06, 18.08it/s][A
+GPU 0 processing prompts:  25%|##5       | 36/143 [00:02<00:05, 18.11it/s][A
+GPU 0 processing prompts:  27%|##6       | 38/143 [00:02<00:05, 18.13it/s][A
+GPU 0 processing prompts:  28%|##7       | 40/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  29%|##9       | 42/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  31%|###       | 44/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  32%|###2      | 46/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  34%|###3      | 48/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  35%|###4      | 50/143 [00:02<00:05, 18.12it/s][A
+GPU 0 processing prompts:  36%|###6      | 52/143 [00:03<00:05, 15.62it/s][A
+GPU 0 processing prompts:  38%|###7      | 54/143 [00:03<00:05, 16.30it/s][A
+GPU 0 processing prompts:  39%|###9      | 56/143 [00:03<00:05, 16.83it/s][A
+GPU 0 processing prompts:  41%|####      | 58/143 [00:03<00:04, 17.20it/s][A
+GPU 0 processing prompts:  42%|####1     | 60/143 [00:03<00:04, 17.46it/s][A
+GPU 0 processing prompts:  43%|####3     | 62/143 [00:03<00:04, 17.67it/s][A
+GPU 0 processing prompts:  45%|####4     | 64/143 [00:03<00:04, 17.75it/s][A
+GPU 0 processing prompts:  46%|####6     | 66/143 [00:03<00:04, 17.81it/s][A
+GPU 0 processing prompts:  48%|####7     | 68/143 [00:03<00:04, 17.91it/s][A
+GPU 0 processing prompts:  49%|####8     | 70/143 [00:04<00:04, 17.98it/s][A
+GPU 0 processing prompts:  50%|#####     | 72/143 [00:04<00:03, 18.04it/s][A
+GPU 0 processing prompts:  52%|#####1    | 74/143 [00:04<00:03, 18.07it/s][A
+GPU 0 processing prompts:  53%|#####3    | 76/143 [00:04<00:03, 18.10it/s][A
+GPU 0 processing prompts:  55%|#####4    | 78/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  56%|#####5    | 80/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  57%|#####7    | 82/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  59%|#####8    | 84/143 [00:04<00:03, 18.11it/s][A
+GPU 0 processing prompts:  60%|######    | 86/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  62%|######1   | 88/143 [00:05<00:03, 18.16it/s][A
+GPU 0 processing prompts:  63%|######2   | 90/143 [00:05<00:03, 16.54it/s][A
+GPU 0 processing prompts:  64%|######4   | 92/143 [00:05<00:03, 17.00it/s][A
+GPU 0 processing prompts:  66%|######5   | 94/143 [00:05<00:02, 17.33it/s][A
+GPU 0 processing prompts:  67%|######7   | 96/143 [00:05<00:02, 17.56it/s][A
+GPU 0 processing prompts:  69%|######8   | 98/143 [00:05<00:02, 17.49it/s][A
+GPU 0 processing prompts:  70%|######9   | 100/143 [00:05<00:02, 17.68it/s][A
+GPU 0 processing prompts:  71%|#######1  | 102/143 [00:05<00:02, 15.59it/s][A
+GPU 0 processing prompts:  73%|#######2  | 104/143 [00:06<00:02, 16.31it/s][A
+GPU 0 processing prompts:  74%|#######4  | 106/143 [00:06<00:02, 16.84it/s][A
+GPU 0 processing prompts:  76%|#######5  | 108/143 [00:06<00:02, 17.22it/s][A
+GPU 0 processing prompts:  77%|#######6  | 110/143 [00:06<00:01, 17.50it/s][A
+GPU 0 processing prompts:  78%|#######8  | 112/143 [00:06<00:01, 17.69it/s][A
+GPU 0 processing prompts:  80%|#######9  | 114/143 [00:06<00:01, 17.82it/s][A
+GPU 0 processing prompts:  81%|########1 | 116/143 [00:06<00:01, 17.93it/s][A
+GPU 0 processing prompts:  83%|########2 | 118/143 [00:06<00:01, 18.01it/s][A
+GPU 0 processing prompts:  84%|########3 | 120/143 [00:06<00:01, 18.06it/s][A
+GPU 0 processing prompts:  85%|########5 | 122/143 [00:07<00:01, 18.07it/s][A
+GPU 0 processing prompts:  87%|########6 | 124/143 [00:07<00:01, 18.09it/s][A
+GPU 0 processing prompts:  88%|########8 | 126/143 [00:07<00:00, 18.10it/s][A
+GPU 0 processing prompts:  90%|########9 | 128/143 [00:07<00:00, 18.09it/s][A
+GPU 0 processing prompts:  91%|######### | 130/143 [00:07<00:00, 18.12it/s][A
+GPU 0 processing prompts:  92%|#########2| 132/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  94%|#########3| 134/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  95%|#########5| 136/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  97%|#########6| 138/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  98%|#########7| 140/143 [00:07<00:00, 18.18it/s][A
+GPU 0 processing prompts:  99%|#########9| 142/143 [00:08<00:00, 18.17it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.52it/s]
+✅ Timestep 788 completed successfully
+Processing timesteps:  64%|######4   | 18/28 [02:37<01:26,  8.65s/it]
+Processing timestep 755 (19/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.68it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.53it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.90it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.12it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.83it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.28it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.56it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.73it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.88it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 17.95it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 18.03it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 18.06it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.07it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 18.09it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 18.11it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.14it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.15it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.13it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.20it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.57it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.32it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.84it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:04, 17.23it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.51it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.68it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.81it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.90it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.99it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.05it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.08it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.11it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.09it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.09it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.10it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.11it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.11it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.11it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.10it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.11it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.11it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.13it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.55it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.30it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:05<00:02, 16.83it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.22it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.49it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.70it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.84it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.94it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 18.00it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.01it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.04it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 18.07it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.09it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.11it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.15it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.73it/s]
+✅ Timestep 755 completed successfully
+Processing timesteps:  68%|######7   | 19/28 [02:46<01:18,  8.69s/it]
+Processing timestep 719 (20/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:16,  8.52it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 11.90it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.46it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.86it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.67it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.19it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.52it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.75it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.89it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 17.98it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 18.05it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 18.10it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.12it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 18.15it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 18.17it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.17it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.17it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.18it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.19it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.62it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.37it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.88it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:04, 17.21it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.48it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.70it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.84it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.94it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 18.01it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.03it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.07it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.08it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.11it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.16it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.19it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.20it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.21it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.20it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.20it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.62it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.42it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:05<00:02, 16.93it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.30it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.57it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.75it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.87it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.97it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 18.03it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.06it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.11it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 18.13it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.23it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.51it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.71it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.85it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.94it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.01it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.06it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.11it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.70it/s]
+✅ Timestep 719 completed successfully
+Processing timesteps:  71%|#######1  | 20/28 [02:55<01:09,  8.67s/it]
+Processing timestep 677 (21/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:16,  8.36it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 11.89it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.46it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.84it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.66it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.16it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.44it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.65it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.11it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.34it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.57it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.74it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.84it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.47it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.65it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.77it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.86it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.94it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.01it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.07it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.12it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.13it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.14it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.56it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.14it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.71it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.12it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.43it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.66it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.82it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.91it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.98it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.03it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.07it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.10it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.16it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.16it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.16it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.18it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.18it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.18it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.16it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.16it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.60it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.29it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.83it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.22it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.51it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.69it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.83it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.94it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 18.03it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.07it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.12it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 18.13it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.16it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.18it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.20it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.19it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.19it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.17it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.64it/s]
+✅ Timestep 677 completed successfully
+Processing timesteps:  75%|#######5  | 21/28 [03:03<01:00,  8.67s/it]
+Processing timestep 631 (22/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:15,  9.28it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.64it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 15.01it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.22it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.91it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.33it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.59it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.77it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.92it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.16it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.44it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.65it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.81it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.90it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.97it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.02it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.05it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.08it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.09it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.09it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.14it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.13it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.14it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.14it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.12it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.56it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.04it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.62it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.07it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.39it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.63it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.79it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.89it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.96it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.03it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.08it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.10it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.14it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.18it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.12it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.13it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.13it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.14it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.15it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.15it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.16it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.59it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.39it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:05<00:02, 16.92it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.25it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.53it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.73it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.89it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.96it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 18.02it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 18.07it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 18.10it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 18.12it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 18.13it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 18.18it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 18.15it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.12it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 18.14it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.15it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.70it/s]
+✅ Timestep 631 completed successfully
+Processing timesteps:  79%|#######8  | 22/28 [03:12<00:52,  8.67s/it]
+Processing timestep 578 (23/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.64it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.62it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.97it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.15it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.84it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.30it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.60it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.79it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.92it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:06, 18.00it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 18.04it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 18.08it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 18.12it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 18.15it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 18.15it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 18.16it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.17it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.15it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.18it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.18it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.17it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.16it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.55it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.21it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.78it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.18it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.45it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.66it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.83it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.92it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.98it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 18.04it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:03, 18.07it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 18.11it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 18.13it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 18.15it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 18.17it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 18.18it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 18.18it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:02, 18.20it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 18.21it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 18.15it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 18.19it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 18.17it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 18.18it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.63it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.41it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:05<00:02, 16.95it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 17.32it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.59it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.78it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.90it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.88it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.88it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.88it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 17.85it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:06<00:01, 17.84it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.84it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.85it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.84it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.85it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.67it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.21it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.39it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 17.51it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:07<00:00, 17.60it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.67it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.66it/s]
+✅ Timestep 578 completed successfully
+Processing timesteps:  82%|########2 | 23/28 [03:21<00:43,  8.67s/it]
+Processing timestep 520 (24/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.61it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.27it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.61it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.85it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.52it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.96it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.23it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.37it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.50it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.60it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.67it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.72it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.77it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.75it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.70it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.68it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.70it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.77it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.80it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.82it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.80it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.82it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.89it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.94it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.03it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.45it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.06it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.65it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 17.10it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.43it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.67it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.83it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.88it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.88it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 17.90it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.89it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.88it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.87it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.84it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.83it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.83it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.82it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.84it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 17.84it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.86it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.86it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.85it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.86it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.83it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.80it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.20it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 15.86it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.43it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.85it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.15it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.35it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.55it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.76it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.80it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.83it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 17.86it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.85it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.85it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.85it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.86it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.86it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.78it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.70it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.69it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 17.71it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 17.76it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.77it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.45it/s]
+✅ Timestep 520 completed successfully
+Processing timesteps:  86%|########5 | 24/28 [03:30<00:35,  8.81s/it]
+Processing timestep 454 (25/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:15,  9.32it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.18it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.54it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.78it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.48it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.91it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.22it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.41it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.57it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.67it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.74it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.79it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.83it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.86it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.88it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.88it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.88it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.90it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.91it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.93it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.91it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.91it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.90it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.89it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.90it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.23it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.73it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.33it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.77it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.09it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.31it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.46it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.59it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.67it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.73it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.79it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.83it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.85it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.87it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.24it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 16.57it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 16.17it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 15.92it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 15.75it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 15.78it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:03, 15.53it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:03, 15.85it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 16.45it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 16.78it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.06it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 15.77it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:06<00:02, 15.55it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.18it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.65it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:02, 16.93it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.20it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.39it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.53it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.63it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.70it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:07<00:01, 17.77it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.81it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.83it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.84it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.86it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.86it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.87it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.90it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:08<00:00, 17.90it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 17.89it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 17.90it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.95it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.15it/s]
+✅ Timestep 454 completed successfully
+Processing timesteps:  89%|########9 | 25/28 [03:39<00:26,  8.90s/it]
+Processing timestep 381 (26/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:14,  9.65it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.36it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.66it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.84it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.53it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.96it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.27it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.47it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.62it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.71it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.78it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.82it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.83it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.83it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.84it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.85it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.83it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.80it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.80it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.76it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.75it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.74it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.73it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.72it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.74it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.10it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.63it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.25it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.70it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.04it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.28it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.45it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.52it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.56it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.63it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.69it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.76it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.80it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.83it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.83it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.81it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.80it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.81it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.81it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.80it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.82it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.86it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.83it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.83it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.83it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.24it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 15.90it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.47it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.88it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.15it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.36it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.50it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.59it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.65it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.69it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 17.71it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.77it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.80it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.78it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.79it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.81it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.82it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.14it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 16.66it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:08<00:00, 16.87it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 17.15it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.48it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.33it/s]
+✅ Timestep 381 completed successfully
+Processing timesteps:  93%|#########2| 26/28 [03:48<00:17,  8.88s/it]
+Processing timestep 210 (27/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:15,  9.21it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 12.56it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.92it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 16.17it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:07, 16.90it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 17.33it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.63it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.84it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.51it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 16.45it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:07, 16.95it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.33it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.59it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.78it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.83it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.97it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 18.11it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:05, 18.20it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 18.26it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 18.31it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 18.33it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 18.34it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 18.36it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 18.35it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 18.35it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.68it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 16.25it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.81it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:04, 17.21it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.51it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.73it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.81it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.83it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.82it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:03<00:04, 17.84it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.87it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.87it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.89it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.89it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.87it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.86it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.85it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.83it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:04<00:03, 17.86it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.87it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.88it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.88it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.87it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.83it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.84it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.28it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.01it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.52it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.90it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.19it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.40it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.53it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.53it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.62it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.70it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 17.75it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.79it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.82it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.85it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.86it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.84it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.72it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.72it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 17.76it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 17.80it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 17.84it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.86it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.52it/s]
+✅ Timestep 210 completed successfully
+Processing timesteps:  96%|#########6| 27/28 [03:57<00:09,  9.10s/it]
+Processing timestep 110 (28/28)
+
+GPU 0 processing prompts:   0%|          | 0/143 [00:00<?, ?it/s][A
+GPU 0 processing prompts:   1%|          | 1/143 [00:00<00:16,  8.55it/s][A
+GPU 0 processing prompts:   2%|2         | 3/143 [00:00<00:11, 11.89it/s][A
+GPU 0 processing prompts:   3%|3         | 5/143 [00:00<00:09, 14.30it/s][A
+GPU 0 processing prompts:   5%|4         | 7/143 [00:00<00:08, 15.48it/s][A
+GPU 0 processing prompts:   6%|6         | 9/143 [00:00<00:08, 16.30it/s][A
+GPU 0 processing prompts:   8%|7         | 11/143 [00:00<00:07, 16.83it/s][A
+GPU 0 processing prompts:   9%|9         | 13/143 [00:00<00:07, 17.18it/s][A
+GPU 0 processing prompts:  10%|#         | 15/143 [00:00<00:07, 17.42it/s][A
+GPU 0 processing prompts:  12%|#1        | 17/143 [00:01<00:07, 17.57it/s][A
+GPU 0 processing prompts:  13%|#3        | 19/143 [00:01<00:07, 17.66it/s][A
+GPU 0 processing prompts:  15%|#4        | 21/143 [00:01<00:06, 17.74it/s][A
+GPU 0 processing prompts:  16%|#6        | 23/143 [00:01<00:06, 17.79it/s][A
+GPU 0 processing prompts:  17%|#7        | 25/143 [00:01<00:06, 17.81it/s][A
+GPU 0 processing prompts:  19%|#8        | 27/143 [00:01<00:06, 17.83it/s][A
+GPU 0 processing prompts:  20%|##        | 29/143 [00:01<00:06, 17.86it/s][A
+GPU 0 processing prompts:  22%|##1       | 31/143 [00:01<00:06, 17.88it/s][A
+GPU 0 processing prompts:  23%|##3       | 33/143 [00:01<00:06, 17.86it/s][A
+GPU 0 processing prompts:  24%|##4       | 35/143 [00:02<00:06, 17.87it/s][A
+GPU 0 processing prompts:  26%|##5       | 37/143 [00:02<00:05, 17.86it/s][A
+GPU 0 processing prompts:  27%|##7       | 39/143 [00:02<00:05, 17.86it/s][A
+GPU 0 processing prompts:  29%|##8       | 41/143 [00:02<00:05, 17.87it/s][A
+GPU 0 processing prompts:  30%|###       | 43/143 [00:02<00:05, 17.88it/s][A
+GPU 0 processing prompts:  31%|###1      | 45/143 [00:02<00:05, 17.88it/s][A
+GPU 0 processing prompts:  33%|###2      | 47/143 [00:02<00:05, 17.89it/s][A
+GPU 0 processing prompts:  34%|###4      | 49/143 [00:02<00:05, 17.98it/s][A
+GPU 0 processing prompts:  36%|###5      | 51/143 [00:02<00:05, 16.36it/s][A
+GPU 0 processing prompts:  37%|###7      | 53/143 [00:03<00:05, 15.92it/s][A
+GPU 0 processing prompts:  38%|###8      | 55/143 [00:03<00:05, 16.46it/s][A
+GPU 0 processing prompts:  40%|###9      | 57/143 [00:03<00:05, 16.85it/s][A
+GPU 0 processing prompts:  41%|####1     | 59/143 [00:03<00:04, 17.17it/s][A
+GPU 0 processing prompts:  43%|####2     | 61/143 [00:03<00:04, 17.38it/s][A
+GPU 0 processing prompts:  44%|####4     | 63/143 [00:03<00:04, 17.52it/s][A
+GPU 0 processing prompts:  45%|####5     | 65/143 [00:03<00:04, 17.62it/s][A
+GPU 0 processing prompts:  47%|####6     | 67/143 [00:03<00:04, 17.70it/s][A
+GPU 0 processing prompts:  48%|####8     | 69/143 [00:04<00:04, 17.75it/s][A
+GPU 0 processing prompts:  50%|####9     | 71/143 [00:04<00:04, 17.79it/s][A
+GPU 0 processing prompts:  51%|#####1    | 73/143 [00:04<00:03, 17.78it/s][A
+GPU 0 processing prompts:  52%|#####2    | 75/143 [00:04<00:03, 17.77it/s][A
+GPU 0 processing prompts:  54%|#####3    | 77/143 [00:04<00:03, 17.72it/s][A
+GPU 0 processing prompts:  55%|#####5    | 79/143 [00:04<00:03, 17.71it/s][A
+GPU 0 processing prompts:  57%|#####6    | 81/143 [00:04<00:03, 17.74it/s][A
+GPU 0 processing prompts:  58%|#####8    | 83/143 [00:04<00:03, 17.77it/s][A
+GPU 0 processing prompts:  59%|#####9    | 85/143 [00:04<00:03, 17.73it/s][A
+GPU 0 processing prompts:  61%|######    | 87/143 [00:05<00:03, 17.78it/s][A
+GPU 0 processing prompts:  62%|######2   | 89/143 [00:05<00:03, 17.80it/s][A
+GPU 0 processing prompts:  64%|######3   | 91/143 [00:05<00:02, 17.81it/s][A
+GPU 0 processing prompts:  65%|######5   | 93/143 [00:05<00:02, 17.81it/s][A
+GPU 0 processing prompts:  66%|######6   | 95/143 [00:05<00:02, 17.81it/s][A
+GPU 0 processing prompts:  68%|######7   | 97/143 [00:05<00:02, 17.82it/s][A
+GPU 0 processing prompts:  69%|######9   | 99/143 [00:05<00:02, 17.85it/s][A
+GPU 0 processing prompts:  71%|#######   | 101/143 [00:05<00:02, 16.29it/s][A
+GPU 0 processing prompts:  72%|#######2  | 103/143 [00:05<00:02, 16.00it/s][A
+GPU 0 processing prompts:  73%|#######3  | 105/143 [00:06<00:02, 16.52it/s][A
+GPU 0 processing prompts:  75%|#######4  | 107/143 [00:06<00:02, 16.92it/s][A
+GPU 0 processing prompts:  76%|#######6  | 109/143 [00:06<00:01, 17.19it/s][A
+GPU 0 processing prompts:  78%|#######7  | 111/143 [00:06<00:01, 17.41it/s][A
+GPU 0 processing prompts:  79%|#######9  | 113/143 [00:06<00:01, 17.55it/s][A
+GPU 0 processing prompts:  80%|########  | 115/143 [00:06<00:01, 17.64it/s][A
+GPU 0 processing prompts:  82%|########1 | 117/143 [00:06<00:01, 17.72it/s][A
+GPU 0 processing prompts:  83%|########3 | 119/143 [00:06<00:01, 17.80it/s][A
+GPU 0 processing prompts:  85%|########4 | 121/143 [00:06<00:01, 17.83it/s][A
+GPU 0 processing prompts:  86%|########6 | 123/143 [00:07<00:01, 17.85it/s][A
+GPU 0 processing prompts:  87%|########7 | 125/143 [00:07<00:01, 17.88it/s][A
+GPU 0 processing prompts:  89%|########8 | 127/143 [00:07<00:00, 17.87it/s][A
+GPU 0 processing prompts:  90%|######### | 129/143 [00:07<00:00, 17.88it/s][A
+GPU 0 processing prompts:  92%|#########1| 131/143 [00:07<00:00, 17.86it/s][A
+GPU 0 processing prompts:  93%|#########3| 133/143 [00:07<00:00, 17.86it/s][A
+GPU 0 processing prompts:  94%|#########4| 135/143 [00:07<00:00, 17.88it/s][A
+GPU 0 processing prompts:  96%|#########5| 137/143 [00:07<00:00, 18.01it/s][A
+GPU 0 processing prompts:  97%|#########7| 139/143 [00:07<00:00, 18.08it/s][A
+GPU 0 processing prompts:  99%|#########8| 141/143 [00:08<00:00, 18.12it/s][A
+GPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 18.15it/s][AGPU 0 processing prompts: 100%|##########| 143/143 [00:08<00:00, 17.43it/s]
+✅ Timestep 110 completed successfully
+Processing timesteps: 100%|##########| 28/28 [04:06<00:00,  9.00s/it]Processing timesteps: 100%|##########| 28/28 [04:06<00:00,  8.81s/it]
+✅ Phase 1 completed: All 28 timesteps processed
+
+============================================================
+PHASE 2: PARALLEL COVARIANCE MATRIX COMPUTATION
+============================================================
+DEBUG: Received timesteps: [989, 986, 983, 979, 975, 970, 964, 957, 949, 939]...
+DEBUG: Total timesteps to process: 30
+DEBUG: Use alpha naming: True
+❌ Error during execution: cannot access local variable 'cache_structure' where it is not associated with a value
+Traceback (most recent call last):
+  File "/home/bluewolf/NullBooth/build_cov_parallel.py", line 1586, in main
+    phase2_success = run_phase2_covariance_computation(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bluewolf/NullBooth/build_cov_parallel.py", line 1853, in run_phase2_covariance_computation
+    all_alpha_keys = cache_structure.get('timestep_keys', []) if use_alpha_naming else None
+                     ^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'cache_structure' where it is not associated with a value
+🧹 Final cleanup synchronization (attempt 1/3)...
+🧹 Cleaning up distributed process group...
+✅ Cleanup completed successfully
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-09-27 15:36:47
+Log saved to: logs/20250927_143200_build_cov_parallel.txt
+================================================================================
+

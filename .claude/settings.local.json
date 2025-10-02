@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(tree:*)",
+      "Bash(python:*)",
+      "Bash(find:*)",
+      "Bash(timeout:*)",
+      "Bash(nvidia-smi:*)",
+      "Bash(./run_parallel_build_cov.sh:*)",
+      "Bash(xargs:*)",
+      "Bash(accelerate launch:*)",
+      "WebSearch",
+      "Read(//mnt/nas/bluewolf/cov_matrices/cache/**)",
+      "Read(//mnt/nas/bluewolf/cov_matrices/**)",
+      "Bash(grep:*)",
+      "Read(//mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/cache/prompt_0000/**)",
+      "Read(//mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/cache/prompt_0000/**)",
+      "Read(//mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/cache/prompt_0000/**)",
+      "Read(//mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/cache/**)",
+      "Read(//home/public/public_nas/bluewolf/**)",
+      "Read(//mnt/**)",
+      "Bash(awk:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

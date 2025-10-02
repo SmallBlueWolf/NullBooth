@@ -1,0 +1,31 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-25 15:30:00
+Log File: logs/20250925_153000_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250925_153000_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+Using output directory: /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K
+   Cache scan found: 1000 prompts, 49 completed timesteps
+✅ Loaded compatible progress from /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/computation_progress.json
+   Phase 1: 1000 prompts completed
+   Phase 2: 0 timesteps completed
+Total prompts loaded: 1000
+Using 1 GPUs: ['cuda:0']
+Timestep generation strategy: Uniform
+Timestep mode: avg
+Phase 2: Detecting timesteps from completed Phase 1 cache...
+Phase 2: Found 49 completed timesteps from Phase 1
+Timesteps: [978, 958, 937, 917, 897]...
+
+============================================================
+PHASE 2: PARALLEL COVARIANCE MATRIX COMPUTATION
+============================================================
+DEBUG: Received timesteps: [978, 958, 937, 917, 897, 876, 856, 835, 815, 795]...

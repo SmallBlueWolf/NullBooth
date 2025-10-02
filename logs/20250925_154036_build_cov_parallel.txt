@@ -1,0 +1,27 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-25 15:40:36
+Log File: logs/20250925_154036_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250925_154036_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+Using output directory: /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K
+Total prompts loaded: 1000
+Using 1 GPUs: ['cuda:0']
+Timestep generation strategy: DPM++ 2M Karras
+Timestep mode: first
+Computing timesteps using DPM++ 2M Karras sampler...
+Using first prompt only for timestep calculation...
+Timesteps computed: [989, 987, 986, 984, 982]...
+Using alpha naming scheme for 50 timesteps
+
+============================================================
+PHASE 1: FEATURE COLLECTION
+============================================================

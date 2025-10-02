@@ -1,498 +1,0 @@
-
-================================================================================
-NullBooth Script Execution Log
-================================================================================
-Script: build_cov_parallel
-Start Time: 2025-09-10 11:17:35
-Log File: logs/20250910_111735_build_cov_parallel.txt
-================================================================================
-
-
-🔍 Logging started for 'build_cov_parallel' script
-📝 Output will be saved to: logs/20250910_111735_build_cov_parallel.txt
---------------------------------------------------------------------------------
-Process 1: Processing 250 prompts
-Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 5583.72it/s]
-/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:223: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
-  "_class_name": "DDPMScheduler",
-  "_diffusers_version": "0.35.1",
-  "beta_end": 0.012,
-  "beta_schedule": "scaled_linear",
-  "beta_start": 0.00085,
-  "clip_sample": true,
-  "clip_sample_range": 1.0,
-  "dynamic_thresholding_ratio": 0.995,
-  "num_train_timesteps": 1000,
-  "prediction_type": "epsilon",
-  "rescale_betas_zero_snr": false,
-  "sample_max_value": 1.0,
-  "steps_offset": 0,
-  "thresholding": false,
-  "timestep_spacing": "leading",
-  "trained_betas": null,
-  "variance_type": "fixed_small"
-}
- is outdated. `steps_offset` should be set to 1 instead of 0. Please make sure to update the config accordingly as leaving `steps_offset` might led to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
-  deprecate("steps_offset!=1", "1.0.0", deprecation_message, standard_warn=False)
-/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:236: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
-  "_class_name": "DDPMScheduler",
-  "_diffusers_version": "0.35.1",
-  "beta_end": 0.012,
-  "beta_schedule": "scaled_linear",
-  "beta_start": 0.00085,
-  "clip_sample": true,
-  "clip_sample_range": 1.0,
-  "dynamic_thresholding_ratio": 0.995,
-  "num_train_timesteps": 1000,
-  "prediction_type": "epsilon",
-  "rescale_betas_zero_snr": false,
-  "sample_max_value": 1.0,
-  "steps_offset": 1,
-  "thresholding": false,
-  "timestep_spacing": "leading",
-  "trained_betas": null,
-  "variance_type": "fixed_small"
-}
- has not set the configuration `clip_sample`. `clip_sample` should be set to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
-  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
- to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
-  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
-Initialized ParallelAttentionFeatureCollector on 4 processes
-Registered hook for layer: down_blocks.0.attentions.0.transformer_blocks.0.attn2
-Registered hook for layer: down_blocks.0.attentions.1.transformer_blocks.0.attn2
-Registered hook for layer: down_blocks.1.attentions.0.transformer_blocks.0.attn2
-Registered hook for layer: down_blocks.1.attentions.1.transformer_blocks.0.attn2
-Registered hook for layer: down_blocks.2.attentions.0.transformer_blocks.0.attn2
-Registered hook for layer: down_blocks.2.attentions.1.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.1.attentions.0.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.1.attentions.1.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.1.attentions.2.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.2.attentions.0.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.2.attentions.1.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.2.attentions.2.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.3.attentions.0.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.3.attentions.1.transformer_blocks.0.attn2
-Registered hook for layer: up_blocks.3.attentions.2.transformer_blocks.0.attn2
-Registered hook for layer: mid_block.attentions.0.transformer_blocks.0.attn2
-Total 16 cross-attention hooks registered.
-Processing prompts to collect features in parallel...
-GPU 0 processing:   0%|          | 0/250 [00:00<?, ?it/s]
-GPU 0: Processing prompt 1/250 (global: 0): 'a photo of dog...'
-GPU 0 processing:   0%|          | 1/250 [04:37<19:10:47, 277.30s/it]
-GPU 0: Processing prompt 2/250 (global: 1): 'a Airedale Terrier puppy exploring on a sunny beac...'
-GPU 0 processing:   1%|          | 2/250 [09:12<19:01:09, 276.08s/it]
-GPU 0: Processing prompt 3/250 (global: 2): 'a Akita dressed as a superhero...'
-GPU 0 processing:   1%|1         | 3/250 [13:47<18:55:21, 275.79s/it]
-GPU 0: Processing prompt 4/250 (global: 3): 'a Akita puppy exploring beside a crackling firepla...'
-GPU 0 processing:   2%|1         | 4/250 [18:24<18:51:29, 275.97s/it]
-GPU 0: Processing prompt 5/250 (global: 4): 'a Akita puppy exploring under a starry night sky...'
-GPU 0 processing:   2%|2         | 5/250 [22:58<18:44:52, 275.48s/it]
-GPU 0: Processing prompt 6/250 (global: 5): 'a Australian Cattle Dog dressed as a superhero...'
-GPU 0 processing:   2%|2         | 6/250 [27:31<18:36:16, 274.49s/it]
-GPU 0: Processing prompt 7/250 (global: 6): 'a Australian Cattle Dog puppy exploring in a field...'
-GPU 0 processing:   3%|2         | 7/250 [32:04<18:29:24, 273.93s/it]
-GPU 0: Processing prompt 8/250 (global: 7): 'a Australian Cattle Dog puppy exploring on top of ...'
-GPU 0 processing:   3%|3         | 8/250 [36:38<18:25:35, 274.11s/it]
-GPU 0: Processing prompt 9/250 (global: 8): 'a Australian Shepherd dressed as a superhero...'
-GPU 0 processing:   4%|3         | 9/250 [41:12<18:20:18, 273.94s/it]
-GPU 0: Processing prompt 10/250 (global: 9): 'a Australian Shepherd puppy exploring in a snowy l...'
-GPU 0 processing:   4%|4         | 10/250 [45:47<18:17:07, 274.28s/it]
-GPU 0: Processing prompt 11/250 (global: 10): 'a Australian Shepherd puppy exploring on a bustlin...'
-GPU 0 processing:   4%|4         | 11/250 [50:22<18:13:24, 274.49s/it]
-GPU 0: Processing prompt 12/250 (global: 11): 'a Basset Hound dressed as a superhero...'
-GPU 0 processing:   5%|4         | 12/250 [54:56<18:09:02, 274.55s/it]
-GPU 0: Processing prompt 13/250 (global: 12): 'a Beagle dressed as a superhero...'
-GPU 0 processing:   5%|5         | 13/250 [59:32<18:06:16, 275.00s/it]
-GPU 0: Processing prompt 14/250 (global: 13): 'a Beagle puppy exploring beside a crackling firepl...'
-GPU 0 processing:   6%|5         | 14/250 [1:04:10<18:04:22, 275.69s/it]
-GPU 0: Processing prompt 15/250 (global: 14): 'a Beagle puppy exploring in a field of tall grass...'
-GPU 0 processing:   6%|6         | 15/250 [1:08:45<17:59:38, 275.65s/it]
-GPU 0: Processing prompt 16/250 (global: 15): 'a Beagle puppy exploring on a boat...'
-GPU 0 processing:   6%|6         | 16/250 [1:13:22<17:55:46, 275.84s/it]
-GPU 0: Processing prompt 17/250 (global: 16): 'a Beagle puppy exploring under a starry night sky...'
-GPU 0 processing:   7%|6         | 17/250 [1:17:57<17:50:33, 275.68s/it]
-GPU 0: Processing prompt 18/250 (global: 17): 'a Bernese Mountain Dog dressed as a superhero...'
-GPU 0 processing:   7%|7         | 18/250 [1:22:31<17:44:04, 275.19s/it]
-GPU 0: Processing prompt 19/250 (global: 18): 'a Bernese Mountain Dog puppy exploring under a sta...'
-GPU 0 processing:   8%|7         | 19/250 [1:27:05<17:37:41, 274.72s/it]
-GPU 0: Processing prompt 20/250 (global: 19): 'a Bichon Frise dressed as a superhero...'
-GPU 0 processing:   8%|8         | 20/250 [1:31:40<17:33:34, 274.85s/it]
-GPU 0: Processing prompt 21/250 (global: 20): 'a Bloodhound dressed as a superhero...'
-GPU 0 processing:   8%|8         | 21/250 [1:36:14<17:28:23, 274.69s/it]
-GPU 0: Processing prompt 22/250 (global: 21): 'a Bloodhound puppy exploring deep in a magical for...'
-GPU 0 processing:   9%|8         | 22/250 [1:40:51<17:26:10, 275.31s/it]
-GPU 0: Processing prompt 23/250 (global: 22): 'a Bloodhound puppy exploring in a field of tall gr...'
-GPU 0 processing:   9%|9         | 23/250 [1:45:27<17:22:44, 275.61s/it]
-GPU 0: Processing prompt 24/250 (global: 23): 'a Bloodhound puppy exploring in the back of a vint...'
-GPU 0 processing:  10%|9         | 24/250 [1:50:03<17:18:35, 275.73s/it]
-GPU 0: Processing prompt 25/250 (global: 24): 'a Bloodhound puppy exploring on a sunny beach...'
-GPU 0 processing:  10%|#         | 25/250 [1:54:40<17:15:01, 276.01s/it]
-GPU 0: Processing prompt 26/250 (global: 25): 'a Border Collie dressed as a superhero...'
-GPU 0 processing:  10%|#         | 26/250 [1:59:13<17:07:49, 275.31s/it]
-GPU 0: Processing prompt 27/250 (global: 26): 'a Border Collie puppy exploring deep in a magical ...'
-GPU 0 processing:  11%|#         | 27/250 [2:03:49<17:02:56, 275.23s/it]
-GPU 0: Processing prompt 28/250 (global: 27): 'a Border Collie puppy exploring on a cozy sofa...'
-GPU 0 processing:  11%|#1        | 28/250 [2:08:25<16:59:45, 275.61s/it]
-GPU 0: Processing prompt 29/250 (global: 28): 'a Boston Terrier dressed as a superhero...'
-GPU 0 processing:  12%|#1        | 29/250 [2:12:59<16:53:35, 275.18s/it]
-GPU 0: Processing prompt 30/250 (global: 29): 'a Boston Terrier puppy exploring in a lush green p...'
-GPU 0 processing:  12%|#2        | 30/250 [2:17:34<16:48:43, 275.11s/it]
-GPU 0: Processing prompt 31/250 (global: 30): 'a Boston Terrier puppy exploring in the back of a ...'
-GPU 0 processing:  12%|#2        | 31/250 [2:22:10<16:45:24, 275.45s/it]
-GPU 0: Processing prompt 32/250 (global: 31): 'a Boxer dressed as a superhero...'
-GPU 0 processing:  13%|#2        | 32/250 [2:26:46<16:40:46, 275.44s/it]
-GPU 0: Processing prompt 33/250 (global: 32): 'a Boxer puppy exploring in a field of tall grass...'
-GPU 0 processing:  13%|#3        | 33/250 [2:31:23<16:37:34, 275.83s/it]
-GPU 0: Processing prompt 34/250 (global: 33): 'a Boxer puppy exploring in the back of a vintage t...'
-GPU 0 processing:  14%|#3        | 34/250 [2:36:00<16:35:02, 276.40s/it]
-GPU 0: Processing prompt 35/250 (global: 34): 'a Boxer puppy exploring under a starry night sky...'
-GPU 0 processing:  14%|#4        | 35/250 [2:40:36<16:29:39, 276.18s/it]
-GPU 0: Processing prompt 36/250 (global: 35): 'a Brittany dressed as a superhero...'
-GPU 0 processing:  14%|#4        | 36/250 [2:45:10<16:23:15, 275.68s/it]
-GPU 0: Processing prompt 37/250 (global: 36): 'a Brittany puppy exploring deep in a magical fores...'
-GPU 0 processing:  15%|#4        | 37/250 [2:49:46<16:18:51, 275.74s/it]
-GPU 0: Processing prompt 38/250 (global: 37): 'a Brittany puppy exploring in a lush green park...'
-GPU 0 processing:  15%|#5        | 38/250 [2:54:21<16:13:36, 275.55s/it]
-GPU 0: Processing prompt 39/250 (global: 38): 'a Bulldog dressed as a superhero...'
-GPU 0 processing:  16%|#5        | 39/250 [2:58:57<16:08:50, 275.50s/it]
-GPU 0: Processing prompt 40/250 (global: 39): 'a Bulldog puppy exploring in a flower garden...'
-GPU 0 processing:  16%|#6        | 40/250 [3:03:32<16:03:32, 275.30s/it]
-GPU 0: Processing prompt 41/250 (global: 40): 'a Bulldog puppy exploring in a lush green park...'
-GPU 0 processing:  16%|#6        | 41/250 [3:08:07<15:58:33, 275.18s/it]
-GPU 0: Processing prompt 42/250 (global: 41): 'a Bulldog puppy exploring in the back of a vintage...'
-GPU 0 processing:  17%|#6        | 42/250 [3:12:42<15:54:35, 275.36s/it]
-GPU 0: Processing prompt 43/250 (global: 42): 'a Bullmastiff dressed as a superhero...'
-GPU 0 processing:  17%|#7        | 43/250 [3:17:18<15:50:26, 275.49s/it]
-GPU 0: Processing prompt 44/250 (global: 43): 'a Bullmastiff puppy exploring on a sunny beach...'
-GPU 0 processing:  18%|#7        | 44/250 [3:21:55<15:46:50, 275.78s/it]
-GPU 0: Processing prompt 45/250 (global: 44): 'a Cane Corso dressed as a superhero...'
-GPU 0 processing:  18%|#8        | 45/250 [3:26:30<15:41:29, 275.56s/it]
-GPU 0: Processing prompt 46/250 (global: 45): 'a Cavalier King Charles Spaniel dressed as a super...'
-GPU 0 processing:  18%|#8        | 46/250 [3:31:04<15:35:12, 275.06s/it]
-GPU 0: Processing prompt 47/250 (global: 46): 'a Cavalier King Charles Spaniel puppy exploring in...'
-GPU 0 processing:  19%|#8        | 47/250 [3:35:37<15:29:19, 274.68s/it]
-GPU 0: Processing prompt 48/250 (global: 47): 'a Cavalier King Charles Spaniel puppy exploring in...'
-GPU 0 processing:  19%|#9        | 48/250 [3:40:12<15:25:14, 274.83s/it]
-GPU 0: Processing prompt 49/250 (global: 48): 'a Cavalier King Charles Spaniel puppy exploring on...'
-GPU 0 processing:  20%|#9        | 49/250 [3:44:46<15:19:23, 274.44s/it]
-GPU 0: Processing prompt 50/250 (global: 49): 'a Chihuahua dressed as a superhero...'
-GPU 0 processing:  20%|##        | 50/250 [3:49:21<15:15:42, 274.71s/it]
-GPU 0: Processing prompt 51/250 (global: 50): 'a Chihuahua puppy exploring in a snowy landscape...'
-GPU 0 processing:  20%|##        | 51/250 [3:53:56<15:11:14, 274.75s/it]
-GPU 0: Processing prompt 52/250 (global: 51): 'a Chihuahua puppy exploring on a boat...'
-GPU 0 processing:  21%|##        | 52/250 [3:58:31<15:06:32, 274.71s/it]
-GPU 0: Processing prompt 53/250 (global: 52): 'a Cocker Spaniel dressed as a superhero...'
-GPU 0 processing:  21%|##1       | 53/250 [4:03:07<15:03:22, 275.14s/it]
-GPU 0: Processing prompt 54/250 (global: 53): 'a Cocker Spaniel puppy exploring deep in a magical...'
-GPU 0 processing:  22%|##1       | 54/250 [4:07:44<15:00:48, 275.76s/it]
-GPU 0: Processing prompt 55/250 (global: 54): 'a Cocker Spaniel puppy exploring under a starry ni...'
-GPU 0 processing:  22%|##2       | 55/250 [4:12:20<14:55:50, 275.64s/it]
-GPU 0: Processing prompt 56/250 (global: 55): 'a Collie dressed as a superhero...'
-GPU 0 processing:  22%|##2       | 56/250 [4:16:54<14:50:08, 275.30s/it]
-GPU 0: Processing prompt 57/250 (global: 56): 'a Collie puppy exploring on a boat...'
-GPU 0 processing:  23%|##2       | 57/250 [4:21:29<14:44:55, 275.11s/it]
-GPU 0: Processing prompt 58/250 (global: 57): 'a Dachshund dressed as a superhero...'
-GPU 0 processing:  23%|##3       | 58/250 [4:26:03<14:39:52, 274.96s/it]
-GPU 0: Processing prompt 59/250 (global: 58): 'a Dachshund puppy exploring in a flower garden...'
-GPU 0 processing:  24%|##3       | 59/250 [4:30:38<14:34:41, 274.77s/it]
-GPU 0: Processing prompt 60/250 (global: 59): 'a Dalmatian dressed as a superhero...'
-GPU 0 processing:  24%|##4       | 60/250 [4:35:12<14:29:19, 274.52s/it]
-GPU 0: Processing prompt 61/250 (global: 60): 'a Doberman Pinscher dressed as a superhero...'
-GPU 0 processing:  24%|##4       | 61/250 [4:39:45<14:24:05, 274.32s/it]
-GPU 0: Processing prompt 62/250 (global: 61): 'a Doberman Pinscher puppy exploring in a quiet lib...'
-GPU 0 processing:  25%|##4       | 62/250 [4:44:22<14:21:20, 274.89s/it]
-GPU 0: Processing prompt 63/250 (global: 62): 'a Doberman Pinscher puppy exploring under a starry...'
-GPU 0 processing:  25%|##5       | 63/250 [4:48:56<14:15:55, 274.63s/it]
-GPU 0: Processing prompt 64/250 (global: 63): 'a English Springer Spaniel dressed as a superhero...'
-GPU 0 processing:  26%|##5       | 64/250 [4:53:30<14:10:44, 274.43s/it]
-GPU 0: Processing prompt 65/250 (global: 64): 'a English Springer Spaniel puppy exploring beside ...'
-GPU 0 processing:  26%|##6       | 65/250 [4:58:09<14:10:22, 275.80s/it]
-GPU 0: Processing prompt 66/250 (global: 65): 'a English Springer Spaniel puppy exploring deep in...'
-GPU 0 processing:  26%|##6       | 66/250 [5:02:45<14:06:39, 276.08s/it]
-GPU 0: Processing prompt 67/250 (global: 66): 'a English Springer Spaniel puppy exploring in a lu...'
-GPU 0 processing:  27%|##6       | 67/250 [5:07:20<14:00:15, 275.50s/it]
-GPU 0: Processing prompt 68/250 (global: 67): 'a English Springer Spaniel puppy exploring on a bo...'
-GPU 0 processing:  27%|##7       | 68/250 [5:11:55<13:55:14, 275.36s/it]
-GPU 0: Processing prompt 69/250 (global: 68): 'a French Bulldog dressed as a superhero...'
-GPU 0 processing:  28%|##7       | 69/250 [5:16:29<13:50:06, 275.18s/it]
-GPU 0: Processing prompt 70/250 (global: 69): 'a French Bulldog puppy exploring in the back of a ...'
-GPU 0 processing:  28%|##8       | 70/250 [5:21:06<13:46:33, 275.52s/it]
-GPU 0: Processing prompt 71/250 (global: 70): 'a German Shepherd dressed as a superhero...'
-GPU 0 processing:  28%|##8       | 71/250 [5:25:38<13:39:33, 274.71s/it]
-GPU 0: Processing prompt 72/250 (global: 71): 'a German Shepherd puppy exploring in a lush green ...'
-GPU 0 processing:  29%|##8       | 72/250 [5:30:12<13:33:54, 274.35s/it]
-GPU 0: Processing prompt 73/250 (global: 72): 'a German Shepherd puppy exploring on a bustling ci...'
-GPU 0 processing:  29%|##9       | 73/250 [5:34:45<13:28:37, 274.11s/it]
-GPU 0: Processing prompt 74/250 (global: 73): 'a German Shorthaired Pointer dressed as a superher...'
-GPU 0 processing:  30%|##9       | 74/250 [5:39:19<13:23:36, 273.96s/it]
-GPU 0: Processing prompt 75/250 (global: 74): 'a German Shorthaired Pointer puppy exploring at a ...'
-GPU 0 processing:  30%|###       | 75/250 [5:43:56<13:21:13, 274.71s/it]
-GPU 0: Processing prompt 76/250 (global: 75): 'a German Shorthaired Pointer puppy exploring besid...'
-GPU 0 processing:  30%|###       | 76/250 [5:48:32<13:18:00, 275.17s/it]
-GPU 0: Processing prompt 77/250 (global: 76): 'a Golden Retriever dressed as a superhero...'
-GPU 0 processing:  31%|###       | 77/250 [5:53:06<13:12:49, 274.97s/it]
-GPU 0: Processing prompt 78/250 (global: 77): 'a Golden Retriever puppy exploring beside a crackl...'
-GPU 0 processing:  31%|###1      | 78/250 [5:57:42<13:09:05, 275.26s/it]
-GPU 0: Processing prompt 79/250 (global: 78): 'a Golden Retriever puppy exploring in a flower gar...'
-GPU 0 processing:  32%|###1      | 79/250 [6:02:17<13:03:49, 275.03s/it]
-GPU 0: Processing prompt 80/250 (global: 79): 'a Great Dane dressed as a superhero...'
-GPU 0 processing:  32%|###2      | 80/250 [6:06:50<12:57:53, 274.55s/it]
-GPU 0: Processing prompt 81/250 (global: 80): 'a Great Dane puppy exploring in a field of tall gr...'
-GPU 0 processing:  32%|###2      | 81/250 [6:11:26<12:54:28, 274.96s/it]
-GPU 0: Processing prompt 82/250 (global: 81): 'a Great Dane puppy exploring on a boat...'
-GPU 0 processing:  33%|###2      | 82/250 [6:16:02<12:50:44, 275.27s/it]
-GPU 0: Processing prompt 83/250 (global: 82): 'a Great Dane puppy exploring on top of a mountain ...'
-GPU 0 processing:  33%|###3      | 83/250 [6:20:38<12:47:05, 275.60s/it]
-GPU 0: Processing prompt 84/250 (global: 83): 'a Havanese dressed as a superhero...'
-GPU 0 processing:  34%|###3      | 84/250 [6:25:14<12:42:18, 275.54s/it]
-GPU 0: Processing prompt 85/250 (global: 84): 'a Havanese puppy exploring in a flower garden...'
-GPU 0 processing:  34%|###4      | 85/250 [6:29:50<12:38:10, 275.70s/it]
-GPU 0: Processing prompt 86/250 (global: 85): 'a Havanese puppy exploring in the back of a vintag...'
-GPU 0 processing:  34%|###4      | 86/250 [6:34:27<12:34:35, 276.07s/it]
-GPU 0: Processing prompt 87/250 (global: 86): 'a Labrador Retriever dressed as a superhero...'
-GPU 0 processing:  35%|###4      | 87/250 [6:39:01<12:28:06, 275.38s/it]
-GPU 0: Processing prompt 88/250 (global: 87): 'a Labrador Retriever puppy exploring deep in a mag...'
-GPU 0 processing:  35%|###5      | 88/250 [6:43:35<12:22:57, 275.17s/it]
-GPU 0: Processing prompt 89/250 (global: 88): 'a Labrador Retriever puppy exploring on top of a m...'
-GPU 0 processing:  36%|###5      | 89/250 [6:48:12<12:19:27, 275.57s/it]
-GPU 0: Processing prompt 90/250 (global: 89): 'a Maltese dressed as a superhero...'
-GPU 0 processing:  36%|###6      | 90/250 [6:52:46<12:13:49, 275.19s/it]
-GPU 0: Processing prompt 91/250 (global: 90): 'a Maltese puppy exploring under a starry night sky...'
-GPU 0 processing:  36%|###6      | 91/250 [6:57:21<12:08:52, 275.05s/it]
-GPU 0: Processing prompt 92/250 (global: 91): 'a Miniature American Shepherd dressed as a superhe...'
-GPU 0 processing:  37%|###6      | 92/250 [7:01:54<12:02:47, 274.48s/it]
-GPU 0: Processing prompt 93/250 (global: 92): 'a Miniature American Shepherd puppy exploring deep...'
-GPU 0 processing:  37%|###7      | 93/250 [7:06:30<11:59:08, 274.83s/it]
-GPU 0: Processing prompt 94/250 (global: 93): 'a Miniature American Shepherd puppy exploring in a...'
-GPU 0 processing:  38%|###7      | 94/250 [7:11:03<11:53:43, 274.51s/it]
-GPU 0: Processing prompt 95/250 (global: 94): 'a Miniature American Shepherd puppy exploring in a...'
-GPU 0 processing:  38%|###8      | 95/250 [7:15:40<11:50:45, 275.13s/it]
-GPU 0: Processing prompt 96/250 (global: 95): 'a Miniature American Shepherd puppy exploring in t...'
-GPU 0 processing:  38%|###8      | 96/250 [7:20:16<11:47:08, 275.51s/it]
-GPU 0: Processing prompt 97/250 (global: 96): 'a Miniature American Shepherd puppy exploring unde...'
-GPU 0 processing:  39%|###8      | 97/250 [7:24:51<11:41:57, 275.27s/it]
-GPU 0: Processing prompt 98/250 (global: 97): 'a Newfoundland dressed as a superhero...'
-GPU 0 processing:  39%|###9      | 98/250 [7:29:26<11:37:10, 275.20s/it]
-GPU 0: Processing prompt 99/250 (global: 98): 'a Newfoundland puppy exploring on a boat...'
-GPU 0 processing:  40%|###9      | 99/250 [7:34:01<11:32:26, 275.14s/it]
-GPU 0: Processing prompt 100/250 (global: 99): 'a Newfoundland puppy exploring on a bustling city ...'
-GPU 0 processing:  40%|####      | 100/250 [7:38:38<11:28:55, 275.57s/it]
-GPU 0: Processing prompt 101/250 (global: 100): 'a Pembroke Welsh Corgi dressed as a superhero...'
-GPU 0 processing:  40%|####      | 101/250 [7:43:12<11:23:39, 275.30s/it]
-GPU 0: Processing prompt 102/250 (global: 101): 'a Pembroke Welsh Corgi puppy exploring in a quiet ...'
-GPU 0 processing:  41%|####      | 102/250 [7:47:48<11:19:32, 275.49s/it]
-GPU 0: Processing prompt 103/250 (global: 102): 'a Pomeranian dressed as a superhero...'
-GPU 0 processing:  41%|####1     | 103/250 [7:52:27<11:17:31, 276.54s/it]
-GPU 0: Processing prompt 104/250 (global: 103): 'a Pomeranian puppy exploring on a boat...'
-GPU 0 processing:  42%|####1     | 104/250 [7:57:03<11:12:18, 276.29s/it]
-GPU 0: Processing prompt 105/250 (global: 104): 'a Pomeranian puppy exploring on a cozy sofa...'
-GPU 0 processing:  42%|####2     | 105/250 [8:01:40<11:07:58, 276.40s/it]
-GPU 0: Processing prompt 106/250 (global: 105): 'a Poodle dressed as a superhero...'
-GPU 0 processing:  42%|####2     | 106/250 [8:06:22<11:07:26, 278.10s/it]
-GPU 0: Processing prompt 107/250 (global: 106): 'a Poodle puppy exploring on a boat...'
-GPU 0 processing:  43%|####2     | 107/250 [8:10:57<11:00:48, 277.26s/it]
-GPU 0: Processing prompt 108/250 (global: 107): 'a Portuguese Water Dog dressed as a superhero...'
-GPU 0 processing:  43%|####3     | 108/250 [8:15:36<10:57:18, 277.74s/it]
-GPU 0: Processing prompt 109/250 (global: 108): 'a Portuguese Water Dog puppy exploring at a colorf...'
-GPU 0 processing:  44%|####3     | 109/250 [8:20:13<10:52:15, 277.56s/it]
-GPU 0: Processing prompt 110/250 (global: 109): 'a Pug dressed as a superhero...'
-GPU 0 processing:  44%|####4     | 110/250 [8:24:48<10:45:50, 276.79s/it]
-GPU 0: Processing prompt 111/250 (global: 110): 'a Pug puppy exploring at a colorful farmers market...'
-GPU 0 processing:  44%|####4     | 111/250 [8:29:24<10:40:27, 276.46s/it]
-GPU 0: Processing prompt 112/250 (global: 111): 'a Pug puppy exploring in a flower garden...'
-GPU 0 processing:  45%|####4     | 112/250 [8:33:59<10:34:54, 276.04s/it]
-GPU 0: Processing prompt 113/250 (global: 112): 'a Pug puppy exploring on a bustling city street...'
-GPU 0 processing:  45%|####5     | 113/250 [8:38:32<10:28:34, 275.29s/it]
-GPU 0: Processing prompt 114/250 (global: 113): 'a Rhodesian Ridgeback dressed as a superhero...'
-GPU 0 processing:  46%|####5     | 114/250 [8:43:07<10:23:16, 274.98s/it]
-GPU 0: Processing prompt 115/250 (global: 114): 'a Rhodesian Ridgeback puppy exploring in a field o...'
-GPU 0 processing:  46%|####6     | 115/250 [8:47:42<10:18:53, 275.06s/it]
-GPU 0: Processing prompt 116/250 (global: 115): 'a Rhodesian Ridgeback puppy exploring in a quiet l...'
-GPU 0 processing:  46%|####6     | 116/250 [8:52:19<10:15:39, 275.67s/it]
-GPU 0: Processing prompt 117/250 (global: 116): 'a Rottweiler dressed as a superhero...'
-GPU 0 processing:  47%|####6     | 117/250 [8:56:57<10:12:41, 276.40s/it]
-GPU 0: Processing prompt 118/250 (global: 117): 'a Rottweiler puppy exploring at a colorful farmers...'
-GPU 0 processing:  47%|####7     | 118/250 [9:01:36<10:09:40, 277.12s/it]
-GPU 0: Processing prompt 119/250 (global: 118): 'a Rottweiler puppy exploring in a flower garden...'
-GPU 0 processing:  48%|####7     | 119/250 [9:06:19<10:08:42, 278.80s/it]
-GPU 0: Processing prompt 120/250 (global: 119): 'a Scottish Terrier dressed as a superhero...'
-GPU 0 processing:  48%|####8     | 120/250 [9:11:01<10:06:38, 279.98s/it]
-GPU 0: Processing prompt 121/250 (global: 120): 'a Shetland Sheepdog dressed as a superhero...'
-GPU 0 processing:  48%|####8     | 121/250 [9:15:42<10:02:42, 280.33s/it]
-GPU 0: Processing prompt 122/250 (global: 121): 'a Shiba Inu dressed as a superhero...'
-GPU 0 processing:  49%|####8     | 122/250 [9:20:20<9:56:11, 279.47s/it] 
-GPU 0: Processing prompt 123/250 (global: 122): 'a Shiba Inu puppy exploring at a colorful farmers ...'
-GPU 0 processing:  49%|####9     | 123/250 [9:24:56<9:49:28, 278.49s/it]
-GPU 0: Processing prompt 124/250 (global: 123): 'a Shiba Inu puppy exploring in a flower garden...'
-GPU 0 processing:  50%|####9     | 124/250 [9:29:34<9:44:35, 278.38s/it]
-GPU 0: Processing prompt 125/250 (global: 124): 'a Shiba Inu puppy exploring under a starry night s...'
-GPU 0 processing:  50%|#####     | 125/250 [9:34:07<9:36:42, 276.82s/it]
-GPU 0: Processing prompt 126/250 (global: 125): 'a Shih Tzu dressed as a superhero...'
-GPU 0 processing:  50%|#####     | 126/250 [9:38:44<9:31:46, 276.67s/it]
-GPU 0: Processing prompt 127/250 (global: 126): 'a Shih Tzu puppy exploring in the back of a vintag...'
-GPU 0 processing:  51%|#####     | 127/250 [9:43:20<9:26:44, 276.46s/it]
-GPU 0: Processing prompt 128/250 (global: 127): 'a Shih Tzu puppy exploring on a cozy sofa...'
-GPU 0 processing:  51%|#####1    | 128/250 [9:47:56<9:22:05, 276.44s/it]
-GPU 0: Processing prompt 129/250 (global: 128): 'a Shih Tzu puppy exploring on top of a mountain at...'
-GPU 0 processing:  52%|#####1    | 129/250 [9:52:32<9:17:15, 276.33s/it]
-GPU 0: Processing prompt 130/250 (global: 129): 'a Siberian Husky puppy exploring at a colorful far...'
-GPU 0 processing:  52%|#####2    | 130/250 [9:57:08<9:12:35, 276.29s/it]
-GPU 0: Processing prompt 131/250 (global: 130): 'a Siberian Husky puppy exploring in a lush green p...'
-GPU 0 processing:  52%|#####2    | 131/250 [10:01:43<9:06:44, 275.67s/it]
-GPU 0: Processing prompt 132/250 (global: 131): 'a Soft Coated Wheaten Terrier dressed as a superhe...'
-GPU 0 processing:  53%|#####2    | 132/250 [10:06:16<9:01:06, 275.14s/it]
-GPU 0: Processing prompt 133/250 (global: 132): 'a Soft Coated Wheaten Terrier puppy exploring in a...'
-GPU 0 processing:  53%|#####3    | 133/250 [10:10:50<8:55:42, 274.72s/it]
-GPU 0: Processing prompt 134/250 (global: 133): 'a Soft Coated Wheaten Terrier puppy exploring on a...'
-GPU 0 processing:  54%|#####3    | 134/250 [10:15:27<8:52:03, 275.20s/it]
-GPU 0: Processing prompt 135/250 (global: 134): 'a Soft Coated Wheaten Terrier puppy exploring unde...'
-GPU 0 processing:  54%|#####4    | 135/250 [10:20:01<8:47:02, 274.97s/it]
-GPU 0: Processing prompt 136/250 (global: 135): 'a photo of corgi dog...'
-GPU 0 processing:  54%|#####4    | 136/250 [10:24:36<8:42:40, 275.09s/it]
-GPU 0: Processing prompt 137/250 (global: 136): 'a St. Bernard dressed as a superhero...'
-GPU 0 processing:  55%|#####4    | 137/250 [10:29:11<8:37:50, 274.96s/it]
-GPU 0: Processing prompt 138/250 (global: 137): 'a St. Bernard puppy exploring in a lush green park...'
-GPU 0 processing:  55%|#####5    | 138/250 [10:33:47<8:33:43, 275.21s/it]
-GPU 0: Processing prompt 139/250 (global: 138): 'a Vizsla dressed as a superhero...'
-GPU 0 processing:  56%|#####5    | 139/250 [10:38:22<8:29:06, 275.20s/it]
-GPU 0: Processing prompt 140/250 (global: 139): 'a Vizsla puppy exploring in a snowy landscape...'
-GPU 0 processing:  56%|#####6    | 140/250 [10:42:59<8:25:25, 275.69s/it]
-GPU 0: Processing prompt 141/250 (global: 140): 'a Weimaraner dressed as a superhero...'
-GPU 0 processing:  56%|#####6    | 141/250 [10:47:35<8:20:53, 275.72s/it]
-GPU 0: Processing prompt 142/250 (global: 141): 'a Weimaraner puppy exploring deep in a magical for...'
-GPU 0 processing:  57%|#####6    | 142/250 [10:52:12<8:17:10, 276.21s/it]
-GPU 0: Processing prompt 143/250 (global: 142): 'a West Highland White Terrier dressed as a superhe...'
-GPU 0 processing:  57%|#####7    | 143/250 [10:56:46<8:11:26, 275.57s/it]
-GPU 0: Processing prompt 144/250 (global: 143): 'a West Highland White Terrier puppy exploring deep...'
-GPU 0 processing:  58%|#####7    | 144/250 [11:01:22<8:07:15, 275.81s/it]
-GPU 0: Processing prompt 145/250 (global: 144): 'a West Highland White Terrier puppy exploring in a...'
-GPU 0 processing:  58%|#####8    | 145/250 [11:05:57<8:02:06, 275.49s/it]
-GPU 0: Processing prompt 146/250 (global: 145): 'a West Highland White Terrier puppy exploring in a...'
-GPU 0 processing:  58%|#####8    | 146/250 [11:10:32<7:57:24, 275.43s/it]
-GPU 0: Processing prompt 147/250 (global: 146): 'a West Highland White Terrier puppy exploring in t...'
-GPU 0 processing:  59%|#####8    | 147/250 [11:15:07<7:52:33, 275.28s/it]
-GPU 0: Processing prompt 148/250 (global: 147): 'a West Highland White Terrier puppy exploring on t...'
-GPU 0 processing:  59%|#####9    | 148/250 [11:19:44<7:48:42, 275.71s/it]
-GPU 0: Processing prompt 149/250 (global: 148): 'a West Highland White Terrier puppy exploring unde...'
-GPU 0 processing:  60%|#####9    | 149/250 [11:24:19<7:43:31, 275.36s/it]
-GPU 0: Processing prompt 150/250 (global: 149): 'a Yorkshire Terrier dressed as a superhero...'
-GPU 0 processing:  60%|######    | 150/250 [11:28:53<7:38:36, 275.17s/it]
-GPU 0: Processing prompt 151/250 (global: 150): 'a Yorkshire Terrier puppy exploring in the back of...'
-GPU 0 processing:  60%|######    | 151/250 [11:33:29<7:34:25, 275.41s/it]
-GPU 0: Processing prompt 152/250 (global: 151): 'a Yorkshire Terrier puppy exploring on a boat...'
-GPU 0 processing:  61%|######    | 152/250 [11:38:05<7:29:45, 275.36s/it]
-GPU 0: Processing prompt 153/250 (global: 152): 'a brave Airedale Terrier dog...'
-GPU 0 processing:  61%|######1   | 153/250 [11:42:42<7:26:02, 275.90s/it]
-GPU 0: Processing prompt 154/250 (global: 153): 'a brave Australian Cattle Dog dog...'
-GPU 0 processing:  62%|######1   | 154/250 [11:47:16<7:20:44, 275.47s/it]
-GPU 0: Processing prompt 155/250 (global: 154): 'a brave Bernese Mountain Dog dog...'
-GPU 0 processing:  62%|######2   | 155/250 [11:51:53<7:16:35, 275.74s/it]
-GPU 0: Processing prompt 156/250 (global: 155): 'a brave Bullmastiff dog...'
-GPU 0 processing:  62%|######2   | 156/250 [11:56:31<7:13:15, 276.55s/it]
-GPU 0: Processing prompt 157/250 (global: 156): 'a brave Great Dane dog...'
-GPU 0 processing:  63%|######2   | 157/250 [12:01:08<7:08:55, 276.72s/it]
-GPU 0: Processing prompt 158/250 (global: 157): 'a brave Portuguese Water Dog dog...'
-GPU 0 processing:  63%|######3   | 158/250 [12:05:45<7:04:22, 276.77s/it]
-GPU 0: Processing prompt 159/250 (global: 158): 'a brave Shih Tzu dog...'
-GPU 0 processing:  64%|######3   | 159/250 [12:10:23<7:00:20, 277.15s/it]
-GPU 0: Processing prompt 160/250 (global: 159): 'a brave Soft Coated Wheaten Terrier dog...'
-GPU 0 processing:  64%|######4   | 160/250 [12:14:59<6:55:06, 276.74s/it]
-GPU 0: Processing prompt 161/250 (global: 160): 'a cinematic shot of a brave Basset Hound on a cozy...'
-GPU 0 processing:  64%|######4   | 161/250 [12:19:35<6:50:16, 276.59s/it]
-GPU 0: Processing prompt 162/250 (global: 161): 'a cinematic shot of a brave Brittany in a lush gre...'
-GPU 0 processing:  65%|######4   | 162/250 [12:24:11<6:45:27, 276.45s/it]
-GPU 0: Processing prompt 163/250 (global: 162): 'a cinematic shot of a brave French Bulldog in a sn...'
-GPU 0 processing:  65%|######5   | 163/250 [12:28:48<6:40:55, 276.50s/it]
-GPU 0: Processing prompt 164/250 (global: 163): 'a cinematic shot of a brave German Shorthaired Poi...'
-GPU 0 processing:  66%|######5   | 164/250 [12:33:22<6:35:28, 275.91s/it]
-GPU 0: Processing prompt 165/250 (global: 164): 'a cinematic shot of a brave Rhodesian Ridgeback de...'
-GPU 0 processing:  66%|######6   | 165/250 [12:37:59<6:31:24, 276.29s/it]
-GPU 0: Processing prompt 166/250 (global: 165): 'a cinematic shot of a brave Shetland Sheepdog deep...'
-GPU 0 processing:  66%|######6   | 166/250 [12:42:36<6:26:53, 276.35s/it]
-GPU 0: Processing prompt 167/250 (global: 166): 'a cinematic shot of a brave Weimaraner in the back...'
-GPU 0 processing:  67%|######6   | 167/250 [12:47:13<6:22:38, 276.61s/it]
-GPU 0: Processing prompt 168/250 (global: 167): 'a cinematic shot of a clumsy Australian Shepherd b...'
-GPU 0 processing:  67%|######7   | 168/250 [12:51:50<6:18:06, 276.67s/it]
-GPU 0: Processing prompt 169/250 (global: 168): 'a cinematic shot of a clumsy Bichon Frise on a bus...'
-GPU 0 processing:  68%|######7   | 169/250 [12:56:25<6:12:57, 276.26s/it]
-GPU 0: Processing prompt 170/250 (global: 169): 'a cinematic shot of a clumsy German Shepherd in a ...'
-GPU 0 processing:  68%|######8   | 170/250 [13:00:59<6:07:20, 275.51s/it]
-GPU 0: Processing prompt 171/250 (global: 170): 'a cinematic shot of a clumsy Siberian Husky at a c...'
-GPU 0 processing:  68%|######8   | 171/250 [13:05:36<6:03:12, 275.85s/it]
-GPU 0: Processing prompt 172/250 (global: 171): 'a cinematic shot of a cute Basset Hound on a sunny...'
-GPU 0 processing:  69%|######8   | 172/250 [13:10:12<5:58:40, 275.90s/it]
-GPU 0: Processing prompt 173/250 (global: 172): 'a cinematic shot of a cute Beagle beside a crackli...'
-GPU 0 processing:  69%|######9   | 173/250 [13:14:54<5:56:34, 277.85s/it]
-GPU 0: Processing prompt 174/250 (global: 173): 'a cinematic shot of a cute Boxer on a bustling cit...'
-GPU 0 processing:  70%|######9   | 174/250 [13:19:32<5:51:59, 277.89s/it]
-GPU 0: Processing prompt 175/250 (global: 174): 'a cinematic shot of a cute Rhodesian Ridgeback on ...'
-GPU 0 processing:  70%|#######   | 175/250 [13:24:13<5:48:35, 278.87s/it]
-GPU 0: Processing prompt 176/250 (global: 175): 'a cinematic shot of a cute Shih Tzu on a bustling ...'
-GPU 0 processing:  70%|#######   | 176/250 [13:28:58<5:45:58, 280.52s/it]
-GPU 0: Processing prompt 177/250 (global: 176): 'a cinematic shot of a fluffy Australian Cattle Dog...'
-GPU 0 processing:  71%|#######   | 177/250 [13:33:36<5:40:27, 279.82s/it]
-GPU 0: Processing prompt 178/250 (global: 177): 'a cinematic shot of a fluffy Newfoundland on top o...'
-GPU 0 processing:  71%|#######1  | 178/250 [13:38:21<5:37:34, 281.32s/it]
-GPU 0: Processing prompt 179/250 (global: 178): 'a cinematic shot of a fluffy Pembroke Welsh Corgi ...'
-GPU 0 processing:  72%|#######1  | 179/250 [13:43:00<5:32:20, 280.85s/it]
-GPU 0: Processing prompt 180/250 (global: 179): 'a cinematic shot of a fluffy Rottweiler on a boat...'
-GPU 0 processing:  72%|#######2  | 180/250 [13:47:37<5:26:14, 279.63s/it]
-GPU 0: Processing prompt 181/250 (global: 180): 'a cinematic shot of a fluffy St. Bernard on a boat...'
-GPU 0 processing:  72%|#######2  | 181/250 [13:52:17<5:21:31, 279.59s/it]
-GPU 0: Processing prompt 182/250 (global: 181): 'a cinematic shot of a funny Bulldog on a boat...'
-GPU 0 processing:  73%|#######2  | 182/250 [13:56:55<5:16:36, 279.36s/it]
-GPU 0: Processing prompt 183/250 (global: 182): 'a cinematic shot of a funny Bullmastiff on top of ...'
-GPU 0 processing:  73%|#######3  | 183/250 [14:01:37<5:12:42, 280.04s/it]
-GPU 0: Processing prompt 184/250 (global: 183): 'a cinematic shot of a funny Chihuahua in a quiet l...'
-GPU 0 processing:  74%|#######3  | 184/250 [14:06:14<5:07:07, 279.20s/it]
-GPU 0: Processing prompt 185/250 (global: 184): 'a cinematic shot of a funny German Shepherd in a q...'
-GPU 0 processing:  74%|#######4  | 185/250 [14:10:57<5:03:35, 280.24s/it]
-GPU 0: Processing prompt 186/250 (global: 185): 'a cinematic shot of a funny Maltese on a sunny bea...'
-GPU 0 processing:  74%|#######4  | 186/250 [14:15:39<4:59:20, 280.63s/it]
-GPU 0: Processing prompt 187/250 (global: 186): 'a cinematic shot of a graceful Airedale Terrier at...'
-GPU 0 processing:  75%|#######4  | 187/250 [14:20:21<4:55:08, 281.09s/it]
-GPU 0: Processing prompt 188/250 (global: 187): 'a cinematic shot of a graceful Boxer under a starr...'
-GPU 0 processing:  75%|#######5  | 188/250 [14:24:58<4:49:19, 279.99s/it]
-GPU 0: Processing prompt 189/250 (global: 188): 'a cinematic shot of a graceful Doberman Pinscher i...'
-GPU 0 processing:  76%|#######5  | 189/250 [14:29:40<4:45:05, 280.41s/it]
-GPU 0: Processing prompt 190/250 (global: 189): 'a cinematic shot of a graceful Miniature American ...'
-GPU 0 processing:  76%|#######6  | 190/250 [14:34:16<4:39:21, 279.36s/it]
-GPU 0: Processing prompt 191/250 (global: 190): 'a cinematic shot of a graceful Poodle on a cozy so...'
-GPU 0 processing:  76%|#######6  | 191/250 [14:38:55<4:34:21, 279.01s/it]
-GPU 0: Processing prompt 192/250 (global: 191): 'a cinematic shot of a graceful Scottish Terrier be...'
-GPU 0 processing:  77%|#######6  | 192/250 [14:43:34<4:29:54, 279.22s/it]
-GPU 0: Processing prompt 193/250 (global: 192): 'a cinematic shot of a graceful Siberian Husky in t...'
-GPU 0 processing:  77%|#######7  | 193/250 [14:48:12<4:24:43, 278.66s/it]
-GPU 0: Processing prompt 194/250 (global: 193): 'a cinematic shot of a graceful Weimaraner at a col...'
-GPU 0 processing:  78%|#######7  | 194/250 [14:52:53<4:20:55, 279.55s/it]
-GPU 0: Processing prompt 195/250 (global: 194): 'a cinematic shot of a happy Cavalier King Charles ...'
-GPU 0 processing:  78%|#######8  | 195/250 [14:57:33<4:16:11, 279.48s/it]
-GPU 0: Processing prompt 196/250 (global: 195): 'a cinematic shot of a happy German Shepherd in a s...'
-GPU 0 processing:  78%|#######8  | 196/250 [15:02:09<4:10:39, 278.51s/it]
-GPU 0: Processing prompt 197/250 (global: 196): 'a cinematic shot of a happy Great Dane in a quiet ...'
-GPU 0 processing:  79%|#######8  | 197/250 [15:06:48<4:06:11, 278.71s/it]
-GPU 0: Processing prompt 198/250 (global: 197): 'a cinematic shot of a happy Shih Tzu under a starr...'
-GPU 0 processing:  79%|#######9  | 198/250 [15:11:28<4:01:47, 278.98s/it]
-GPU 0: Processing prompt 199/250 (global: 198): 'a cinematic shot of a happy Soft Coated Wheaten Te...'
-GPU 0 processing:  80%|#######9  | 199/250 [15:16:08<3:57:25, 279.32s/it]
-GPU 0: Processing prompt 200/250 (global: 199): 'a cinematic shot of a large Australian Shepherd un...'
-GPU 0 processing:  80%|########  | 200/250 [15:20:45<3:52:08, 278.58s/it]
-GPU 0: Processing prompt 201/250 (global: 200): 'a cinematic shot of a large Bernese Mountain Dog i...'
-GPU 0 processing:  80%|########  | 201/250 [15:25:28<3:48:39, 279.99s/it]
-GPU 0: Processing prompt 202/250 (global: 201): 'a cinematic shot of a large Bloodhound in a field ...'
-GPU 0 processing:  81%|########  | 202/250 [15:30:08<3:44:04, 280.10s/it]
-GPU 0: Processing prompt 203/250 (global: 202): 'a cinematic shot of a large Pomeranian on a sunny ...'
-GPU 0 processing:  81%|########1 | 203/250 [15:34:46<3:38:54, 279.46s/it]
-GPU 0: Processing prompt 204/250 (global: 203): 'a cinematic shot of a large Shiba Inu in a flower ...'
-GPU 0 processing:  82%|########1 | 204/250 [15:39:22<3:33:28, 278.44s/it]
-GPU 0: Processing prompt 205/250 (global: 204): 'a cinematic shot of a large Vizsla deep in a magic...'
-GPU 0 processing:  82%|########2 | 205/250 [15:44:04<3:29:38, 279.52s/it]
-GPU 0: Processing prompt 206/250 (global: 205): 'a cinematic shot of a lazy Australian Shepherd on ...'
-GPU 0 processing:  82%|########2 | 206/250 [15:48:42<3:24:38, 279.07s/it]
-GPU 0: Processing prompt 207/250 (global: 206): 'a cinematic shot of a lazy Bulldog on a sunny beac...'
-GPU 0 processing:  83%|########2 | 207/250 [15:53:20<3:19:40, 278.63s/it]
-GPU 0: Processing prompt 208/250 (global: 207): 'a cinematic shot of a lazy Bullmastiff on a boat...'
-GPU 0 processing:  83%|########3 | 208/250 [15:57:58<3:14:54, 278.44s/it]
-GPU 0: Processing prompt 209/250 (global: 208): 'a cinematic shot of a lazy Cavalier King Charles S...'
-GPU 0 processing:  84%|########3 | 209/250 [16:02:37<3:10:28, 278.74s/it]
-GPU 0: Processing prompt 210/250 (global: 209): 'a cinematic shot of a lazy German Shorthaired Poin...'

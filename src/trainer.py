@@ -14,6 +14,7 @@ from accelerate.logging import get_logger
 
 from .dataset import PromptDataset
 from .training_utils import TorchTracemalloc, b2mb
+from .nullbooth_trainer import NullBoothTrainer
 
 logger = get_logger(__name__)
 
@@ -126,7 +127,9 @@ def run_validation(config, accelerator, unet, text_encoder, epoch, step, num_upd
 
 
 def training_step(batch, unet, text_encoder, vae, noise_scheduler, accelerator, config, weight_dtype):
-    """Perform a single training step."""
+    """Perform a single training step.
+    Note: NullBooth projection is now handled by the optimizer wrapper, not here.
+    """
     # Convert images to latent space
     latents = vae.encode(batch["pixel_values"].to(dtype=weight_dtype)).latent_dist.sample()
     latents = latents * 0.18215
@@ -147,7 +150,7 @@ def training_step(batch, unet, text_encoder, vae, noise_scheduler, accelerator, 
     # Get the text embedding for conditioning
     encoder_hidden_states = text_encoder(batch["input_ids"])[0]
 
-    # Predict the noise residual
+    # Predict the noise residual (with NullBooth projection applied via hooks)
     model_pred = unet(noisy_latents, timesteps, encoder_hidden_states).sample
 
     # Get the target for loss depending on the prediction type
@@ -174,7 +177,7 @@ def training_step(batch, unet, text_encoder, vae, noise_scheduler, accelerator, 
     else:
         loss = F.mse_loss(model_pred.float(), target.float(), reduction="mean")
 
-    return loss
+    return loss, timesteps
 
 
 def training_loop(
@@ -189,7 +192,52 @@ def training_loop(
     train_dataloader,
     train_dataset,
 ):
-    """Main training loop."""
+    """Main training loop with NullBooth support."""
+    # Initialize NullBooth trainer if enabled
+    nullbooth_trainer = None
+    alphaedit_optimizer = None
+
+    if hasattr(config, 'nullbooth') and getattr(config.nullbooth, 'enable', False):
+        try:
+            from .nullbooth_trainer import NullBoothTrainer
+            from .correct_optimizer import AlphaEditOptimizer
+
+            # Get device from accelerator
+            device = accelerator.device
+
+            # Initialize NullBooth trainer (manages covariance matrices)
+            nullbooth_trainer = NullBoothTrainer(config, unet, device)
+
+            # Wrap optimizer with AlphaEdit projection
+            # IMPORTANT: This must happen AFTER accelerator.prepare() in train.py
+            logger.info("\n" + "="*60)
+            logger.info("🎯 Initializing AlphaEdit NullBooth Training")
+            logger.info("="*60)
+
+            alphaedit_optimizer = AlphaEditOptimizer(
+                optimizer=optimizer,
+                cov_manager=nullbooth_trainer.cov_manager,
+                unet=unet,
+                enable_projection=True,
+                debug=getattr(config.nullbooth, 'debug', False)
+            )
+
+            # Replace the original optimizer
+            optimizer = alphaedit_optimizer
+
+            logger.info("✅ AlphaEdit optimizer wrapper initialized successfully")
+            logger.info("  - Mode: Projecting weight UPDATES (Δ = W_new - W_old)")
+            logger.info("  - NOT projecting gradients or features (correct implementation)")
+            logger.info(f"  - Covariance matrices: {config.nullbooth.cov_matrices_output_dir}")
+            logger.info(f"  - Available timesteps: {len(nullbooth_trainer.cov_manager.available_timesteps)}")
+            logger.info("="*60 + "\n")
+
+        except Exception as e:
+            logger.error(f"Failed to initialize NullBooth trainer: {e}")
+            logger.info("Continuing with standard DreamBooth training")
+            nullbooth_trainer = None
+            alphaedit_optimizer = None
+
     # We need to recalculate our total training steps as the size of the training dataloader may have changed.
     num_update_steps_per_epoch = math.ceil(len(train_dataloader) / config.gradient_accumulation_steps)
     config.num_train_epochs = math.ceil(config.max_train_steps / num_update_steps_per_epoch)
@@ -203,7 +251,7 @@ def training_loop(
                 config_dict[key] = value
             else:
                 config_dict[key] = str(value)  # Convert complex objects to string
-        
+
         accelerator.init_trackers("dreambooth", config=config_dict)
 
     # Train!
@@ -217,7 +265,12 @@ def training_loop(
     logger.info(f"  Total train batch size (w. parallel, distributed & accumulation) = {total_batch_size}")
     logger.info(f"  Gradient Accumulation steps = {config.gradient_accumulation_steps}")
     logger.info(f"  Total optimization steps = {config.max_train_steps}")
-    
+
+    if nullbooth_trainer and nullbooth_trainer.enabled:
+        logger.info("  🎯 NullBooth Mode: AlphaEdit null-space projection ACTIVE")
+        logger.info(f"  📊 Covariance matrices dir: {config.nullbooth.cov_matrices_output_dir}")
+        logger.info(f"  🔍 Nullspace threshold: {getattr(config.nullbooth, 'nullspace_threshold', 'default (2e-2)')}")
+
     global_step = 0
     first_epoch = 0
 
@@ -250,76 +303,100 @@ def training_loop(
     elif accelerator.mixed_precision == "bf16":
         weight_dtype = torch.bfloat16
 
-    for epoch in range(first_epoch, config.num_train_epochs):
-        unet.train()
-        if config.train_text_encoder:
-            text_encoder.train()
-        with TorchTracemalloc() if not config.no_tracemalloc else nullcontext() as tracemalloc:
-            for step, batch in enumerate(train_dataloader):
-                # Skip steps until we reach the resumed step
-                if config.resume_from_checkpoint and epoch == first_epoch and step < resume_step:
-                    if step % config.gradient_accumulation_steps == 0:
+    try:
+        for epoch in range(first_epoch, config.num_train_epochs):
+            unet.train()
+            if config.train_text_encoder:
+                text_encoder.train()
+            with TorchTracemalloc() if not config.no_tracemalloc else nullcontext() as tracemalloc:
+                for step, batch in enumerate(train_dataloader):
+                    # Skip steps until we reach the resumed step
+                    if config.resume_from_checkpoint and epoch == first_epoch and step < resume_step:
+                        if step % config.gradient_accumulation_steps == 0:
+                            progress_bar.update(1)
+                            if config.report_to == "wandb":
+                                accelerator.print(progress_bar)
+                        continue
+
+                    with accelerator.accumulate(unet):
+                        loss, timesteps = training_step(
+                            batch, unet, text_encoder, vae, noise_scheduler,
+                            accelerator, config, weight_dtype
+                        )
+
+                        # Set current timestep for AlphaEdit projection AFTER training_step
+                        if alphaedit_optimizer is not None:
+                            alphaedit_optimizer.set_current_timestep(timesteps[0].item())
+
+                        accelerator.backward(loss)
+                        if accelerator.sync_gradients:
+                            params_to_clip = (
+                                itertools.chain(unet.parameters(), text_encoder.parameters())
+                                if config.train_text_encoder
+                                else unet.parameters()
+                            )
+                            accelerator.clip_grad_norm_(params_to_clip, config.max_grad_norm)
+                        optimizer.step()
+                        lr_scheduler.step()
+                        optimizer.zero_grad()
+
+                    # Checks if the accelerator has performed an optimization step behind the scenes
+                    if accelerator.sync_gradients:
                         progress_bar.update(1)
                         if config.report_to == "wandb":
                             accelerator.print(progress_bar)
-                    continue
+                        global_step += 1
 
-                with accelerator.accumulate(unet):
-                    loss = training_step(
-                        batch, unet, text_encoder, vae, noise_scheduler, accelerator, config, weight_dtype
-                    )
+                    logs = {"loss": loss.detach().item(), "lr": lr_scheduler.get_last_lr()[0]}
 
-                    accelerator.backward(loss)
-                    if accelerator.sync_gradients:
-                        params_to_clip = (
-                            itertools.chain(unet.parameters(), text_encoder.parameters())
-                            if config.train_text_encoder
-                            else unet.parameters()
-                        )
-                        accelerator.clip_grad_norm_(params_to_clip, config.max_grad_norm)
-                    optimizer.step()
-                    lr_scheduler.step()
-                    optimizer.zero_grad()
+                    # Add NullBooth status to logs
+                    if nullbooth_trainer and nullbooth_trainer.enabled:
+                        logs["nullbooth"] = "active"
 
-                # Checks if the accelerator has performed an optimization step behind the scenes
-                if accelerator.sync_gradients:
-                    progress_bar.update(1)
-                    if config.report_to == "wandb":
-                        accelerator.print(progress_bar)
-                    global_step += 1
+                    progress_bar.set_postfix(**logs)
+                    accelerator.log(logs, step=global_step)
 
-                logs = {"loss": loss.detach().item(), "lr": lr_scheduler.get_last_lr()[0]}
-                progress_bar.set_postfix(**logs)
-                accelerator.log(logs, step=global_step)
+                    # Run validation
+                    run_validation(config, accelerator, unet, text_encoder, epoch, step, num_update_steps_per_epoch)
 
-                # Run validation
-                run_validation(config, accelerator, unet, text_encoder, epoch, step, num_update_steps_per_epoch)
+                    if global_step >= config.max_train_steps:
+                        break
 
-                if global_step >= config.max_train_steps:
-                    break
+            # Print memory usage
+            if not config.no_tracemalloc:
+                accelerator.print(
+                    f"{accelerator.device.type.upper()} Memory before entering the train : {b2mb(tracemalloc.begin)}"
+                )
+                accelerator.print(
+                    f"{accelerator.device.type.upper()} Memory consumed at the end of the train (end-begin): {tracemalloc.used}"
+                )
+                accelerator.print(
+                    f"{accelerator.device.type.upper()} Peak Memory consumed during the train (max-begin): {tracemalloc.peaked}"
+                )
+                accelerator.print(
+                    f"{accelerator.device.type.upper()} Total Peak Memory consumed during the train (max): {tracemalloc.peaked + b2mb(tracemalloc.begin)}"
+                )
 
-        # Print memory usage
-        if not config.no_tracemalloc:
-            accelerator.print(
-                f"{accelerator.device.type.upper()} Memory before entering the train : {b2mb(tracemalloc.begin)}"
-            )
-            accelerator.print(
-                f"{accelerator.device.type.upper()} Memory consumed at the end of the train (end-begin): {tracemalloc.used}"
-            )
-            accelerator.print(
-                f"{accelerator.device.type.upper()} Peak Memory consumed during the train (max-begin): {tracemalloc.peaked}"
-            )
-            accelerator.print(
-                f"{accelerator.device.type.upper()} Total Peak Memory consumed during the train (max): {tracemalloc.peaked + b2mb(tracemalloc.begin)}"
-            )
+                accelerator.print(f"CPU Memory before entering the train : {b2mb(tracemalloc.cpu_begin)}")
+                accelerator.print(f"CPU Memory consumed at the end of the train (end-begin): {tracemalloc.cpu_used}")
+                accelerator.print(f"CPU Peak Memory consumed during the train (max-begin): {tracemalloc.cpu_peaked}")
+                accelerator.print(
+                    f"CPU Total Peak Memory consumed during the train (max): {tracemalloc.cpu_peaked + b2mb(tracemalloc.cpu_begin)}"
+                )
 
-            accelerator.print(f"CPU Memory before entering the train : {b2mb(tracemalloc.cpu_begin)}")
-            accelerator.print(f"CPU Memory consumed at the end of the train (end-begin): {tracemalloc.cpu_used}")
-            accelerator.print(f"CPU Peak Memory consumed during the train (max-begin): {tracemalloc.cpu_peaked}")
-            accelerator.print(
-                f"CPU Total Peak Memory consumed during the train (max): {tracemalloc.cpu_peaked + b2mb(tracemalloc.cpu_begin)}"
-            )
+    finally:
+        # Clean up NullBooth trainer
+        if alphaedit_optimizer:
+            logger.info("\n" + "="*60)
+            logger.info("📊 AlphaEdit NullBooth Training Summary")
+            logger.info("="*60)
+            logger.info("✅ Successfully applied null-space projection to weight updates")
+            logger.info("✅ Original knowledge preserved through K₀K₀ᵀ null-space constraint")
+            logger.info("="*60)
 
+        if nullbooth_trainer:
+            nullbooth_trainer.cleanup()
+            logger.info("NullBooth trainer cleaned up")
 
 def save_model(config, accelerator, unet, text_encoder, api=None, repo_id=None):
     """Save the trained model."""

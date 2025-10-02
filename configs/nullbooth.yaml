@@ -9,8 +9,8 @@ tokenizer_name: null
 # Data Configuration
 instance_data_dir: "./dataset/dog"  # Required - path to instance images
 class_data_dir: "./dataset/class_img_cache"
-instance_prompt: null  # Required - prompt with identifier
-class_prompt: null
+instance_prompt: "a photo of sks dog"  # Required - prompt with identifier
+class_prompt: "a photo of a dog"
 
 # Prior Preservation (Essential for DreamBooth)
 with_prior_preservation: false
@@ -43,16 +43,16 @@ lora_text_encoder_dropout: null
 lora_text_encoder_bias: null
 
 # Training Configuration (Official DreamBooth parameters)
-train_batch_size: 1
-sample_batch_size: 4
+train_batch_size: 1  # Reduced for testing
+sample_batch_size: 2  # Reduced for testing
 num_train_epochs: null  # Use max_train_steps instead
-max_train_steps: 1000  # Paper suggests ~1000 iterations
+max_train_steps: 100  # Increased for proper learning
 checkpointing_steps: 500
 resume_from_checkpoint: null
 gradient_accumulation_steps: 1
 gradient_checkpointing: true
-num_dataloader_workers: 1
-no_tracemalloc: false
+num_dataloader_workers: 0  # Avoid multiprocessing issues
+no_tracemalloc: true  # Disable for simplicity
 
 # Optimization (Official DreamBooth parameters)
 learning_rate: 0.000005  # 5e-6 for Stable Diffusion as per paper
@@ -81,7 +81,7 @@ wandb_project_name: null
 
 # Hardware Configuration
 allow_tf32: false
-mixed_precision: null  # "no", "fp16", "bf16"
+mixed_precision: "no"  # Disable mixed precision for testing
 prior_generation_precision: null  # "fp32", "fp16", "bf16"
 local_rank: -1
 enable_xformers_memory_efficient_attention: false
@@ -90,13 +90,32 @@ enable_xformers_memory_efficient_attention: false
 nullbooth:
   enable: true  # Set to true to enable NullBooth mode
   original_knowledge_prompts: "./dataset/dog_prompts_1000.txt"  # Path to original knowledge prompts
-  cov_matrices_output_dir: "./cov_matrices"  # Output directory for covariance matrices
+  cov_matrices_output_dir: "/home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K"  # Output directory for covariance matrices
   visual_attention_map: true  # Set to true to save attention map visualizations
-  num_denoising_steps: 50  # Number of timesteps to sample from the full noise range (0-1000)
-  nullspace_threshold: 2e-2  # Threshold for determining null space (same as AlphaEdit)
+  num_denoising_steps: 30  # Number of timesteps to sample from the full noise range (0-1000)
+  sampler_strategy: "DPM++ 2M Karras"  # Options: "uniform" (default), "early_timestep", "DPM++ 2M", "DPM++ 2M Karras", "DPM++ 3M", "DPM++ 3M SDE Karras", "Euler", "Euler a", "UniPC"
+  timestep_mode: "avg"  # Timestep averaging mode: "avg" (average across prompts), "first" (use first prompt only)
+  nullspace_threshold: 1e-4  # Threshold for determining null space (more reasonable value)
+  threshold_percent: 10  # Percentile threshold (0-100), higher priority than nullspace_threshold, use 10% percentile
+
+  # NEW: Projection configuration
+  projection_mode: "weight_update"  # "weight_update" (correct) or "feature" (deprecated)
+  use_interpolation: true  # Enable timestep interpolation for smoother transitions
+  debug: false  # Enable debug output for projection operations
+  cache_size: 50  # Number of projection matrices to cache in memory
+
+  # NEW: Feature collection mode
+  feature_collection_mode: "inference"  # "inference" (clean) or "training" (original)
+  inference_mode: "partial_denoise"  # "partial_denoise" (noise→target) or "full_denoise" (clean→noise→target)
+
+  # Memory Management Configuration (Optimized for 4x RTX 4090 - 49GB each, ~196GB total)
+  covariance_batch_size: 100   # Number of prompts to process at once for covariance computation (optimized for 4 GPUs)
+  feature_batch_size: 600     # Number of prompts to load at once for feature loading (optimized for larger memory pool)
+  gpu_memory_batch_size: 800  # Batch size for GPU tensor operations - Optimized for 49GB VRAM per GPU
+
   collect_features:
     q_features: true  # Collect Query features
-    k_features: true  # Collect Key features  
+    k_features: true  # Collect Key features
     v_features: true  # Collect Value features
     out_features: true  # Collect Output features
   cross_attention_layers: "all"  # "all" or list of specific layer indices

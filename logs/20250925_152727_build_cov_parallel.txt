@@ -1,0 +1,42 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-25 15:27:27
+Log File: logs/20250925_152727_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250925_152727_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+Using output directory: /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K
+   Cache scan found: 1000 prompts, 49 completed timesteps
+✅ Loaded compatible progress from /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/computation_progress.json
+   Phase 1: 1000 prompts completed
+   Phase 2: 0 timesteps completed
+Total prompts loaded: 1000
+Using 1 GPUs: ['cuda:0']
+Timestep generation strategy: Uniform
+Timestep mode: avg
+
+============================================================
+PHASE 2: PARALLEL COVARIANCE MATRIX COMPUTATION
+============================================================
+DEBUG: Received timesteps: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+DEBUG: Total timesteps to process: 50
+DEBUG: Use alpha naming: False
+DEBUG: Remaining timesteps after filtering: [999, 978, 958, 937, 917, 897, 876, 856, 835, 815]...
+Processing 50/50 remaining timesteps
+Skipping 0 completed timesteps
+Using 1 GPUs for parallel covariance computation
+Timestep distribution across processes:
+  Process 0: 25 timesteps [999, 978, 958]...
+Process 0: Processing 25 timesteps
+Gathering cache structure...
+Analyzing unified cache directory...
+Found unified cache directory: /mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/cache
+Scanning 1000 prompt directories for cache structure...
+Analyzing cache structure:   0%|          | 0/1000 [00:00<?, ?prompts/s]Analyzing cache structure:   0%|          | 2/1000 [00:04<39:51,  2.40s/prompts]Analyzing cache structure:   0%|          | 3/1000 [00:09<55:23,  3.33s/prompts]Analyzing cache structure:   0%|          | 4/1000 [00:14<1:06:16,  3.99s/prompts]Analyzing cache structure:   0%|          | 5/1000 [00:18<1:08:21,  4.12s/prompts]Analyzing cache structure:   1%|          | 6/1000 [00:21<1:02:01,  3.74s/prompts]Analyzing cache structure:   1%|          | 7/1000 [00:25<1:01:25,  3.71s/prompts]Analyzing cache structure:   1%|          | 8/1000 [00:28<59:39,  3.61s/prompts]  Analyzing cache structure:   1%|          | 9/1000 [00:32<58:58,  3.57s/prompts]Analyzing cache structure:   1%|1         | 10/1000 [00:36<59:11,  3.59s/prompts]Analyzing cache structure:   1%|1         | 11/1000 [00:39<58:18,  3.54s/prompts]Analyzing cache structure:   1%|1         | 12/1000 [00:42<56:44,  3.45s/prompts]Analyzing cache structure:   1%|1         | 13/1000 [00:45<53:53,  3.28s/prompts]Analyzing cache structure:   1%|1         | 14/1000 [00:48<54:24,  3.31s/prompts]Analyzing cache structure:   2%|1         | 15/1000 [00:52<54:11,  3.30s/prompts]Analyzing cache structure:   2%|1         | 16/1000 [00:55<54:03,  3.30s/prompts]Analyzing cache structure:   2%|1         | 17/1000 [00:58<53:20,  3.26s/prompts]Analyzing cache structure:   2%|1         | 18/1000 [01:01<51:40,  3.16s/prompts]Analyzing cache structure:   2%|1         | 19/1000 [01:04<50:43,  3.10s/prompts]Analyzing cache structure:   2%|2         | 20/1000 [01:07<51:27,  3.15s/prompts]Analyzing cache structure:   2%|2         | 21/1000 [01:11<54:25,  3.34s/prompts]Analyzing cache structure:   2%|2         | 22/1000 [01:15<55:05,  3.38s/prompts]Analyzing cache structure:   2%|2         | 23/1000 [01:18<53:58,  3.31s/prompts]Analyzing cache structure:   2%|2         | 24/1000 [01:21<55:31,  3.41s/prompts]Analyzing cache structure:   2%|2         | 25/1000 [01:24<52:32,  3.23s/prompts]Analyzing cache structure:   3%|2         | 26/1000 [01:27<52:11,  3.22s/prompts]Analyzing cache structure:   3%|2         | 27/1000 [01:30<49:16,  3.04s/prompts]Analyzing cache structure:   3%|2         | 28/1000 [01:33<50:43,  3.13s/prompts]Analyzing cache structure:   3%|2         | 29/1000 [01:37<51:41,  3.19s/prompts]

@@ -1,0 +1,655 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-09-29 09:13:26
+Log File: logs/20250929_091326_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20250929_091326_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 5903.31it/s]
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:223: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 0,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ is outdated. `steps_offset` should be set to 1 instead of 0. Please make sure to update the config accordingly as leaving `steps_offset` might led to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("steps_offset!=1", "1.0.0", deprecation_message, standard_warn=False)
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/diffusers/pipelines/stable_diffusion/pipeline_stable_diffusion.py:236: FutureWarning: The configuration file of this scheduler: DDPMScheduler {
+  "_class_name": "DDPMScheduler",
+  "_diffusers_version": "0.35.1",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "clip_sample": true,
+  "clip_sample_range": 1.0,
+  "dynamic_thresholding_ratio": 0.995,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "rescale_betas_zero_snr": false,
+  "sample_max_value": 1.0,
+  "steps_offset": 1,
+  "thresholding": false,
+  "timestep_spacing": "leading",
+  "trained_betas": null,
+  "variance_type": "fixed_small"
+}
+ has not set the configuration `clip_sample`. `clip_sample` should be set to False in the configuration file. Please make sure to update the config accordingly as not setting `clip_sample` in the config might lead to incorrect results in future versions. If you have downloaded this checkpoint from the Hugging Face Hub, it would be very nice if you could open a Pull request for the `scheduler/scheduler_config.json` file
+  deprecate("clip_sample not set", "1.0.0", deprecation_message, standard_warn=False)
+Process 3: Processing 250 prompts
+Process 3: Processing 3 timesteps
+Process 3: Computing covariance matrices with streaming processing...
+Process 3: Processing 1 timesteps × 64 layer/feature combinations
+Process 3 timesteps:   0%|          | 0/1 [00:00<?, ?it/s]
+Process 3 alpha_09_0939:   0%|          | 0/64 [00:00<?, ?it/s][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:   2%|1         | 1/64 [05:28<5:44:42, 328.30s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:   3%|3         | 2/64 [06:27<2:55:39, 170.00s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:   5%|4         | 3/64 [07:45<2:09:57, 127.83s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:   6%|6         | 4/64 [07:49<1:18:54, 78.91s/it] [A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:   8%|7         | 5/64 [09:37<1:28:03, 89.55s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:   9%|9         | 6/64 [10:36<1:16:27, 79.09s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  11%|#         | 7/64 [11:49<1:13:14, 77.09s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  12%|#2        | 8/64 [11:52<50:07, 53.71s/it]  [A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  14%|#4        | 9/64 [13:40<1:04:41, 70.57s/it][A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  16%|#5        | 10/64 [13:54<47:46, 53.08s/it] [A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  17%|#7        | 11/64 [14:53<48:23, 54.77s/it][A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  19%|#8        | 12/64 [14:56<34:00, 39.24s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  20%|##        | 13/64 [16:38<49:25, 58.15s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  22%|##1       | 14/64 [16:52<37:24, 44.88s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  23%|##3       | 15/64 [17:41<37:38, 46.09s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  25%|##5       | 16/64 [17:45<26:38, 33.29s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  27%|##6       | 17/64 [18:31<29:03, 37.09s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  28%|##8       | 18/64 [19:02<27:14, 35.53s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  30%|##9       | 19/64 [19:15<21:26, 28.60s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  31%|###1      | 20/64 [19:18<15:20, 20.92s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  33%|###2      | 21/64 [21:03<33:00, 46.05s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  34%|###4      | 22/64 [21:12<24:26, 34.92s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  36%|###5      | 23/64 [21:51<24:45, 36.22s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  38%|###7      | 24/64 [21:54<17:32, 26.30s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.mid.block.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  39%|###9      | 25/64 [21:57<12:33, 19.33s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.mid.block.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  41%|####      | 26/64 [22:00<09:04, 14.33s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.mid.block.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  42%|####2     | 27/64 [22:03<06:52, 11.16s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.mid.block.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  44%|####3     | 28/64 [22:06<05:14,  8.73s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  45%|####5     | 29/64 [23:50<21:42, 37.22s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  47%|####6     | 30/64 [23:59<16:18, 28.78s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  48%|####8     | 31/64 [24:16<13:48, 25.10s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  50%|#####     | 32/64 [24:19<09:52, 18.51s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  52%|#####1    | 33/64 [24:43<10:27, 20.25s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  53%|#####3    | 34/64 [25:16<12:03, 24.12s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  55%|#####4    | 35/64 [25:30<10:05, 20.88s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  56%|#####6    | 36/64 [25:33<07:15, 15.54s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  58%|#####7    | 37/64 [27:06<17:29, 38.86s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  59%|#####9    | 38/64 [27:14<12:49, 29.59s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  61%|######    | 39/64 [27:55<13:42, 32.92s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  62%|######2   | 40/64 [27:59<09:46, 24.46s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  64%|######4   | 41/64 [29:27<16:37, 43.35s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  66%|######5   | 42/64 [29:41<12:39, 34.50s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  67%|######7   | 43/64 [30:29<13:33, 38.73s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  69%|######8   | 44/64 [30:33<09:22, 28.12s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  70%|#######   | 45/64 [31:57<14:15, 45.04s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  72%|#######1  | 46/64 [32:11<10:42, 35.69s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  73%|#######3  | 47/64 [33:08<11:55, 42.07s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  75%|#######5  | 48/64 [33:12<08:10, 30.64s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  77%|#######6  | 49/64 [34:26<10:52, 43.52s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  78%|#######8  | 50/64 [34:39<08:03, 34.53s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  80%|#######9  | 51/64 [35:33<08:46, 40.48s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  81%|########1 | 52/64 [35:37<05:53, 29.43s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  83%|########2 | 53/64 [36:48<07:41, 41.93s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  84%|########4 | 54/64 [37:42<07:34, 45.46s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  86%|########5 | 55/64 [39:06<08:32, 56.91s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  88%|########7 | 56/64 [39:09<05:27, 40.96s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  89%|########9 | 57/64 [39:59<05:05, 43.60s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  91%|######### | 58/64 [40:52<04:38, 46.45s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  92%|#########2| 59/64 [42:11<04:40, 56.03s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  94%|#########3| 60/64 [42:14<02:41, 40.29s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  95%|#########5| 61/64 [42:56<02:02, 40.80s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  97%|#########6| 62/64 [43:24<01:13, 36.88s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939:  98%|#########8| 63/64 [44:43<00:49, 49.53s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_09_0939/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_09_0939: 100%|##########| 64/64 [44:47<00:00, 35.84s/it][A
+                                                                        [AProcess 3 timesteps: 100%|##########| 1/1 [44:47<00:00, 2687.26s/it]                                                                    Process 3: ✅ Timestep 939 completed
+Process 3: Computing covariance matrices with streaming processing...
+Process 3: Processing 1 timesteps × 64 layer/feature combinations
+Process 3 timesteps:   0%|          | 0/1 [00:00<?, ?it/s]
+Process 3 alpha_10_0928:   0%|          | 0/64 [00:00<?, ?it/s][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:   2%|1         | 1/64 [05:05<5:20:34, 305.30s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:   3%|3         | 2/64 [06:03<2:45:33, 160.23s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:   5%|4         | 3/64 [07:26<2:06:35, 124.52s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:   6%|6         | 4/64 [07:29<1:16:44, 76.74s/it] [A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:   8%|7         | 5/64 [08:58<1:19:56, 81.30s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:   9%|9         | 6/64 [09:53<1:09:41, 72.10s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  11%|#         | 7/64 [11:19<1:13:00, 76.85s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  12%|#2        | 8/64 [11:23<50:03, 53.63s/it]  [A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  14%|#4        | 9/64 [12:51<58:59, 64.35s/it][A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  16%|#5        | 10/64 [13:05<43:49, 48.70s/it][A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  17%|#7        | 11/64 [14:13<48:15, 54.64s/it][A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  19%|#8        | 12/64 [14:17<33:57, 39.19s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  20%|##        | 13/64 [15:35<43:29, 51.16s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  22%|##1       | 14/64 [15:49<33:05, 39.70s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  23%|##3       | 15/64 [16:41<35:28, 43.44s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  25%|##5       | 16/64 [16:45<25:12, 31.50s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  27%|##6       | 17/64 [17:39<30:08, 38.48s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  28%|##8       | 18/64 [18:16<29:07, 38.00s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  30%|##9       | 19/64 [18:29<22:48, 30.42s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  31%|###1      | 20/64 [18:32<16:16, 22.20s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  33%|###2      | 21/64 [20:05<31:06, 43.42s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  34%|###4      | 22/64 [20:13<23:02, 32.92s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  36%|###5      | 23/64 [20:54<24:05, 35.25s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  38%|###7      | 24/64 [20:58<17:13, 25.84s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.mid.block.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  39%|###9      | 25/64 [21:01<12:23, 19.06s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.mid.block.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  41%|####      | 26/64 [21:04<08:58, 14.18s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.mid.block.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  42%|####2     | 27/64 [21:08<06:51, 11.13s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.mid.block.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  44%|####3     | 28/64 [21:11<05:13,  8.71s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  45%|####5     | 29/64 [22:41<19:17, 33.08s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  47%|####6     | 30/64 [22:50<14:38, 25.83s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  48%|####8     | 31/64 [23:05<12:24, 22.57s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  50%|#####     | 32/64 [23:08<08:57, 16.80s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  52%|#####1    | 33/64 [23:37<10:37, 20.57s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  53%|#####3    | 34/64 [24:10<12:05, 24.18s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  55%|#####4    | 35/64 [24:24<10:08, 20.99s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  56%|#####6    | 36/64 [24:27<07:19, 15.70s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  58%|#####7    | 37/64 [25:58<17:17, 38.41s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  59%|#####9    | 38/64 [26:07<12:48, 29.55s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  61%|######    | 39/64 [26:48<13:42, 32.90s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  62%|######2   | 40/64 [26:52<09:40, 24.17s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  64%|######4   | 41/64 [28:21<16:42, 43.60s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  66%|######5   | 42/64 [28:36<12:49, 34.97s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  67%|######7   | 43/64 [29:21<13:18, 38.04s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  69%|######8   | 44/64 [29:25<09:15, 27.77s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  70%|#######   | 45/64 [30:49<14:08, 44.64s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  72%|#######1  | 46/64 [31:03<10:41, 35.65s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  73%|#######3  | 47/64 [31:52<11:13, 39.62s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  75%|#######5  | 48/64 [31:55<07:39, 28.70s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  77%|#######6  | 49/64 [33:12<10:45, 43.00s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  78%|#######8  | 50/64 [33:25<07:58, 34.14s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  80%|#######9  | 51/64 [34:16<08:28, 39.12s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  81%|########1 | 52/64 [34:19<05:41, 28.45s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  83%|########2 | 53/64 [35:33<07:41, 41.93s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  84%|########4 | 54/64 [36:26<07:32, 45.23s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  86%|########5 | 55/64 [37:48<08:26, 56.24s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  88%|########7 | 56/64 [37:51<05:23, 40.42s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  89%|########9 | 57/64 [38:49<05:18, 45.55s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  91%|######### | 58/64 [39:41<04:45, 47.55s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  92%|#########2| 59/64 [40:58<04:42, 56.54s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  94%|#########3| 60/64 [41:02<02:42, 40.62s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  95%|#########5| 61/64 [41:48<02:06, 42.27s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  97%|#########6| 62/64 [42:14<01:14, 37.28s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928:  98%|#########8| 63/64 [43:37<00:51, 51.24s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_10_0928/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_10_0928: 100%|##########| 64/64 [43:41<00:00, 36.92s/it][A
+                                                                        [AProcess 3 timesteps: 100%|##########| 1/1 [43:41<00:00, 2621.49s/it]                                                                    Process 3: ✅ Timestep 928 completed
+Process 3: Computing covariance matrices with streaming processing...
+Process 3: Processing 1 timesteps × 64 layer/feature combinations
+Process 3 timesteps:   0%|          | 0/1 [00:00<?, ?it/s]
+Process 3 alpha_11_0916:   0%|          | 0/64 [00:00<?, ?it/s][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:   2%|1         | 1/64 [04:58<5:12:57, 298.06s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:   3%|3         | 2/64 [06:06<2:48:34, 163.14s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:   5%|4         | 3/64 [07:25<2:06:32, 124.47s/it][A    Processing module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.0.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:   6%|6         | 4/64 [07:29<1:16:52, 76.87s/it] [A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:   8%|7         | 5/64 [09:03<1:21:58, 83.36s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:   9%|9         | 6/64 [10:13<1:16:11, 78.81s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  11%|#         | 7/64 [11:31<1:14:26, 78.35s/it][A    Processing module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.0.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  12%|#2        | 8/64 [11:34<50:51, 54.49s/it]  [A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  14%|#4        | 9/64 [13:15<1:03:11, 68.94s/it][A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  16%|#5        | 10/64 [13:30<47:10, 52.42s/it] [A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  17%|#7        | 11/64 [14:33<49:02, 55.52s/it][A    Processing module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.1.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  19%|#8        | 12/64 [14:37<34:32, 39.85s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  20%|##        | 13/64 [16:03<45:38, 53.71s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  22%|##1       | 14/64 [16:17<34:58, 41.98s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  23%|##3       | 15/64 [17:14<37:54, 46.41s/it][A    Processing module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.1.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  25%|##5       | 16/64 [17:18<26:54, 33.64s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  27%|##6       | 17/64 [18:04<29:11, 37.27s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  28%|##8       | 18/64 [18:31<26:18, 34.32s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  30%|##9       | 19/64 [18:44<20:51, 27.81s/it][A    Processing module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.2.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  31%|###1      | 20/64 [18:48<15:04, 20.55s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  33%|###2      | 21/64 [20:30<32:18, 45.07s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  34%|###4      | 22/64 [20:39<24:04, 34.39s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  36%|###5      | 23/64 [21:19<24:34, 35.96s/it][A    Processing module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.down.blocks.2.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  38%|###7      | 24/64 [21:23<17:33, 26.34s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.mid.block.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  39%|###9      | 25/64 [21:27<12:43, 19.58s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.mid.block.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  41%|####      | 26/64 [21:30<09:17, 14.67s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.mid.block.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  42%|####2     | 27/64 [21:34<07:05, 11.50s/it][A    Processing module.mid.block.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.mid.block.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  44%|####3     | 28/64 [21:37<05:23,  8.98s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  45%|####5     | 29/64 [23:15<20:45, 35.60s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  47%|####6     | 30/64 [23:23<15:30, 27.38s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  48%|####8     | 31/64 [23:39<13:08, 23.89s/it][A    Processing module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  50%|#####     | 32/64 [23:42<09:27, 17.73s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  52%|#####1    | 33/64 [24:07<10:18, 19.95s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  53%|#####3    | 34/64 [24:41<12:08, 24.27s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  55%|#####4    | 35/64 [24:56<10:20, 21.41s/it][A    Processing module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  56%|#####6    | 36/64 [24:59<07:26, 15.93s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  58%|#####7    | 37/64 [26:30<17:11, 38.21s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  59%|#####9    | 38/64 [26:38<12:42, 29.32s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(1280, 1280) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  61%|######    | 39/64 [27:16<13:20, 32.02s/it][A    Processing module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.1.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  62%|######2   | 40/64 [27:20<09:26, 23.59s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  64%|######4   | 41/64 [28:51<16:45, 43.71s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  66%|######5   | 42/64 [29:05<12:47, 34.88s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  67%|######7   | 43/64 [29:52<13:26, 38.39s/it][A    Processing module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  69%|######8   | 44/64 [29:55<09:17, 27.88s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  70%|#######   | 45/64 [31:20<14:14, 44.99s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  72%|#######1  | 46/64 [31:35<10:44, 35.80s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  73%|#######3  | 47/64 [32:25<11:24, 40.28s/it][A    Processing module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  75%|#######5  | 48/64 [32:29<07:46, 29.18s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  77%|#######6  | 49/64 [33:51<11:15, 45.02s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  78%|#######8  | 50/64 [34:06<08:25, 36.12s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(640, 640) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  80%|#######9  | 51/64 [34:54<08:35, 39.66s/it][A    Processing module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.2.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  81%|########1 | 52/64 [34:58<05:46, 28.87s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  83%|########2 | 53/64 [36:12<07:49, 42.71s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  84%|########4 | 54/64 [37:10<07:51, 47.11s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  86%|########5 | 55/64 [38:32<08:39, 57.67s/it][A    Processing module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.0.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  88%|########7 | 56/64 [38:35<05:30, 41.35s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  89%|########9 | 57/64 [39:33<05:23, 46.15s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  91%|######### | 58/64 [40:26<04:48, 48.15s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  92%|#########2| 59/64 [41:47<04:50, 58.17s/it][A    Processing module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.1.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  94%|#########3| 60/64 [41:51<02:47, 41.81s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/k: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/k: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  95%|#########5| 61/64 [42:35<02:07, 42.63s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/out: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/out: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  97%|#########6| 62/64 [43:01<01:15, 37.52s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/q: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/q: cov_shape=(320, 320) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916:  98%|#########8| 63/64 [44:11<00:47, 47.26s/it][A    Processing module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/v: 1000 samples (batch_size=800)
+Process 3: alpha_11_0916/module.up.blocks.3.attentions.2.transformer.blocks.0.attn2/v: cov_shape=(768, 768) (K₀K₀ᵀ only, no SVD)
+
+Process 3 alpha_11_0916: 100%|##########| 64/64 [44:14<00:00, 34.09s/it][A
+                                                                        [AProcess 3 timesteps: 100%|##########| 1/1 [44:14<00:00, 2654.80s/it]                                                                    Process 3: ✅ Timestep 916 completed
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-09-30 02:32:36
+Log saved to: logs/20250929_091326_build_cov_parallel.txt
+================================================================================
+

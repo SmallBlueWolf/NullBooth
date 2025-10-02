@@ -1,0 +1,70 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-02 21:10:14
+Log File: logs/20251002_211014_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251002_211014_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth.yaml
+/root/bluewolf/NullBooth/src/training_utils.py:141: UserWarning: You need not use class_data_dir without with_prior_preservation.
+  warnings.warn("You need not use class_data_dir without with_prior_preservation.")
+/root/bluewolf/NullBooth/src/training_utils.py:143: UserWarning: You need not use class_prompt without with_prior_preservation.
+  warnings.warn("You need not use class_prompt without with_prior_preservation.")
+10/02/2025 21:10:14 - INFO - src.training_utils - Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cuda
+
+Mixed precision type: no
+
+
+============================================================
+🎯 Initializing NullBooth (AlphaEdit) Training
+============================================================
+  Detected new structure: scanning layer directories...
+  Loaded 30 timesteps
+  Including 30 alpha-named timesteps
+  Timestep range: 989 to 0
+CovarianceMatrixManager initialized:
+  Directory: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+  Available timesteps: 30
+  Nullspace threshold: 1e-4
+  Use interpolation: True
+✅ NullBooth initialized successfully
+  Covariance dir: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+  Available timesteps: 30
+============================================================
+
+10/02/2025 21:10:16 - INFO - src.trainer - 
+============================================================
+10/02/2025 21:10:16 - INFO - src.trainer - 🎯 Initializing AlphaEdit NullBooth Training
+10/02/2025 21:10:16 - INFO - src.trainer - ============================================================
+AlphaEditOptimizer initialized:
+  Tracked cross-attention parameters: 80
+  Projection enabled: True
+10/02/2025 21:10:16 - INFO - src.trainer - ✅ AlphaEdit optimizer wrapper initialized successfully
+10/02/2025 21:10:16 - INFO - src.trainer -   - Mode: Projecting weight UPDATES (Δ = W_new - W_old)
+10/02/2025 21:10:16 - INFO - src.trainer -   - NOT projecting gradients or features (correct implementation)
+10/02/2025 21:10:16 - INFO - src.trainer -   - Covariance matrices: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+10/02/2025 21:10:16 - INFO - src.trainer -   - Available timesteps: 30
+10/02/2025 21:10:16 - INFO - src.trainer - ============================================================
+
+10/02/2025 21:10:16 - INFO - src.trainer - ***** Running training *****
+10/02/2025 21:10:16 - INFO - src.trainer -   Num examples = 8
+10/02/2025 21:10:16 - INFO - src.trainer -   Num batches each epoch = 8
+10/02/2025 21:10:16 - INFO - src.trainer -   Num Epochs = 13
+10/02/2025 21:10:16 - INFO - src.trainer -   Instantaneous batch size per device = 1
+10/02/2025 21:10:16 - INFO - src.trainer -   Total train batch size (w. parallel, distributed & accumulation) = 1
+10/02/2025 21:10:16 - INFO - src.trainer -   Gradient Accumulation steps = 1
+10/02/2025 21:10:16 - INFO - src.trainer -   Total optimization steps = 100
+10/02/2025 21:10:16 - INFO - src.trainer -   🎯 NullBooth Mode: AlphaEdit null-space projection ACTIVE
+10/02/2025 21:10:16 - INFO - src.trainer -   📊 Covariance matrices dir: /home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K
+10/02/2025 21:10:16 - INFO - src.trainer -   🔍 Nullspace threshold: 1e-4
+  0%|          | 0/100 [00:00<?, ?it/s]Steps:   0%|          | 0/100 [00:00<?, ?it/s]Steps:   1%|1         | 1/100 [00:12<20:01, 12.14s/it]Steps:   1%|1         | 1/100 [00:12<20:01, 12.14s/it, loss=0.751, lr=5e-6, nullbooth=active]Steps:   2%|2         | 2/100 [00:18<14:15,  8.73s/it, loss=0.751, lr=5e-6, nullbooth=active]Steps:   2%|2         | 2/100 [00:18<14:15,  8.73s/it, loss=0.037, lr=5e-6, nullbooth=active]Steps:   3%|3         | 3/100 [00:24<12:18,  7.61s/it, loss=0.037, lr=5e-6, nullbooth=active]Steps:   3%|3         | 3/100 [00:24<12:18,  7.61s/it, loss=0.543, lr=5e-6, nullbooth=active]Steps:   4%|4         | 4/100 [00:32<12:29,  7.81s/it, loss=0.543, lr=5e-6, nullbooth=active]Steps:   4%|4         | 4/100 [00:32<12:29,  7.81s/it, loss=0.0137, lr=5e-6, nullbooth=active]Steps:   5%|5         | 5/100 [00:39<11:47,  7.45s/it, loss=0.0137, lr=5e-6, nullbooth=active]Steps:   5%|5         | 5/100 [00:39<11:47,  7.45s/it, loss=0.0173, lr=5e-6, nullbooth=active]Steps:   6%|6         | 6/100 [00:46<11:20,  7.24s/it, loss=0.0173, lr=5e-6, nullbooth=active]Steps:   6%|6         | 6/100 [00:46<11:20,  7.24s/it, loss=0.295, lr=5e-6, nullbooth=active] Steps:   7%|7         | 7/100 [00:52<10:41,  6.90s/it, loss=0.295, lr=5e-6, nullbooth=active]Steps:   7%|7         | 7/100 [00:52<10:41,  6.90s/it, loss=0.0434, lr=5e-6, nullbooth=active]Steps:   8%|8         | 8/100 [00:59<10:32,  6.88s/it, loss=0.0434, lr=5e-6, nullbooth=active]Steps:   8%|8         | 8/100 [00:59<10:32,  6.88s/it, loss=0.193, lr=5e-6, nullbooth=active] Steps:   9%|9         | 9/100 [01:08<11:10,  7.37s/it, loss=0.193, lr=5e-6, nullbooth=active]Steps:   9%|9         | 9/100 [01:08<11:10,  7.37s/it, loss=0.00314, lr=5e-6, nullbooth=active]Steps:  10%|#         | 10/100 [01:14<10:31,  7.02s/it, loss=0.00314, lr=5e-6, nullbooth=active]Steps:  10%|#         | 10/100 [01:14<10:31,  7.02s/it, loss=0.319, lr=5e-6, nullbooth=active]  Steps:  11%|#1        | 11/100 [01:20<10:04,  6.79s/it, loss=0.319, lr=5e-6, nullbooth=active]Steps:  11%|#1        | 11/100 [01:20<10:04,  6.79s/it, loss=0.317, lr=5e-6, nullbooth=active]Steps:  12%|#2        | 12/100 [01:26<09:43,  6.63s/it, loss=0.317, lr=5e-6, nullbooth=active]Steps:  12%|#2        | 12/100 [01:26<09:43,  6.63s/it, loss=0.268, lr=5e-6, nullbooth=active]Steps:  13%|#3        | 13/100 [01:33<09:29,  6.54s/it, loss=0.268, lr=5e-6, nullbooth=active]Steps:  13%|#3        | 13/100 [01:33<09:29,  6.54s/it, loss=0.342, lr=5e-6, nullbooth=active]Steps:  14%|#4        | 14/100 [01:39<09:12,  6.43s/it, loss=0.342, lr=5e-6, nullbooth=active]Steps:  14%|#4        | 14/100 [01:39<09:12,  6.43s/it, loss=0.0201, lr=5e-6, nullbooth=active]Steps:  15%|#5        | 15/100 [01:45<09:12,  6.50s/it, loss=0.0201, lr=5e-6, nullbooth=active]Steps:  15%|#5        | 15/100 [01:45<09:12,  6.50s/it, loss=0.0747, lr=5e-6, nullbooth=active]Steps:  16%|#6        | 16/100 [01:52<09:18,  6.65s/it, loss=0.0747, lr=5e-6, nullbooth=active]Steps:  16%|#6        | 16/100 [01:52<09:18,  6.65s/it, loss=0.123, lr=5e-6, nullbooth=active] 
