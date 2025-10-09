@@ -8,6 +8,7 @@ outputs/*
 inference_results/*
 cov_matrices/*
 alphaedit_src/
+evaluation_results/*
 
 # Python
 __pycache__/

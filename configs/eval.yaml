@@ -1,0 +1,68 @@
+# Evaluation Configuration for Continual Learning Assessment
+
+# Model Paths
+original_model_path: "sd1-4"  # or path to checkpoint
+finetuned_model_path: "outputs/nullbooth-model-dog"  # path to your finetuned model
+
+# Generation Settings
+generation:
+  num_samples_per_prompt: 200  # number of images to generate per prompt
+  batch_size: 4  # batch size for generation
+  num_inference_steps: 50
+  guidance_scale: 7.5
+  image_size: 512
+  seed: 42  # set to null for random seed
+
+# Test Prompts
+prompts:
+  # General concept prompts to test semantic preservation
+  - "a photo of a dog"
+  - "a photo of a cat"
+  - "a photo of a person"
+  - "a photo of a car"
+  - "a landscape painting"
+  - "a portrait of a woman"
+  - "a modern building"
+  - "a plate of food"
+
+# Feature Extractors
+feature_extractors:
+  - "clip"      # CLIP ViT-L/14
+  - "dinov2"    # DINOv2 ViT-L/14
+  # - "inception"  # InceptionV3 (optional, for FID)
+
+# Metrics to Compute
+metrics:
+  - "mmd"       # Maximum Mean Discrepancy
+  - "coverage"  # Coverage
+  - "1-nna"     # 1-Nearest Neighbor Accuracy
+  - "fid"       # Frechet Inception Distance
+  - "jsd"       # Jensen-Shannon Divergence
+
+# Metric-specific Settings
+metric_settings:
+  mmd:
+    kernel: "gaussian"  # "gaussian" or "linear"
+    sigma: 1.0  # bandwidth for gaussian kernel
+  coverage:
+    k: 5  # number of nearest neighbors to consider
+  jsd:
+    n_bins: 50  # number of bins for histogram estimation
+
+# Output Settings
+output:
+  output_dir: "evaluation_results"
+  save_images: true  # save generated images
+  save_features: true  # save extracted features for later analysis
+  create_visualizations: true  # create t-SNE plots
+  report_format: "markdown"  # "markdown" or "json" or "both"
+
+# Device Settings
+device: "cuda"  # "cuda" or "cpu"
+mixed_precision: true  # use fp16 for faster generation
+
+# Advanced Settings
+advanced:
+  cache_features: true  # cache features to avoid recomputation
+  use_ema: false  # use EMA weights if available
+  compile_models: false  # use torch.compile for faster inference (requires PyTorch 2.0+)

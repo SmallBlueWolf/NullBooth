@@ -1,6 +1,6 @@
 #!/bin/bash
 # Configure to use GPUs 4-7 (4x RTX 4090)
-export CUDA_VISIBLE_DEVICES=4,5,6,7
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 
 # NCCL environment configuration for better compatibility with 4 GPUs
 export NCCL_DEBUG=INFO

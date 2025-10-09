@@ -15,8 +15,32 @@ sys.path.append(str(Path(__file__).parent / "src"))
 
 from src import load_config
 from src.logger import log_script_execution
-from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler
+from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler, LatentConsistencyModelPipeline, LCMScheduler
 from peft import PeftModel
+
+
+def is_lcm_model(base_model_path: str) -> bool:
+    """
+    Check if the base model is an LCM model by looking for LCMScheduler.
+
+    Args:
+        base_model_path: Path to the base model directory
+
+    Returns:
+        True if it's an LCM model
+    """
+    model_path = Path(base_model_path)
+    model_index_path = model_path / "model_index.json"
+
+    if model_index_path.exists():
+        import json
+        with open(model_index_path) as f:
+            model_index = json.load(f)
+        # Check if it uses LCMScheduler
+        scheduler_class = model_index.get("scheduler", [None, None])[1]
+        return scheduler_class == "LCMScheduler" or model_index.get("_class_name") == "LatentConsistencyModelPipeline"
+
+    return False
 
 
 def is_lora_model(model_path: str) -> bool:
@@ -83,46 +107,54 @@ def load_pipeline(
     base_model_path: str,
     model_path: str,
     device: str = "cuda",
-    torch_dtype=torch.float16
+    torch_dtype=torch.float16,
+    model_type: str = "SD"  # Add model_type parameter
 ) -> DiffusionPipeline:
     """
-    Load a DiffusionPipeline, automatically detecting whether it's LoRA or full fine-tuned.
-    
+    Load a DiffusionPipeline, automatically detecting whether it's LoRA, full fine-tuned, SD or LCM.
+
     Args:
         base_model_path: Path to the base model
         model_path: Path to the fine-tuned model directory (LoRA or full)
         device: Device to load the model on
         torch_dtype: Torch dtype for the model
-    
+        model_type: Model type ("SD" or "LCM")
+
     Returns:
         DiffusionPipeline with fine-tuned weights applied
     """
     model_path = Path(model_path)
-    
+
+    # Determine if base model is LCM
+    is_lcm = model_type == "LCM" or is_lcm_model(base_model_path)
+
+    # Choose pipeline class based on model type
+    PipelineClass = LatentConsistencyModelPipeline if is_lcm else DiffusionPipeline
+
     # Check if it's a full fine-tuned model
     if is_full_finetuned_model(model_path):
-        print(f"Detected full fine-tuned model at: {model_path}")
+        print(f"Detected full fine-tuned {'LCM' if is_lcm else 'SD'} model at: {model_path}")
         print("Loading full fine-tuned pipeline...")
-        pipeline = DiffusionPipeline.from_pretrained(
+        pipeline = PipelineClass.from_pretrained(
             str(model_path),
             torch_dtype=torch_dtype,
             safety_checker=None,
             requires_safety_checker=False,
         )
-    
+
     # Check if it's a LoRA model
     elif is_lora_model(model_path):
         print(f"Detected LoRA model at: {model_path}")
-        print("Loading base pipeline and applying LoRA weights...")
-        
+        print(f"Loading base {'LCM' if is_lcm else 'SD'} pipeline and applying LoRA weights...")
+
         # Load the base pipeline
-        pipeline = DiffusionPipeline.from_pretrained(
+        pipeline = PipelineClass.from_pretrained(
             base_model_path,
             torch_dtype=torch_dtype,
             safety_checker=None,
             requires_safety_checker=False,
         )
-        
+
         # Load LoRA weights for UNet
         unet_lora_path = model_path / "unet"
         if unet_lora_path.exists() and (unet_lora_path / "adapter_config.json").exists():
@@ -130,7 +162,7 @@ def load_pipeline(
             pipeline.unet = PeftModel.from_pretrained(pipeline.unet, str(unet_lora_path))
             # Merge LoRA weights for faster inference
             pipeline.unet = pipeline.unet.merge_and_unload()
-        
+
         # Load LoRA weights for text encoder if available
         text_encoder_lora_path = model_path / "text_encoder"
         if text_encoder_lora_path.exists() and (text_encoder_lora_path / "adapter_config.json").exists():
@@ -138,23 +170,29 @@ def load_pipeline(
             pipeline.text_encoder = PeftModel.from_pretrained(pipeline.text_encoder, str(text_encoder_lora_path))
             # Merge LoRA weights for faster inference
             pipeline.text_encoder = pipeline.text_encoder.merge_and_unload()
-    
+
     else:
         print(f"Could not determine model type at: {model_path}")
-        print("Falling back to loading as base model...")
-        pipeline = DiffusionPipeline.from_pretrained(
+        print(f"Falling back to loading as base {'LCM' if is_lcm else 'SD'} model...")
+        pipeline = PipelineClass.from_pretrained(
             base_model_path,
             torch_dtype=torch_dtype,
             safety_checker=None,
             requires_safety_checker=False,
         )
-    
-    # Use DPM Solver for faster inference
-    pipeline.scheduler = DPMSolverMultistepScheduler.from_config(pipeline.scheduler.config)
-    
+
+    # Set scheduler based on model type
+    if is_lcm:
+        # LCM uses its own scheduler - keep it as is
+        print("Using LCM scheduler")
+    else:
+        # Use DPM Solver for faster inference (SD models)
+        pipeline.scheduler = DPMSolverMultistepScheduler.from_config(pipeline.scheduler.config)
+        print("Using DPM Solver scheduler")
+
     # Move to device
     pipeline = pipeline.to(device)
-    
+
     return pipeline
 
 
@@ -264,21 +302,27 @@ def main(config_path: str = "configs/config.yaml"):
         # Create timestamped output directory
         output_dir = create_output_directory(config_path)
         print(f"Output directory: {output_dir}")
-        
-        # Load fine-tuned pipeline (auto-detect LoRA vs full fine-tuned)
+
+        # Get model type from config
+        model_type = getattr(config, 'model_type', 'SD')
+        print(f"Model type: {model_type}")
+
+        # Load fine-tuned pipeline (auto-detect LoRA vs full fine-tuned, SD vs LCM)
         print("Loading fine-tuned pipeline...")
         pipeline = load_pipeline(
             base_model_path=base_model_path,
             model_path=lora_model_path,
             device=device,
-            torch_dtype=torch_dtype
+            torch_dtype=torch_dtype,
+            model_type=model_type
         )
         
         # Load base model pipeline if comparison is requested
         base_pipeline = None
         if hasattr(inference_config, 'compare_with_base_model') and inference_config.compare_with_base_model:
             print("Loading base model pipeline for comparison...")
-            base_pipeline = DiffusionPipeline.from_pretrained(
+            PipelineClass = LatentConsistencyModelPipeline if model_type == "LCM" else DiffusionPipeline
+            base_pipeline = PipelineClass.from_pretrained(
                 base_model_path,
                 torch_dtype=torch_dtype,
                 safety_checker=None,
@@ -380,13 +424,17 @@ def interactive_mode(config_path: str = "configs/config.yaml"):
         lora_model_path = config.output_dir
         device = "cuda" if torch.cuda.is_available() else "cpu"
         torch_dtype = torch.float16 if device == "cuda" else torch.float32
-        
+
+        # Get model type
+        model_type = getattr(config, 'model_type', 'SD')
+
         print("Loading pipeline...")
         pipeline = load_pipeline(
             base_model_path=base_model_path,
             model_path=lora_model_path,
             device=device,
-            torch_dtype=torch_dtype
+            torch_dtype=torch_dtype,
+            model_type=model_type
         )
         
         print("Pipeline loaded! Enter prompts to generate images (type 'quit' to exit):")

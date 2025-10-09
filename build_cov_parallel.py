@@ -57,6 +57,10 @@ class ModernSamplers:
             print(f"Early timestep strategy: selecting {len(timesteps)} timesteps from {timesteps[0]} to {timesteps[-1]}")
             return timesteps
 
+        # LCM scheduler (special handling for few-step models)
+        if sampler_strategy == "LCM":
+            return ModernSamplers.lcm_timesteps(num_denoising_steps, total_timesteps)
+
         sampler_map = {
             "DPM++ 2M": ModernSamplers.dpmpp_2m_timesteps,
             "DPM++ 2M Karras": ModernSamplers.dpmpp_2m_karras_timesteps,
@@ -189,6 +193,44 @@ class ModernSamplers:
             ).squeeze().long().tolist()
         
         return list(reversed(refined_timesteps))
+
+    @staticmethod
+    def lcm_timesteps(num_steps: int, total_timesteps: int = 1000, original_inference_steps: int = 50) -> list:
+        """
+        LCM (Latent Consistency Model) timestep schedule.
+        LCM uses very few inference steps (typically 1-8) but maps them to the
+        original training timesteps (e.g., 50 steps).
+
+        Args:
+            num_steps: Number of inference steps (e.g., 1, 2, 4, 8)
+            total_timesteps: Total training timesteps (1000)
+            original_inference_steps: Original steps LCM was distilled from (typically 50)
+
+        Returns:
+            List of timesteps for LCM inference
+        """
+        # LCM timestep spacing follows the "leading" strategy
+        # Map num_steps to the range [0, original_inference_steps]
+        c = total_timesteps // original_inference_steps
+
+        # Generate linearly spaced timestep indices
+        lcm_origin_timesteps = np.asarray(list(range(1, original_inference_steps + 1))) * c - 1
+
+        # Select subset based on num_steps
+        # For num_steps < original_inference_steps, we skip timesteps
+        skipping_step = len(lcm_origin_timesteps) // num_steps
+
+        # Get evenly spaced indices
+        indices = np.arange(0, len(lcm_origin_timesteps), skipping_step)[:num_steps]
+        timesteps = lcm_origin_timesteps[indices]
+
+        # LCM uses descending order (high noise to low noise)
+        timesteps = timesteps[::-1].copy()
+
+        print(f"LCM scheduler: {num_steps} steps from {len(lcm_origin_timesteps)} original timesteps")
+        print(f"  Timesteps: {timesteps.tolist()}")
+
+        return timesteps.tolist()
 
 
 class TimestepAverager:
@@ -1491,24 +1533,24 @@ def main():
         
         # Validate sampler strategy
         if sampler_strategy is not None:
-            valid_samplers = ["uniform", "early_timestep", "DPM++ 2M", "DPM++ 2M Karras", "DPM++ 3M", "DPM++ 3M SDE Karras", "Euler", "Euler a", "UniPC"]
+            valid_samplers = ["uniform", "early_timestep", "DPM++ 2M", "DPM++ 2M Karras", "DPM++ 3M", "DPM++ 3M SDE Karras", "Euler", "Euler a", "UniPC", "LCM"]
             if sampler_strategy not in valid_samplers:
                 if accelerator.is_main_process:
                     print(f"❌ Invalid sampler strategy: {sampler_strategy}")
                     print(f"   Valid options: {valid_samplers}")
                 return
-        
+
         # Validate timestep mode
-        valid_timestep_modes = ['avg', 'first']
+        valid_timestep_modes = ['avg', 'first', 'all_steps']  # Added 'all_steps' for LCM
         if timestep_mode not in valid_timestep_modes:
             if accelerator.is_main_process:
                 print(f"❌ Invalid timestep_mode: {timestep_mode}. Valid options: {valid_timestep_modes}")
             return
-        
+
         if accelerator.is_main_process:
             print(f"Timestep generation strategy: {sampler_strategy if sampler_strategy else 'Uniform'}")
             print(f"Timestep mode: {timestep_mode}")
-        
+
         use_alpha_naming = sampler_strategy is not None
 
         # Generate timesteps and mapping
@@ -1557,27 +1599,50 @@ def main():
             # Modern sampler strategy
             if accelerator.is_main_process:
                 print(f"Computing timesteps using {sampler_strategy} sampler...")
-                if timestep_mode == 'avg':
+                if timestep_mode == 'all_steps':
+                    print("Using 'all_steps' mode - computing covariance for all inference timesteps (no sampling/averaging)")
+                elif timestep_mode == 'avg':
                     print(f"Averaging timesteps across {len(prompts)} prompts...")
                 else:
                     print("Using first prompt only for timestep calculation...")
-            
-            if timestep_mode == 'avg':
+
+            # LCM requires lcm_original_inference_steps parameter
+            if sampler_strategy == "LCM":
+                lcm_original_steps = getattr(config.nullbooth, 'lcm_original_inference_steps', 50)
+                if accelerator.is_main_process:
+                    print(f"LCM Configuration:")
+                    print(f"  Inference steps: {num_sample_steps}")
+                    print(f"  Original training steps: {lcm_original_steps}")
+
+                # For LCM with 'all_steps' mode, generate timesteps directly
+                timesteps = ModernSamplers.lcm_timesteps(
+                    num_sample_steps, total_timesteps, lcm_original_steps
+                )
+                timesteps = [int(t) for t in timesteps]
+
+            elif timestep_mode == 'all_steps':
+                # For all_steps mode with other samplers: compute once, no averaging
+                timesteps = ModernSamplers.get_sampler_timesteps(
+                    sampler_strategy, num_sample_steps, total_timesteps
+                )
+                timesteps = [int(t) for t in timesteps]
+
+            elif timestep_mode == 'avg':
                 # Collect timesteps from all prompts using the specified sampler
                 timestep_averager = TimestepAverager()
                 for i, prompt in enumerate(prompts):
                     if accelerator.is_main_process and i % 100 == 0:
                         print(f"  Processing prompt {i+1}/{len(prompts)} for timestep calculation...")
-                    
+
                     prompt_timesteps = ModernSamplers.get_sampler_timesteps(
                         sampler_strategy, num_sample_steps, total_timesteps
                     )
                     timestep_averager.update(prompt_timesteps)
-                
+
                 # Get average timesteps
                 avg_timesteps = timestep_averager.get_average_timesteps()
                 timesteps = [int(t) for t in avg_timesteps]
-                
+
                 if accelerator.is_main_process:
                     print(f"  Completed timestep averaging across {len(prompts)} prompts")
             else:  # timestep_mode == 'first'
@@ -1586,13 +1651,13 @@ def main():
                     sampler_strategy, num_sample_steps, total_timesteps
                 )
                 timesteps = [int(t) for t in timesteps]
-            
+
             # Create mapping from timestep_xxxx to alpha_xx_xxx format
             timestep_to_alpha_mapping = {}
             for i, t in enumerate(timesteps):
                 alpha_name = generate_alpha_filename(i, float(t))
                 timestep_to_alpha_mapping[f"timestep_{t:04d}"] = alpha_name
-            
+
             if accelerator.is_main_process:
                 print(f"Timesteps computed: {timesteps[:5]}{'...' if len(timesteps) > 5 else ''}")
                 print(f"Using alpha naming scheme for {len(timesteps)} timesteps")
@@ -2142,29 +2207,67 @@ def run_phase2_covariance_computation(accelerator, config, run_dir, progress_tra
 
 
 def load_diffusion_models(config, accelerator):
-    """Load and prepare diffusion models for parallel processing."""
-    tokenizer = load_tokenizer(config)
-    noise_scheduler, text_encoder, vae, unet = load_models(config)
-    
-    # Move models to device using accelerator
-    text_encoder = accelerator.prepare(text_encoder)
-    unet = accelerator.prepare(unet)
-    vae = accelerator.prepare(vae)
-    
-    # Create pipeline
-    pipeline = StableDiffusionPipeline.from_pretrained(
-        config.pretrained_model_name_or_path,
-        vae=vae.module if hasattr(vae, 'module') else vae,
-        text_encoder=text_encoder.module if hasattr(text_encoder, 'module') else text_encoder,
-        tokenizer=tokenizer,
-        unet=unet.module if hasattr(unet, 'module') else unet,
-        scheduler=noise_scheduler,
-        safety_checker=None,
-        requires_safety_checker=False,
-        torch_dtype=torch.float16 if config.use_fp16 else torch.float32
-    )
-    
-    return tokenizer, text_encoder, unet, pipeline
+    """Load and prepare diffusion models for parallel processing (SD or LCM)."""
+    # Check if we're loading an LCM model
+    model_type = getattr(config, 'model_type', 'SD')  # Default to Stable Diffusion
+
+    if model_type == 'LCM':
+        # Load LCM-specific pipeline
+        from diffusers import LatentConsistencyModelPipeline, LCMScheduler
+
+        if accelerator.is_main_process:
+            print(f"Loading LCM model from: {config.pretrained_model_name_or_path}")
+
+        # Load LCM pipeline directly
+        pipeline = LatentConsistencyModelPipeline.from_pretrained(
+            config.pretrained_model_name_or_path,
+            safety_checker=None,
+            requires_safety_checker=False,
+            torch_dtype=torch.float16 if getattr(config, 'use_fp16', True) else torch.float32
+        )
+
+        # Extract components
+        tokenizer = pipeline.tokenizer
+        text_encoder = pipeline.text_encoder
+        unet = pipeline.unet
+        vae = pipeline.vae
+
+        # Move models to device using accelerator
+        text_encoder = accelerator.prepare(text_encoder)
+        unet = accelerator.prepare(unet)
+        vae = accelerator.prepare(vae)
+
+        # Update pipeline components
+        pipeline.text_encoder = text_encoder.module if hasattr(text_encoder, 'module') else text_encoder
+        pipeline.unet = unet.module if hasattr(unet, 'module') else unet
+        pipeline.vae = vae.module if hasattr(vae, 'module') else vae
+
+        return tokenizer, text_encoder, unet, pipeline
+
+    else:
+        # Original Stable Diffusion loading
+        tokenizer = load_tokenizer(config)
+        noise_scheduler, text_encoder, vae, unet = load_models(config)
+
+        # Move models to device using accelerator
+        text_encoder = accelerator.prepare(text_encoder)
+        unet = accelerator.prepare(unet)
+        vae = accelerator.prepare(vae)
+
+        # Create pipeline
+        pipeline = StableDiffusionPipeline.from_pretrained(
+            config.pretrained_model_name_or_path,
+            vae=vae.module if hasattr(vae, 'module') else vae,
+            text_encoder=text_encoder.module if hasattr(text_encoder, 'module') else text_encoder,
+            tokenizer=tokenizer,
+            unet=unet.module if hasattr(unet, 'module') else unet,
+            scheduler=noise_scheduler,
+            safety_checker=None,
+            requires_safety_checker=False,
+            torch_dtype=torch.float16 if config.use_fp16 else torch.float32
+        )
+
+        return tokenizer, text_encoder, unet, pipeline
 
 
 if __name__ == "__main__":

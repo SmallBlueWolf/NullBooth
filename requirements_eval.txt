@@ -1,0 +1,32 @@
+# Core dependencies for evaluation system
+torch>=2.0.0
+torchvision>=0.15.0
+diffusers>=0.21.0
+transformers>=4.30.0
+
+# Feature extraction
+# CLIP - install from GitHub
+# git+https://github.com/openai/CLIP.git
+
+# DINOv2 loads automatically via torch.hub (requires internet on first use)
+
+# Data processing
+numpy>=1.24.0
+scipy>=1.10.0
+scikit-learn>=1.2.0
+Pillow>=9.5.0
+
+# Configuration and utilities
+pyyaml>=6.0
+tqdm>=4.65.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Optional optimizations
+xformers>=0.0.20  # For memory-efficient attention (highly recommended)
+accelerate>=0.20.0  # For faster training/inference
+
+# Optional for better performance
+triton>=2.0.0  # If using torch.compile

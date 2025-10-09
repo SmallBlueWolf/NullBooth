@@ -6,6 +6,8 @@ from diffusers import (
     AutoencoderKL,
     DDPMScheduler,
     UNet2DConditionModel,
+    LCMScheduler,  # Add LCM scheduler
+    LatentConsistencyModelPipeline,  # Add LCM pipeline
 )
 from transformers import PretrainedConfig
 from peft import LoraConfig, get_peft_model
@@ -35,13 +37,24 @@ def import_model_class_from_model_name_or_path(pretrained_model_name_or_path: st
 
 
 def load_models(config):
-    """Load all the required models for training."""
+    """Load all the required models for training (SD or LCM)."""
+    # Check if we're loading an LCM model
+    model_type = getattr(config, 'model_type', 'SD')
+
+    if model_type == 'LCM':
+        return load_lcm_models(config)
+    else:
+        return load_sd_models(config)
+
+
+def load_sd_models(config):
+    """Load Stable Diffusion models for training."""
     # Import correct text encoder class
     text_encoder_cls = import_model_class_from_model_name_or_path(
-        config.pretrained_model_name_or_path, 
+        config.pretrained_model_name_or_path,
         config.revision
     )
-    
+
     # Load scheduler and models
     noise_scheduler = DDPMScheduler(
         beta_start=0.00085,
@@ -49,25 +62,68 @@ def load_models(config):
         beta_schedule="scaled_linear",
         num_train_timesteps=1000,
     )
-    
+
     text_encoder = text_encoder_cls.from_pretrained(
-        config.pretrained_model_name_or_path, 
-        subfolder="text_encoder", 
+        config.pretrained_model_name_or_path,
+        subfolder="text_encoder",
         revision=config.revision
     )
-    
+
     vae = AutoencoderKL.from_pretrained(
-        config.pretrained_model_name_or_path, 
-        subfolder="vae", 
+        config.pretrained_model_name_or_path,
+        subfolder="vae",
         revision=config.revision
     )
-    
+
     unet = UNet2DConditionModel.from_pretrained(
-        config.pretrained_model_name_or_path, 
-        subfolder="unet", 
+        config.pretrained_model_name_or_path,
+        subfolder="unet",
         revision=config.revision
     )
-    
+
+    return noise_scheduler, text_encoder, vae, unet
+
+
+def load_lcm_models(config):
+    """Load LCM (Latent Consistency Model) models for training."""
+    print(f"Loading LCM model from: {config.pretrained_model_name_or_path}")
+
+    # Import text encoder class
+    text_encoder_cls = import_model_class_from_model_name_or_path(
+        config.pretrained_model_name_or_path,
+        config.revision
+    )
+
+    # Load LCM scheduler
+    noise_scheduler = LCMScheduler.from_pretrained(
+        config.pretrained_model_name_or_path,
+        subfolder="scheduler"
+    )
+
+    # Load components
+    text_encoder = text_encoder_cls.from_pretrained(
+        config.pretrained_model_name_or_path,
+        subfolder="text_encoder",
+        revision=config.revision
+    )
+
+    vae = AutoencoderKL.from_pretrained(
+        config.pretrained_model_name_or_path,
+        subfolder="vae",
+        revision=config.revision
+    )
+
+    unet = UNet2DConditionModel.from_pretrained(
+        config.pretrained_model_name_or_path,
+        subfolder="unet",
+        revision=config.revision
+    )
+
+    print(f"LCM model loaded successfully")
+    print(f"  Scheduler: {noise_scheduler.__class__.__name__}")
+    print(f"  Text Encoder: {text_encoder.__class__.__name__}")
+    print(f"  UNet: {unet.__class__.__name__}")
+
     return noise_scheduler, text_encoder, vae, unet
 
 

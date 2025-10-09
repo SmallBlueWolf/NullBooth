@@ -89,14 +89,14 @@ enable_xformers_memory_efficient_attention: false
 # NullBooth Configuration (AlphaEdit implementation)
 nullbooth:
   enable: true  # Set to true to enable NullBooth mode
-  original_knowledge_prompts: "./dataset/dog_prompts_1000.txt"  # Path to original knowledge prompts
+  original_knowledge_prompts: "./dataset/ wordnet/wordnet_vision_all.txt"  # Path to original knowledge prompts
   cov_matrices_output_dir: "/home/public/public_nas/bluewolf/cov_matrices_DPM++_2M_K"  # Output directory for covariance matrices
   visual_attention_map: true  # Set to true to save attention map visualizations
   num_denoising_steps: 30  # Number of timesteps to sample from the full noise range (0-1000)
   sampler_strategy: "DPM++ 2M Karras"  # Options: "uniform" (default), "early_timestep", "DPM++ 2M", "DPM++ 2M Karras", "DPM++ 3M", "DPM++ 3M SDE Karras", "Euler", "Euler a", "UniPC"
   timestep_mode: "avg"  # Timestep averaging mode: "avg" (average across prompts), "first" (use first prompt only)
-  nullspace_threshold: 1e-4  # Threshold for determining null space (more reasonable value)
-  threshold_percent: 10  # Percentile threshold (0-100), higher priority than nullspace_threshold, use 10% percentile
+  nullspace_threshold: 1e-5  # Threshold for determining null space (more reasonable value)
+  threshold_percent: 5  # Percentile threshold (0-100), higher priority than nullspace_threshold, use 10% percentile
 
   # NEW: Projection configuration
   projection_mode: "weight_update"  # "weight_update" (correct) or "feature" (deprecated)

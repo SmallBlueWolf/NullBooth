@@ -21,7 +21,12 @@
       "Read(//mnt/nas/bluewolf/cov_matrices_DPM++_2M_K/cache/**)",
       "Read(//home/public/public_nas/bluewolf/**)",
       "Read(//mnt/**)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(./verify_eval_installation.sh:*)",
+      "Bash(python3:*)",
+      "Bash(for f in \"dataset/ wordnet/\"*.txt)",
+      "Bash(do cp \"$f\" dataset/)",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

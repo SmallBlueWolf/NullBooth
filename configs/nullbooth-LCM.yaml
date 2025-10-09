@@ -1,0 +1,142 @@
+# NullBooth Configuration for LCM (Latent Consistency Model)
+# LCM is a distilled few-step diffusion model (1-8 steps typical)
+
+# Model Configuration
+pretrained_model_name_or_path: "LCM"  # Use local LCM directory
+model_type: "LCM"  # NEW: Specify LCM model type
+revision: null
+tokenizer_name: null
+
+# Data Configuration
+instance_data_dir: "./dataset/dog"  # Required - path to instance images
+class_data_dir: "./dataset/class_img_cache"
+instance_prompt: "a photo of sks dog"  # Required - prompt with identifier
+class_prompt: "a photo of a dog"
+
+# Prior Preservation
+with_prior_preservation: false
+prior_loss_weight: 1.0
+num_class_images: 1000
+
+# Validation
+validation_prompt: null
+num_validation_images: 4
+validation_steps: 100
+
+# Output Configuration
+output_dir: "outputs/nullbooth-lcm-model-dog"
+seed: 42
+resolution: 512
+center_crop: false
+
+# LoRA Configuration (Disabled for official DreamBooth)
+use_lora: false
+lora_r: null
+lora_alpha: null
+lora_dropout: null
+lora_bias: null
+
+# Text Encoder Training (Disabled)
+train_text_encoder: false
+lora_text_encoder_r: null
+lora_text_encoder_alpha: null
+lora_text_encoder_dropout: null
+lora_text_encoder_bias: null
+
+# Training Configuration
+train_batch_size: 1
+sample_batch_size: 2
+num_train_epochs: null
+max_train_steps: 100  # Faster convergence expected with LCM
+checkpointing_steps: 500
+resume_from_checkpoint: null
+gradient_accumulation_steps: 1
+gradient_checkpointing: true
+num_dataloader_workers: 0
+no_tracemalloc: true
+
+# Optimization
+learning_rate: 0.000005  # 5e-6 same as SD
+scale_lr: false
+lr_scheduler: "constant"
+lr_warmup_steps: 0
+lr_num_cycles: 1
+lr_power: 1.0
+use_8bit_adam: false
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_weight_decay: 0.01
+adam_epsilon: 0.00000001
+max_grad_norm: 1.0
+
+# Hub Configuration
+push_to_hub: false
+hub_token: null
+hub_model_id: null
+
+# Logging
+logging_dir: "logs"
+report_to: "tensorboard"
+wandb_key: null
+wandb_project_name: null
+
+# Hardware Configuration
+allow_tf32: false
+mixed_precision: "no"
+prior_generation_precision: null
+local_rank: -1
+enable_xformers_memory_efficient_attention: false
+
+# NullBooth Configuration for LCM
+nullbooth:
+  enable: true
+  original_knowledge_prompts: "./dataset/dog_prompts_1000.txt"
+  cov_matrices_output_dir: "/home/public/public_nas/bluewolf/cov_matrices_LCM"
+  visual_attention_map: true
+
+  # LCM-specific configuration
+  # For LCM, we compute covariance for ALL inference timesteps
+  # since there are so few (typically 1-8 steps)
+  num_denoising_steps: 4  # LCM typical: 1, 2, 4, or 8 steps
+  sampler_strategy: "LCM"  # NEW: LCM scheduler strategy
+  lcm_original_inference_steps: 50  # From LCM scheduler config
+  timestep_mode: "all_steps"  # NEW: Use all timesteps, no sampling/averaging
+
+  # Projection configuration
+  nullspace_threshold: 1e-4
+  threshold_percent: 10  # 10% percentile
+  projection_mode: "weight_update"  # Standard AlphaEdit projection
+  use_interpolation: false  # No interpolation needed with so few steps
+  debug: false
+  cache_size: 10  # Smaller cache since fewer timesteps
+
+  # Feature collection mode
+  feature_collection_mode: "inference"
+  inference_mode: "partial_denoise"
+
+  # Memory Management (adjusted for fewer timesteps)
+  covariance_batch_size: 100
+  feature_batch_size: 600
+  gpu_memory_batch_size: 800
+
+  collect_features:
+    q_features: true
+    k_features: true
+    v_features: true
+    out_features: true
+  cross_attention_layers: "all"
+
+# Inference Configuration
+inference:
+  prompts:
+    - "A photo of sks dog"
+    - "A photo of dog"
+  negative_prompt: ""
+  num_inference_steps: 4  # LCM uses very few steps
+  guidance_scale: 1.0  # LCM typically uses guidance_scale=1.0 (no CFG)
+  num_images_per_prompt: 1
+  height: 512
+  width: 512
+  generator_seed: 42
+  output_dir: "inference_results/"
+  compare_with_base_model: true
