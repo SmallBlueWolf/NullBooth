@@ -1,0 +1,26 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-13 09:32:20
+Log File: logs/20251013_093220_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251013_093220_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM-dog.yaml
+/root/bluewolf/NullBooth/src/training_utils.py:142: UserWarning: You need not use class_data_dir without with_prior_preservation.
+  warnings.warn("You need not use class_data_dir without with_prior_preservation.")
+/root/bluewolf/NullBooth/src/training_utils.py:144: UserWarning: You need not use class_prompt without with_prior_preservation.
+  warnings.warn("You need not use class_prompt without with_prior_preservation.")
+
+❌ Script failed with exception: TypeError: Accelerator.__init__() got an unexpected keyword argument 'find_unused_parameters'
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-13 09:32:20
+Log saved to: logs/20251013_093220_train.txt
+================================================================================
+

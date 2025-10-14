@@ -11,6 +11,7 @@ import psutil
 import torch
 import torch.nn.functional as F
 from accelerate import Accelerator
+from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.logging import get_logger
 from accelerate.utils import set_seed
 from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler
@@ -107,11 +108,16 @@ def setup_accelerator(config):
     """Setup accelerator for training"""
     logging_dir = Path(config.output_dir, config.logging_dir)
     
+    ddp_kwargs = DistributedDataParallelKwargs(
+        find_unused_parameters=getattr(config, "find_unused_parameters", False)
+    )
+
     accelerator = Accelerator(
         gradient_accumulation_steps=config.gradient_accumulation_steps,
         mixed_precision=config.mixed_precision,
         log_with=config.report_to,
         project_dir=logging_dir,
+        kwargs_handlers=[ddp_kwargs],
     )
     
     if config.report_to == "wandb":

@@ -112,6 +112,8 @@ nullbooth:
   covariance_batch_size: 100   # Number of prompts to process at once for covariance computation (optimized for 4 GPUs)
   feature_batch_size: 600     # Number of prompts to load at once for feature loading (optimized for larger memory pool)
   gpu_memory_batch_size: 800  # Batch size for GPU tensor operations - Optimized for 49GB VRAM per GPU
+  prompt_batch_size: 2        # Batch size for prompt processing during feature collection
+  async_io_workers: 4         # Number of threads for asynchronous feature writes
 
   collect_features:
     q_features: true  # Collect Query features

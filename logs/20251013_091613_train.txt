@@ -1,0 +1,66 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-13 09:16:13
+Log File: logs/20251013_091613_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251013_091613_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM-dog.yaml
+/root/bluewolf/NullBooth/src/training_utils.py:141: UserWarning: You need not use class_data_dir without with_prior_preservation.
+  warnings.warn("You need not use class_data_dir without with_prior_preservation.")
+/root/bluewolf/NullBooth/src/training_utils.py:143: UserWarning: You need not use class_prompt without with_prior_preservation.
+  warnings.warn("You need not use class_prompt without with_prior_preservation.")
+10/13/2025 09:16:13 - INFO - src.training_utils - Distributed environment: DistributedType.MULTI_GPU  Backend: nccl
+Num processes: 4
+Process index: 2
+Local process index: 2
+Device: cuda:2
+
+Mixed precision type: no
+
+Loading LCM model from: /root/bluewolf/NullBooth/LCM
+LCM model loaded successfully
+  Scheduler: LCMScheduler
+  Text Encoder: CLIPTextModel
+  UNet: UNet2DConditionModel
+
+============================================================
+🎯 Initializing NullBooth (AlphaEdit) Training
+============================================================
+  Detected new structure: scanning layer directories...
+  Loaded 4 timesteps
+  Including 4 alpha-named timesteps
+  Timestep range: 739 to 19
+CovarianceMatrixManager initialized:
+  Directory: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+  Available timesteps: 4
+  Nullspace threshold: 0.02
+  Use interpolation: True
+✅ NullBooth initialized successfully
+  Covariance dir: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+  Available timesteps: 4
+============================================================
+
+AlphaEditOptimizer initialized:
+  Tracked cross-attention parameters: 80
+  Projection enabled: True
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  17%|#6        | 1/6 [00:00<00:01,  3.30it/s]Loading pipeline components...:  50%|#####     | 3/6 [00:00<00:00,  7.24it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 10.90it/s]
+🧹 Cleaning up NullBooth trainer...
+
+❌ Script failed with exception: RuntimeError: Expected to have finished reduction in the prior iteration before starting a new one. This error indicates that your module has parameters that were not used in producing loss. You can enable unused parameter detection by passing the keyword argument `find_unused_parameters=True` to `torch.nn.parallel.DistributedDataParallel`, and by 
+making sure all `forward` function outputs participate in calculating loss. 
+If you already have done the above, then the distributed data parallel module wasn't able to locate the output tensors in the return value of your module's `forward` function. Please include the loss function and the structure of the return value of `forward` of your module when reporting this issue (e.g. list, dict, iterable).
+Parameter indices which did not receive grad for rank 2: 4
+ In addition, you can set the environment variable TORCH_DISTRIBUTED_DEBUG to either INFO or DETAIL to print out information about which particular parameters did not receive gradient on this rank as part of this error
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-13 09:16:24
+Log saved to: logs/20251013_091613_train.txt
+================================================================================
+

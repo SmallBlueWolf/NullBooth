@@ -1,0 +1,119 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-13 07:47:59
+Log File: logs/20251013_074759_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251013_074759_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM-dog.yaml
+/root/bluewolf/NullBooth/src/training_utils.py:141: UserWarning: You need not use class_data_dir without with_prior_preservation.
+  warnings.warn("You need not use class_data_dir without with_prior_preservation.")
+/root/bluewolf/NullBooth/src/training_utils.py:143: UserWarning: You need not use class_prompt without with_prior_preservation.
+  warnings.warn("You need not use class_prompt without with_prior_preservation.")
+10/13/2025 07:47:59 - INFO - src.training_utils - Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cuda
+
+Mixed precision type: no
+
+Loading LCM model from: /root/bluewolf/NullBooth/LCM
+LCM model loaded successfully
+  Scheduler: LCMScheduler
+  Text Encoder: CLIPTextModel
+  UNet: UNet2DConditionModel
+10/13/2025 07:48:00 - INFO - src.trainer - 
+============================================================
+10/13/2025 07:48:00 - INFO - src.trainer - 🔬 LCF (Latent Consistency Fine-tuning) Mode Enabled
+10/13/2025 07:48:00 - INFO - src.trainer - ============================================================
+10/13/2025 07:48:00 - INFO - src.trainer -   Using self-consistency loss without distillation
+10/13/2025 07:48:01 - INFO - src.trainer -   EMA decay rate: 0.9999
+10/13/2025 07:48:01 - INFO - src.trainer -   Skipping step k: 20
+10/13/2025 07:48:01 - INFO - src.trainer -   CFG scale range: [2.0, 14.0]
+10/13/2025 07:48:01 - INFO - src.trainer - ============================================================
+
+
+============================================================
+🎯 Initializing NullBooth (AlphaEdit) Training
+============================================================
+  Detected new structure: scanning layer directories...
+  Loaded 4 timesteps
+  Including 4 alpha-named timesteps
+  Timestep range: 739 to 19
+CovarianceMatrixManager initialized:
+  Directory: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+  Available timesteps: 4
+  Nullspace threshold: 0.02
+  Use interpolation: True
+✅ NullBooth initialized successfully
+  Covariance dir: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+  Available timesteps: 4
+============================================================
+
+10/13/2025 07:48:01 - INFO - src.trainer - 
+============================================================
+10/13/2025 07:48:01 - INFO - src.trainer - 🎯 Initializing AlphaEdit NullBooth Training
+10/13/2025 07:48:01 - INFO - src.trainer - ============================================================
+AlphaEditOptimizer initialized:
+  Tracked cross-attention parameters: 80
+  Projection enabled: True
+10/13/2025 07:48:01 - INFO - src.trainer - ✅ AlphaEdit optimizer wrapper initialized successfully
+10/13/2025 07:48:01 - INFO - src.trainer -   - Mode: Projecting weight UPDATES (Δ = W_new - W_old)
+10/13/2025 07:48:01 - INFO - src.trainer -   - NOT projecting gradients or features (correct implementation)
+10/13/2025 07:48:01 - INFO - src.trainer -   - Covariance matrices: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+10/13/2025 07:48:01 - INFO - src.trainer -   - Available timesteps: 4
+10/13/2025 07:48:01 - INFO - src.trainer - ============================================================
+
+10/13/2025 07:48:01 - INFO - src.trainer - ***** Running training *****
+10/13/2025 07:48:01 - INFO - src.trainer -   Num examples = 8
+10/13/2025 07:48:01 - INFO - src.trainer -   Num batches each epoch = 8
+10/13/2025 07:48:01 - INFO - src.trainer -   Num Epochs = 3750
+10/13/2025 07:48:01 - INFO - src.trainer -   Instantaneous batch size per device = 1
+10/13/2025 07:48:01 - INFO - src.trainer -   Total train batch size (w. parallel, distributed & accumulation) = 1
+10/13/2025 07:48:01 - INFO - src.trainer -   Gradient Accumulation steps = 1
+10/13/2025 07:48:01 - INFO - src.trainer -   Total optimization steps = 30000
+10/13/2025 07:48:01 - INFO - src.trainer -   🎯 NullBooth Mode: AlphaEdit null-space projection ACTIVE
+10/13/2025 07:48:01 - INFO - src.trainer -   📊 Covariance matrices dir: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+10/13/2025 07:48:01 - INFO - src.trainer -   🔍 Nullspace threshold: 0.02
+  0%|          | 0/30000 [00:00<?, ?it/s]Steps:   0%|          | 0/30000 [00:00<?, ?it/s]Steps:   0%|          | 1/30000 [00:07<62:15:58,  7.47s/it]Steps:   0%|          | 1/30000 [00:07<62:15:58,  7.47s/it, loss=1.51, lr=8e-6, mode=LCF, nullbooth=active]10/13/2025 07:48:08 - INFO - src.trainer - Running validation... 
+ Generating 4 images with prompt: a photo of sks dog.
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s][A
+Loading pipeline components...:  50%|#####     | 3/6 [00:00<00:00, 21.27it/s][A
+Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 23.48it/s][ALoading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 23.11it/s]
+Steps:   0%|          | 2/30000 [00:15<63:13:27,  7.59s/it, loss=1.51, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 2/30000 [00:15<63:13:27,  7.59s/it, loss=4.12, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 3/30000 [00:21<59:22:35,  7.13s/it, loss=4.12, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 3/30000 [00:21<59:22:35,  7.13s/it, loss=0.022, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 4/30000 [00:31<68:29:12,  8.22s/it, loss=0.022, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 4/30000 [00:31<68:29:12,  8.22s/it, loss=0.491, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 5/30000 [00:35<53:59:43,  6.48s/it, loss=0.491, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 5/30000 [00:35<53:59:43,  6.48s/it, loss=13.6, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 6/30000 [00:38<45:18:53,  5.44s/it, loss=13.6, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 6/30000 [00:38<45:18:53,  5.44s/it, loss=2.4, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 7/30000 [00:44<48:10:57,  5.78s/it, loss=2.4, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 7/30000 [00:44<48:10:57,  5.78s/it, loss=0.104, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 8/30000 [00:51<49:57:45,  6.00s/it, loss=0.104, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 8/30000 [00:51<49:57:45,  6.00s/it, loss=0.279, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 9/30000 [00:57<51:07:38,  6.14s/it, loss=0.279, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 9/30000 [00:57<51:07:38,  6.14s/it, loss=2.8, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 10/30000 [01:01<44:01:23,  5.28s/it, loss=2.8, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 10/30000 [01:01<44:01:23,  5.28s/it, loss=5.96, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 11/30000 [01:07<46:52:51,  5.63s/it, loss=5.96, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 11/30000 [01:07<46:52:51,  5.63s/it, loss=0.137, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 12/30000 [01:14<48:59:49,  5.88s/it, loss=0.137, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 12/30000 [01:14<48:59:49,  5.88s/it, loss=0.113, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 13/30000 [01:20<50:19:32,  6.04s/it, loss=0.113, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 13/30000 [01:20<50:19:32,  6.04s/it, loss=0.252, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 14/30000 [01:23<43:38:32,  5.24s/it, loss=0.252, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 14/30000 [01:23<43:38:32,  5.24s/it, loss=5.66, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 15/30000 [01:30<46:47:12,  5.62s/it, loss=5.66, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 15/30000 [01:30<46:47:12,  5.62s/it, loss=0.0433, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 16/30000 [01:36<48:57:14,  5.88s/it, loss=0.0433, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 16/30000 [01:36<48:57:14,  5.88s/it, loss=2.38, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 17/30000 [01:43<50:31:45,  6.07s/it, loss=2.38, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 17/30000 [01:43<50:31:45,  6.07s/it, loss=2.3, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 18/30000 [01:49<51:46:31,  6.22s/it, loss=2.3, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 18/30000 [01:49<51:46:31,  6.22s/it, loss=0.0886, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 19/30000 [01:53<44:49:09,  5.38s/it, loss=0.0886, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 19/30000 [01:53<44:49:09,  5.38s/it, loss=9.73, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 20/30000 [01:59<47:34:35,  5.71s/it, loss=9.73, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 20/30000 [01:59<47:34:35,  5.71s/it, loss=0.0474, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 21/30000 [02:06<49:26:00,  5.94s/it, loss=0.0474, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 21/30000 [02:06<49:26:00,  5.94s/it, loss=1.13, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 22/30000 [02:12<50:31:36,  6.07s/it, loss=1.13, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 22/30000 [02:12<50:31:36,  6.07s/it, loss=1.58, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 23/30000 [02:19<51:22:45,  6.17s/it, loss=1.58, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 23/30000 [02:19<51:22:45,  6.17s/it, loss=0.0477, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 24/30000 [02:25<51:56:23,  6.24s/it, loss=0.0477, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 24/30000 [02:25<51:56:23,  6.24s/it, loss=0.182, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 25/30000 [02:31<52:24:24,  6.29s/it, loss=0.182, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 25/30000 [02:31<52:24:24,  6.29s/it, loss=0.0558, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 26/30000 [02:38<52:44:50,  6.34s/it, loss=0.0558, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 26/30000 [02:38<52:44:50,  6.34s/it, loss=0.473, lr=8e-6, mode=LCF, nullbooth=active] 10/13/2025 07:50:39 - INFO - src.trainer - Running validation... 
+ Generating 4 images with prompt: a photo of sks dog.
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s][A
+Loading pipeline components...:  50%|#####     | 3/6 [00:00<00:00, 18.40it/s][A
+Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 11.73it/s][ALoading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 12.40it/s]
+Steps:   0%|          | 27/30000 [02:49<64:31:26,  7.75s/it, loss=0.473, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 27/30000 [02:49<64:31:26,  7.75s/it, loss=0.0655, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 28/30000 [02:55<61:17:27,  7.36s/it, loss=0.0655, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 28/30000 [02:55<61:17:27,  7.36s/it, loss=2.95, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 29/30000 [03:02<59:13:28,  7.11s/it, loss=2.95, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 29/30000 [03:02<59:13:28,  7.11s/it, loss=0.0397, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 30/30000 [03:08<57:26:06,  6.90s/it, loss=0.0397, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 30/30000 [03:08<57:26:06,  6.90s/it, loss=0.793, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 31/30000 [03:15<56:11:33,  6.75s/it, loss=0.793, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 31/30000 [03:15<56:11:33,  6.75s/it, loss=4.94, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 32/30000 [03:21<55:24:46,  6.66s/it, loss=4.94, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 32/30000 [03:21<55:24:46,  6.66s/it, loss=0.153, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 33/30000 [03:28<54:58:39,  6.60s/it, loss=0.153, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 33/30000 [03:28<54:58:39,  6.60s/it, loss=0.177, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 34/30000 [03:34<54:47:14,  6.58s/it, loss=0.177, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 34/30000 [03:34<54:47:14,  6.58s/it, loss=2.83, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 35/30000 [03:38<47:01:23,  5.65s/it, loss=2.83, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 35/30000 [03:38<47:01:23,  5.65s/it, loss=6.41, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 36/30000 [03:44<49:11:06,  5.91s/it, loss=6.41, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 36/30000 [03:44<49:11:06,  5.91s/it, loss=0.643, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 37/30000 [03:48<43:04:10,  5.17s/it, loss=0.643, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 37/30000 [03:48<43:04:10,  5.17s/it, loss=6.03, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 38/30000 [03:54<46:36:25,  5.60s/it, loss=6.03, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 38/30000 [03:54<46:36:25,  5.60s/it, loss=0.375, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 39/30000 [04:01<48:53:11,  5.87s/it, loss=0.375, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 39/30000 [04:01<48:53:11,  5.87s/it, loss=4.43, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 40/30000 [04:07<50:09:36,  6.03s/it, loss=4.43, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 40/30000 [04:07<50:09:36,  6.03s/it, loss=1.34, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 41/30000 [04:14<51:21:10,  6.17s/it, loss=1.34, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 41/30000 [04:14<51:21:10,  6.17s/it, loss=2.39, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 42/30000 [04:17<44:33:02,  5.35s/it, loss=2.39, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 42/30000 [04:17<44:33:02,  5.35s/it, loss=9.49, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 43/30000 [04:20<39:37:57,  4.76s/it, loss=9.49, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 43/30000 [04:20<39:37:57,  4.76s/it, loss=17.8, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 44/30000 [04:27<43:48:34,  5.26s/it, loss=17.8, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 44/30000 [04:27<43:48:34,  5.26s/it, loss=0.212, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 45/30000 [04:33<46:38:04,  5.60s/it, loss=0.212, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 45/30000 [04:33<46:38:04,  5.60s/it, loss=1.68, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 46/30000 [04:37<41:08:56,  4.95s/it, loss=1.68, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 46/30000 [04:37<41:08:56,  4.95s/it, loss=1.5, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 47/30000 [04:43<44:59:09,  5.41s/it, loss=1.5, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 47/30000 [04:43<44:59:09,  5.41s/it, loss=0.0834, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 48/30000 [04:47<40:00:48,  4.81s/it, loss=0.0834, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 48/30000 [04:47<40:00:48,  4.81s/it, loss=11.1, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 49/30000 [04:53<44:30:18,  5.35s/it, loss=11.1, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 49/30000 [04:53<44:30:18,  5.35s/it, loss=0.0613, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 50/30000 [05:00<47:17:52,  5.69s/it, loss=0.0613, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 50/30000 [05:00<47:17:52,  5.69s/it, loss=2.09, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 51/30000 [05:06<49:04:38,  5.90s/it, loss=2.09, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 51/30000 [05:06<49:04:38,  5.90s/it, loss=2.14, lr=8e-6, mode=LCF, nullbooth=active]10/13/2025 07:53:07 - INFO - src.trainer - Running validation... 
+ Generating 4 images with prompt: a photo of sks dog.
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s][A
+Loading pipeline components...:  50%|#####     | 3/6 [00:00<00:00, 19.65it/s][A
+Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 23.22it/s][ALoading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 22.59it/s]
+Steps:   0%|          | 52/30000 [05:17<61:11:43,  7.36s/it, loss=2.14, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 52/30000 [05:17<61:11:43,  7.36s/it, loss=0.217, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 53/30000 [05:20<51:22:21,  6.18s/it, loss=0.217, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 53/30000 [05:20<51:22:21,  6.18s/it, loss=2.59, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 54/30000 [05:27<52:15:36,  6.28s/it, loss=2.59, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 54/30000 [05:27<52:15:36,  6.28s/it, loss=0.0741, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 55/30000 [05:33<52:50:51,  6.35s/it, loss=0.0741, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 55/30000 [05:33<52:50:51,  6.35s/it, loss=1.07, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 56/30000 [05:40<53:07:15,  6.39s/it, loss=1.07, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 56/30000 [05:40<53:07:15,  6.39s/it, loss=2.51, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 57/30000 [05:46<53:41:47,  6.46s/it, loss=2.51, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 57/30000 [05:46<53:41:47,  6.46s/it, loss=0.12, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 58/30000 [05:50<46:13:53,  5.56s/it, loss=0.12, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 58/30000 [05:50<46:13:53,  5.56s/it, loss=11.7, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 59/30000 [05:56<48:36:04,  5.84s/it, loss=11.7, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 59/30000 [05:56<48:36:04,  5.84s/it, loss=4.87, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 60/30000 [06:00<42:32:03,  5.11s/it, loss=4.87, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 60/30000 [06:00<42:32:03,  5.11s/it, loss=4.19, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 61/30000 [06:06<46:08:21,  5.55s/it, loss=4.19, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 61/30000 [06:06<46:08:21,  5.55s/it, loss=0.523, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 62/30000 [06:13<48:21:09,  5.81s/it, loss=0.523, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 62/30000 [06:13<48:21:09,  5.81s/it, loss=2.34, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 63/30000 [06:19<49:54:14,  6.00s/it, loss=2.34, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 63/30000 [06:19<49:54:14,  6.00s/it, loss=1.13, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 64/30000 [06:23<43:21:24,  5.21s/it, loss=1.13, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 64/30000 [06:23<43:21:24,  5.21s/it, loss=3.88, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 65/30000 [06:29<46:19:49,  5.57s/it, loss=3.88, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 65/30000 [06:29<46:19:49,  5.57s/it, loss=1.02, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 66/30000 [06:32<40:52:51,  4.92s/it, loss=1.02, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 66/30000 [06:32<40:52:51,  4.92s/it, loss=4.97, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 67/30000 [06:36<37:05:01,  4.46s/it, loss=4.97, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 67/30000 [06:36<37:05:01,  4.46s/it, loss=6.27, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 68/30000 [06:42<42:04:52,  5.06s/it, loss=6.27, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 68/30000 [06:42<42:04:52,  5.06s/it, loss=1.18, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 69/30000 [06:49<45:39:28,  5.49s/it, loss=1.18, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 69/30000 [06:49<45:39:28,  5.49s/it, loss=0.273, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 70/30000 [06:55<48:23:21,  5.82s/it, loss=0.273, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 70/30000 [06:55<48:23:21,  5.82s/it, loss=0.566, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 71/30000 [07:02<50:08:11,  6.03s/it, loss=0.566, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 71/30000 [07:02<50:08:11,  6.03s/it, loss=0.0253, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 72/30000 [07:05<43:36:21,  5.25s/it, loss=0.0253, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 72/30000 [07:05<43:36:21,  5.25s/it, loss=3.99, lr=8e-6, mode=LCF, nullbooth=active]  Steps:   0%|          | 73/30000 [07:12<46:49:36,  5.63s/it, loss=3.99, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 73/30000 [07:12<46:49:36,  5.63s/it, loss=0.252, lr=8e-6, mode=LCF, nullbooth=active]10/13/2025 07:55:16 - INFO - src.trainer - 
+============================================================
+10/13/2025 07:55:16 - INFO - src.trainer - 📊 AlphaEdit NullBooth Training Summary
+10/13/2025 07:55:16 - INFO - src.trainer - ============================================================
+10/13/2025 07:55:16 - INFO - src.trainer - ✅ Successfully applied null-space projection to weight updates
+10/13/2025 07:55:16 - INFO - src.trainer - ✅ Original knowledge preserved through K₀K₀ᵀ null-space constraint
+10/13/2025 07:55:16 - INFO - src.trainer - ============================================================
+🧹 Cleaning up NullBooth trainer...
+10/13/2025 07:55:16 - INFO - src.trainer - NullBooth trainer cleaned up
+
+❌ Script failed with exception: KeyboardInterrupt: 
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-13 07:55:16
+Log saved to: logs/20251013_074759_train.txt
+================================================================================
+

@@ -201,17 +201,16 @@ class CovarianceMatrixManager:
         Get projection matrix with optional interpolation between neighboring timesteps.
         This provides smoother transitions for timesteps not in the cache.
         """
-        # Check if exact timestep exists
-        if timestep in self.available_timesteps:
-            return self.get_projection_matrix(timestep, layer_name, feature_type)
-
         # Find neighboring timesteps for interpolation
         lower_ts = [t for t in self.available_timesteps if t < timestep]
         upper_ts = [t for t in self.available_timesteps if t > timestep]
 
         if not lower_ts or not upper_ts:
-            # Can't interpolate, use closest
-            return self.get_projection_matrix(timestep, layer_name, feature_type)
+            # Can't interpolate, use closest available timestep
+            if not self.available_timesteps:
+                return None
+            closest_timestep = self.find_closest_timestep(timestep)
+            return self._load_and_compute_projection(closest_timestep, layer_name, feature_type)
 
         # Get nearest neighbors
         lower_timestep = max(lower_ts)
@@ -221,9 +220,13 @@ class CovarianceMatrixManager:
         P_lower = self._load_and_compute_projection(lower_timestep, layer_name, feature_type)
         P_upper = self._load_and_compute_projection(upper_timestep, layer_name, feature_type)
 
-        if P_lower is None or P_upper is None:
-            # Can't interpolate without both matrices
-            return self.get_projection_matrix(timestep, layer_name, feature_type)
+        if P_lower is None and P_upper is None:
+            closest_timestep = self.find_closest_timestep(timestep)
+            return self._load_and_compute_projection(closest_timestep, layer_name, feature_type)
+        if P_lower is None:
+            return P_upper
+        if P_upper is None:
+            return P_lower
 
         # Calculate interpolation weight
         alpha = (timestep - lower_timestep) / (upper_timestep - lower_timestep)
@@ -262,9 +265,13 @@ class CovarianceMatrixManager:
         Returns:
             Projection matrix or None if not available
         """
-        # If interpolation is enabled and timestep is not exact match, use interpolation
+        # If interpolation is enabled and timestep is not exact match, try interpolation
         if self.use_interpolation and timestep not in self.available_timesteps:
-            return self.get_interpolated_projection_matrix(timestep, layer_name, feature_type)
+            interpolated = self.get_interpolated_projection_matrix(timestep, layer_name, feature_type)
+            if interpolated is not None:
+                cache_key = f"interp_{timestep}_{layer_name}_{feature_type}"
+                self._cache_projection(cache_key, interpolated)
+                return interpolated
 
         # Find closest available timestep
         closest_timestep = self.find_closest_timestep(timestep)
@@ -283,19 +290,31 @@ class CovarianceMatrixManager:
         )
 
         if projection_matrix is not None:
-            # Cache management (LRU)
-            cache_size = self.cache_size if self.cache_size is not None else 50
-            if len(self.projection_cache) >= cache_size:
-                # Remove least recently used item
-                lru_key = min(self.access_count.keys(), key=self.access_count.get)
-                del self.projection_cache[lru_key]
-                del self.access_count[lru_key]
-
-            # Add to cache
-            self.projection_cache[cache_key] = projection_matrix
-            self.access_count[cache_key] = 1
+            self._cache_projection(cache_key, projection_matrix)
 
         return projection_matrix
+
+    def _cache_projection(self, cache_key: str, projection_matrix: Optional[torch.Tensor]):
+        """Cache projection matrix with basic LRU eviction."""
+        if projection_matrix is None:
+            return
+
+        cache_size = self.cache_size if self.cache_size is not None else 50
+        if cache_size <= 0:
+            return
+
+        if cache_key in self.projection_cache:
+            self.projection_cache[cache_key] = projection_matrix
+            self.access_count[cache_key] = self.access_count.get(cache_key, 0) + 1
+            return
+
+        if len(self.projection_cache) >= cache_size and self.access_count:
+            lru_key = min(self.access_count.keys(), key=self.access_count.get)
+            self.projection_cache.pop(lru_key, None)
+            self.access_count.pop(lru_key, None)
+
+        self.projection_cache[cache_key] = projection_matrix
+        self.access_count[cache_key] = 1
 
     def _load_and_compute_projection(
         self,

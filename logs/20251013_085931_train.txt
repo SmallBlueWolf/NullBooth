@@ -1,0 +1,106 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-13 08:59:31
+Log File: logs/20251013_085931_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251013_085931_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM-dog.yaml
+/root/bluewolf/NullBooth/src/training_utils.py:141: UserWarning: You need not use class_data_dir without with_prior_preservation.
+  warnings.warn("You need not use class_data_dir without with_prior_preservation.")
+/root/bluewolf/NullBooth/src/training_utils.py:143: UserWarning: You need not use class_prompt without with_prior_preservation.
+  warnings.warn("You need not use class_prompt without with_prior_preservation.")
+10/13/2025 08:59:31 - INFO - src.training_utils - Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cpu
+
+Mixed precision type: no
+
+Loading LCM model from: /root/bluewolf/NullBooth/LCM
+LCM model loaded successfully
+  Scheduler: LCMScheduler
+  Text Encoder: CLIPTextModel
+  UNet: UNet2DConditionModel
+10/13/2025 08:59:32 - INFO - src.trainer - 
+============================================================
+10/13/2025 08:59:32 - INFO - src.trainer - 🔬 LCF (Latent Consistency Fine-tuning) Mode Enabled
+10/13/2025 08:59:32 - INFO - src.trainer - ============================================================
+10/13/2025 08:59:32 - INFO - src.trainer -   Using self-consistency loss without distillation
+10/13/2025 08:59:33 - INFO - src.trainer -   EMA decay rate: 0.9999
+10/13/2025 08:59:33 - INFO - src.trainer -   Skipping step k: 20
+10/13/2025 08:59:33 - INFO - src.trainer -   CFG scale range: [2.0, 14.0]
+10/13/2025 08:59:33 - INFO - src.trainer - ============================================================
+
+
+============================================================
+🎯 Initializing NullBooth (AlphaEdit) Training
+============================================================
+  Detected new structure: scanning layer directories...
+  Loaded 4 timesteps
+  Including 4 alpha-named timesteps
+  Timestep range: 739 to 19
+CovarianceMatrixManager initialized:
+  Directory: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+  Available timesteps: 4
+  Nullspace threshold: 0.02
+  Use interpolation: True
+✅ NullBooth initialized successfully
+  Covariance dir: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+  Available timesteps: 4
+============================================================
+
+10/13/2025 08:59:33 - INFO - src.trainer - 
+============================================================
+10/13/2025 08:59:33 - INFO - src.trainer - 🎯 Initializing AlphaEdit NullBooth Training
+10/13/2025 08:59:33 - INFO - src.trainer - ============================================================
+AlphaEditOptimizer initialized:
+  Tracked cross-attention parameters: 80
+  Projection enabled: True
+10/13/2025 08:59:33 - INFO - src.trainer - ✅ AlphaEdit optimizer wrapper initialized successfully
+10/13/2025 08:59:33 - INFO - src.trainer -   - Mode: Projecting weight UPDATES (Δ = W_new - W_old)
+10/13/2025 08:59:33 - INFO - src.trainer -   - NOT projecting gradients or features (correct implementation)
+10/13/2025 08:59:33 - INFO - src.trainer -   - Covariance matrices: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+10/13/2025 08:59:33 - INFO - src.trainer -   - Available timesteps: 4
+10/13/2025 08:59:33 - INFO - src.trainer - ============================================================
+
+10/13/2025 08:59:33 - INFO - src.trainer - ***** Running training *****
+10/13/2025 08:59:33 - INFO - src.trainer -   Num examples = 8
+10/13/2025 08:59:33 - INFO - src.trainer -   Num batches each epoch = 8
+10/13/2025 08:59:33 - INFO - src.trainer -   Num Epochs = 3750
+10/13/2025 08:59:33 - INFO - src.trainer -   Instantaneous batch size per device = 1
+10/13/2025 08:59:33 - INFO - src.trainer -   Total train batch size (w. parallel, distributed & accumulation) = 1
+10/13/2025 08:59:33 - INFO - src.trainer -   Gradient Accumulation steps = 1
+10/13/2025 08:59:33 - INFO - src.trainer -   Total optimization steps = 30000
+10/13/2025 08:59:33 - INFO - src.trainer -   🎯 NullBooth Mode: AlphaEdit null-space projection ACTIVE
+10/13/2025 08:59:33 - INFO - src.trainer -   📊 Covariance matrices dir: /home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog
+10/13/2025 08:59:33 - INFO - src.trainer -   🔍 Nullspace threshold: 0.02
+  0%|          | 0/30000 [00:00<?, ?it/s]Steps:   0%|          | 0/30000 [00:00<?, ?it/s]Steps:   0%|          | 1/30000 [01:59<997:18:40, 119.68s/it]Steps:   0%|          | 1/30000 [01:59<997:18:40, 119.68s/it, loss=0.0452, lr=8e-6, mode=LCF, nullbooth=active]10/13/2025 09:01:33 - INFO - src.trainer - Running validation... 
+ Generating 4 images with prompt: a photo of sks dog.
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s][A
+Loading pipeline components...:  67%|######6   | 4/6 [00:00<00:00, 36.21it/s][ALoading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 25.77it/s]
+Steps:   0%|          | 2/30000 [05:50<1544:24:02, 185.34s/it, loss=0.0452, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 2/30000 [05:50<1544:24:02, 185.34s/it, loss=0.393, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 3/30000 [07:45<1276:18:39, 153.17s/it, loss=0.393, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 3/30000 [07:45<1276:18:39, 153.17s/it, loss=1.13, lr=8e-6, mode=LCF, nullbooth=active] Steps:   0%|          | 4/30000 [09:32<1123:21:28, 134.82s/it, loss=1.13, lr=8e-6, mode=LCF, nullbooth=active]Steps:   0%|          | 4/30000 [09:32<1123:21:28, 134.82s/it, loss=0.0776, lr=8e-6, mode=LCF, nullbooth=active]10/13/2025 09:09:53 - INFO - src.trainer - 
+============================================================
+10/13/2025 09:09:53 - INFO - src.trainer - 📊 AlphaEdit NullBooth Training Summary
+10/13/2025 09:09:53 - INFO - src.trainer - ============================================================
+10/13/2025 09:09:53 - INFO - src.trainer - ✅ Successfully applied null-space projection to weight updates
+10/13/2025 09:09:53 - INFO - src.trainer - ✅ Original knowledge preserved through K₀K₀ᵀ null-space constraint
+10/13/2025 09:09:53 - INFO - src.trainer - ============================================================
+🧹 Cleaning up NullBooth trainer...
+10/13/2025 09:09:53 - INFO - src.trainer - NullBooth trainer cleaned up
+
+❌ Script failed with exception: KeyboardInterrupt: 
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-13 09:09:53
+Log saved to: logs/20251013_085931_train.txt
+================================================================================
+

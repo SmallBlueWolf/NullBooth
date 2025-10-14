@@ -1,0 +1,1033 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-14 09:44:52
+Log File: logs/20251014_094452_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251014_094452_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM-dog-dreambooth-fast.yaml
+10/14/2025 09:44:52 - INFO - src.training_utils - Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cuda
+
+Mixed precision type: no
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  17%|#6        | 1/6 [00:00<00:00,  5.80it/s]Loading pipeline components...:  33%|###3      | 2/6 [00:00<00:01,  3.44it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00,  9.45it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00,  8.00it/s]
+10/14/2025 09:44:53 - INFO - src.trainer - Number of class images to sample: 30.
+Generating class images:   0%|          | 0/8 [00:00<?, ?it/s]Generating class images:  12%|#2        | 1/8 [00:01<00:13,  1.99s/it]Generating class images:  25%|##5       | 2/8 [00:03<00:10,  1.68s/it]Generating class images:  38%|###7      | 3/8 [00:04<00:07,  1.59s/it]Generating class images:  50%|#####     | 4/8 [00:06<00:06,  1.54s/it]Generating class images:  62%|######2   | 5/8 [00:07<00:04,  1.51s/it]Generating class images:  75%|#######5  | 6/8 [00:09<00:02,  1.49s/it]Generating class images:  88%|########7 | 7/8 [00:10<00:01,  1.48s/it]Generating class images: 100%|##########| 8/8 [00:11<00:00,  1.27s/it]Generating class images: 100%|##########| 8/8 [00:11<00:00,  1.45s/it]
+Loading LCM model from: /root/bluewolf/NullBooth/LCM
+LCM model loaded successfully
+  Scheduler: LCMScheduler
+  Text Encoder: CLIPTextModel
+  UNet: UNet2DConditionModel
+trainable params: 1,594,368 || all params: 861,197,252 || trainable%: 0.1851
+PeftModel(
+  (base_model): LoraModel(
+    (model): UNet2DConditionModel(
+      (conv_in): Conv2d(4, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (time_proj): Timesteps()
+      (time_embedding): TimestepEmbedding(
+        (linear_1): Linear(in_features=320, out_features=1280, bias=True)
+        (cond_proj): Linear(in_features=256, out_features=320, bias=False)
+        (act): SiLU()
+        (linear_2): Linear(in_features=1280, out_features=1280, bias=True)
+      )
+      (down_blocks): ModuleList(
+        (0): CrossAttnDownBlock2D(
+          (attentions): ModuleList(
+            (0-1): 2 x Transformer2DModel(
+              (norm): GroupNorm(32, 320, eps=1e-06, affine=True)
+              (proj_in): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+              (transformer_blocks): ModuleList(
+                (0): BasicTransformerBlock(
+                  (norm1): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+                  (attn1): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=320, out_features=320, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=320, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=320, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=320, out_features=320, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=320, out_features=320, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=320, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=320, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=320, out_features=320, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm2): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+                  (attn2): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=320, out_features=320, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=320, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=320, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=768, out_features=320, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=768, out_features=320, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=768, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=320, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=320, out_features=320, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm3): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+                  (ff): FeedForward(
+                    (net): ModuleList(
+                      (0): GEGLU(
+                        (proj): Linear(in_features=320, out_features=2560, bias=True)
+                      )
+                      (1): Dropout(p=0.0, inplace=False)
+                      (2): Linear(in_features=1280, out_features=320, bias=True)
+                    )
+                  )
+                )
+              )
+              (proj_out): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (resnets): ModuleList(
+            (0-1): 2 x ResnetBlock2D(
+              (norm1): GroupNorm(32, 320, eps=1e-05, affine=True)
+              (conv1): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=320, bias=True)
+              (norm2): GroupNorm(32, 320, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+            )
+          )
+          (downsamplers): ModuleList(
+            (0): Downsample2D(
+              (conv): Conv2d(320, 320, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+            )
+          )
+        )
+        (1): CrossAttnDownBlock2D(
+          (attentions): ModuleList(
+            (0-1): 2 x Transformer2DModel(
+              (norm): GroupNorm(32, 640, eps=1e-06, affine=True)
+              (proj_in): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+              (transformer_blocks): ModuleList(
+                (0): BasicTransformerBlock(
+                  (norm1): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+                  (attn1): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=640, out_features=640, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=640, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=640, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=640, out_features=640, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=640, out_features=640, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=640, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=640, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=640, out_features=640, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm2): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+                  (attn2): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=640, out_features=640, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=640, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=640, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=768, out_features=640, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=768, out_features=640, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=768, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=640, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=640, out_features=640, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm3): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+                  (ff): FeedForward(
+                    (net): ModuleList(
+                      (0): GEGLU(
+                        (proj): Linear(in_features=640, out_features=5120, bias=True)
+                      )
+                      (1): Dropout(p=0.0, inplace=False)
+                      (2): Linear(in_features=2560, out_features=640, bias=True)
+                    )
+                  )
+                )
+              )
+              (proj_out): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (resnets): ModuleList(
+            (0): ResnetBlock2D(
+              (norm1): GroupNorm(32, 320, eps=1e-05, affine=True)
+              (conv1): Conv2d(320, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+              (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(320, 640, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (1): ResnetBlock2D(
+              (norm1): GroupNorm(32, 640, eps=1e-05, affine=True)
+              (conv1): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+              (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+            )
+          )
+          (downsamplers): ModuleList(
+            (0): Downsample2D(
+              (conv): Conv2d(640, 640, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+            )
+          )
+        )
+        (2): CrossAttnDownBlock2D(
+          (attentions): ModuleList(
+            (0-1): 2 x Transformer2DModel(
+              (norm): GroupNorm(32, 1280, eps=1e-06, affine=True)
+              (proj_in): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+              (transformer_blocks): ModuleList(
+                (0): BasicTransformerBlock(
+                  (norm1): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                  (attn1): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=1280, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=1280, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=1280, out_features=1280, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=1280, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=1280, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=1280, out_features=1280, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm2): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                  (attn2): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=1280, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=1280, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=768, out_features=1280, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=768, out_features=1280, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=768, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=1280, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=1280, out_features=1280, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm3): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                  (ff): FeedForward(
+                    (net): ModuleList(
+                      (0): GEGLU(
+                        (proj): Linear(in_features=1280, out_features=10240, bias=True)
+                      )
+                      (1): Dropout(p=0.0, inplace=False)
+                      (2): Linear(in_features=5120, out_features=1280, bias=True)
+                    )
+                  )
+                )
+              )
+              (proj_out): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (resnets): ModuleList(
+            (0): ResnetBlock2D(
+              (norm1): GroupNorm(32, 640, eps=1e-05, affine=True)
+              (conv1): Conv2d(640, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+              (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(640, 1280, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (1): ResnetBlock2D(
+              (norm1): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (conv1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+              (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+            )
+          )
+          (downsamplers): ModuleList(
+            (0): Downsample2D(
+              (conv): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+            )
+          )
+        )
+        (3): DownBlock2D(
+          (resnets): ModuleList(
+            (0-1): 2 x ResnetBlock2D(
+              (norm1): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (conv1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+              (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+            )
+          )
+        )
+      )
+      (up_blocks): ModuleList(
+        (0): UpBlock2D(
+          (resnets): ModuleList(
+            (0-2): 3 x ResnetBlock2D(
+              (norm1): GroupNorm(32, 2560, eps=1e-05, affine=True)
+              (conv1): Conv2d(2560, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+              (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(2560, 1280, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (upsamplers): ModuleList(
+            (0): Upsample2D(
+              (conv): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+          )
+        )
+        (1): CrossAttnUpBlock2D(
+          (attentions): ModuleList(
+            (0-2): 3 x Transformer2DModel(
+              (norm): GroupNorm(32, 1280, eps=1e-06, affine=True)
+              (proj_in): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+              (transformer_blocks): ModuleList(
+                (0): BasicTransformerBlock(
+                  (norm1): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                  (attn1): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=1280, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=1280, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=1280, out_features=1280, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=1280, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=1280, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=1280, out_features=1280, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm2): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                  (attn2): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=1280, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=1280, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=768, out_features=1280, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=768, out_features=1280, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=768, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=1280, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=1280, out_features=1280, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm3): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                  (ff): FeedForward(
+                    (net): ModuleList(
+                      (0): GEGLU(
+                        (proj): Linear(in_features=1280, out_features=10240, bias=True)
+                      )
+                      (1): Dropout(p=0.0, inplace=False)
+                      (2): Linear(in_features=5120, out_features=1280, bias=True)
+                    )
+                  )
+                )
+              )
+              (proj_out): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (resnets): ModuleList(
+            (0-1): 2 x ResnetBlock2D(
+              (norm1): GroupNorm(32, 2560, eps=1e-05, affine=True)
+              (conv1): Conv2d(2560, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+              (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(2560, 1280, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (2): ResnetBlock2D(
+              (norm1): GroupNorm(32, 1920, eps=1e-05, affine=True)
+              (conv1): Conv2d(1920, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+              (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(1920, 1280, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (upsamplers): ModuleList(
+            (0): Upsample2D(
+              (conv): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+          )
+        )
+        (2): CrossAttnUpBlock2D(
+          (attentions): ModuleList(
+            (0-2): 3 x Transformer2DModel(
+              (norm): GroupNorm(32, 640, eps=1e-06, affine=True)
+              (proj_in): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+              (transformer_blocks): ModuleList(
+                (0): BasicTransformerBlock(
+                  (norm1): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+                  (attn1): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=640, out_features=640, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=640, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=640, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=640, out_features=640, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=640, out_features=640, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=640, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=640, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=640, out_features=640, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm2): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+                  (attn2): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=640, out_features=640, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=640, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=640, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=768, out_features=640, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=768, out_features=640, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=768, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=640, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=640, out_features=640, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm3): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+                  (ff): FeedForward(
+                    (net): ModuleList(
+                      (0): GEGLU(
+                        (proj): Linear(in_features=640, out_features=5120, bias=True)
+                      )
+                      (1): Dropout(p=0.0, inplace=False)
+                      (2): Linear(in_features=2560, out_features=640, bias=True)
+                    )
+                  )
+                )
+              )
+              (proj_out): Conv2d(640, 640, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (resnets): ModuleList(
+            (0): ResnetBlock2D(
+              (norm1): GroupNorm(32, 1920, eps=1e-05, affine=True)
+              (conv1): Conv2d(1920, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+              (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(1920, 640, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (1): ResnetBlock2D(
+              (norm1): GroupNorm(32, 1280, eps=1e-05, affine=True)
+              (conv1): Conv2d(1280, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+              (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(1280, 640, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (2): ResnetBlock2D(
+              (norm1): GroupNorm(32, 960, eps=1e-05, affine=True)
+              (conv1): Conv2d(960, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=640, bias=True)
+              (norm2): GroupNorm(32, 640, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(960, 640, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (upsamplers): ModuleList(
+            (0): Upsample2D(
+              (conv): Conv2d(640, 640, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            )
+          )
+        )
+        (3): CrossAttnUpBlock2D(
+          (attentions): ModuleList(
+            (0-2): 3 x Transformer2DModel(
+              (norm): GroupNorm(32, 320, eps=1e-06, affine=True)
+              (proj_in): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+              (transformer_blocks): ModuleList(
+                (0): BasicTransformerBlock(
+                  (norm1): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+                  (attn1): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=320, out_features=320, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=320, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=320, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=320, out_features=320, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=320, out_features=320, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=320, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=320, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=320, out_features=320, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm2): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+                  (attn2): Attention(
+                    (to_q): lora.Linear(
+                      (base_layer): Linear(in_features=320, out_features=320, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=320, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=320, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_k): Linear(in_features=768, out_features=320, bias=False)
+                    (to_v): lora.Linear(
+                      (base_layer): Linear(in_features=768, out_features=320, bias=False)
+                      (lora_dropout): ModuleDict(
+                        (default): Identity()
+                      )
+                      (lora_A): ModuleDict(
+                        (default): Linear(in_features=768, out_features=16, bias=False)
+                      )
+                      (lora_B): ModuleDict(
+                        (default): Linear(in_features=16, out_features=320, bias=False)
+                      )
+                      (lora_embedding_A): ParameterDict()
+                      (lora_embedding_B): ParameterDict()
+                      (lora_magnitude_vector): ModuleDict()
+                    )
+                    (to_out): ModuleList(
+                      (0): Linear(in_features=320, out_features=320, bias=True)
+                      (1): Dropout(p=0.0, inplace=False)
+                    )
+                  )
+                  (norm3): LayerNorm((320,), eps=1e-05, elementwise_affine=True)
+                  (ff): FeedForward(
+                    (net): ModuleList(
+                      (0): GEGLU(
+                        (proj): Linear(in_features=320, out_features=2560, bias=True)
+                      )
+                      (1): Dropout(p=0.0, inplace=False)
+                      (2): Linear(in_features=1280, out_features=320, bias=True)
+                    )
+                  )
+                )
+              )
+              (proj_out): Conv2d(320, 320, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+          (resnets): ModuleList(
+            (0): ResnetBlock2D(
+              (norm1): GroupNorm(32, 960, eps=1e-05, affine=True)
+              (conv1): Conv2d(960, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=320, bias=True)
+              (norm2): GroupNorm(32, 320, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(960, 320, kernel_size=(1, 1), stride=(1, 1))
+            )
+            (1-2): 2 x ResnetBlock2D(
+              (norm1): GroupNorm(32, 640, eps=1e-05, affine=True)
+              (conv1): Conv2d(640, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (time_emb_proj): Linear(in_features=1280, out_features=320, bias=True)
+              (norm2): GroupNorm(32, 320, eps=1e-05, affine=True)
+              (dropout): Dropout(p=0.0, inplace=False)
+              (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+              (nonlinearity): SiLU()
+              (conv_shortcut): Conv2d(640, 320, kernel_size=(1, 1), stride=(1, 1))
+            )
+          )
+        )
+      )
+      (mid_block): UNetMidBlock2DCrossAttn(
+        (attentions): ModuleList(
+          (0): Transformer2DModel(
+            (norm): GroupNorm(32, 1280, eps=1e-06, affine=True)
+            (proj_in): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+            (transformer_blocks): ModuleList(
+              (0): BasicTransformerBlock(
+                (norm1): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                (attn1): Attention(
+                  (to_q): lora.Linear(
+                    (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                    (lora_dropout): ModuleDict(
+                      (default): Identity()
+                    )
+                    (lora_A): ModuleDict(
+                      (default): Linear(in_features=1280, out_features=16, bias=False)
+                    )
+                    (lora_B): ModuleDict(
+                      (default): Linear(in_features=16, out_features=1280, bias=False)
+                    )
+                    (lora_embedding_A): ParameterDict()
+                    (lora_embedding_B): ParameterDict()
+                    (lora_magnitude_vector): ModuleDict()
+                  )
+                  (to_k): Linear(in_features=1280, out_features=1280, bias=False)
+                  (to_v): lora.Linear(
+                    (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                    (lora_dropout): ModuleDict(
+                      (default): Identity()
+                    )
+                    (lora_A): ModuleDict(
+                      (default): Linear(in_features=1280, out_features=16, bias=False)
+                    )
+                    (lora_B): ModuleDict(
+                      (default): Linear(in_features=16, out_features=1280, bias=False)
+                    )
+                    (lora_embedding_A): ParameterDict()
+                    (lora_embedding_B): ParameterDict()
+                    (lora_magnitude_vector): ModuleDict()
+                  )
+                  (to_out): ModuleList(
+                    (0): Linear(in_features=1280, out_features=1280, bias=True)
+                    (1): Dropout(p=0.0, inplace=False)
+                  )
+                )
+                (norm2): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                (attn2): Attention(
+                  (to_q): lora.Linear(
+                    (base_layer): Linear(in_features=1280, out_features=1280, bias=False)
+                    (lora_dropout): ModuleDict(
+                      (default): Identity()
+                    )
+                    (lora_A): ModuleDict(
+                      (default): Linear(in_features=1280, out_features=16, bias=False)
+                    )
+                    (lora_B): ModuleDict(
+                      (default): Linear(in_features=16, out_features=1280, bias=False)
+                    )
+                    (lora_embedding_A): ParameterDict()
+                    (lora_embedding_B): ParameterDict()
+                    (lora_magnitude_vector): ModuleDict()
+                  )
+                  (to_k): Linear(in_features=768, out_features=1280, bias=False)
+                  (to_v): lora.Linear(
+                    (base_layer): Linear(in_features=768, out_features=1280, bias=False)
+                    (lora_dropout): ModuleDict(
+                      (default): Identity()
+                    )
+                    (lora_A): ModuleDict(
+                      (default): Linear(in_features=768, out_features=16, bias=False)
+                    )
+                    (lora_B): ModuleDict(
+                      (default): Linear(in_features=16, out_features=1280, bias=False)
+                    )
+                    (lora_embedding_A): ParameterDict()
+                    (lora_embedding_B): ParameterDict()
+                    (lora_magnitude_vector): ModuleDict()
+                  )
+                  (to_out): ModuleList(
+                    (0): Linear(in_features=1280, out_features=1280, bias=True)
+                    (1): Dropout(p=0.0, inplace=False)
+                  )
+                )
+                (norm3): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+                (ff): FeedForward(
+                  (net): ModuleList(
+                    (0): GEGLU(
+                      (proj): Linear(in_features=1280, out_features=10240, bias=True)
+                    )
+                    (1): Dropout(p=0.0, inplace=False)
+                    (2): Linear(in_features=5120, out_features=1280, bias=True)
+                  )
+                )
+              )
+            )
+            (proj_out): Conv2d(1280, 1280, kernel_size=(1, 1), stride=(1, 1))
+          )
+        )
+        (resnets): ModuleList(
+          (0-1): 2 x ResnetBlock2D(
+            (norm1): GroupNorm(32, 1280, eps=1e-05, affine=True)
+            (conv1): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (time_emb_proj): Linear(in_features=1280, out_features=1280, bias=True)
+            (norm2): GroupNorm(32, 1280, eps=1e-05, affine=True)
+            (dropout): Dropout(p=0.0, inplace=False)
+            (conv2): Conv2d(1280, 1280, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (nonlinearity): SiLU()
+          )
+        )
+      )
+      (conv_norm_out): GroupNorm(32, 320, eps=1e-05, affine=True)
+      (conv_act): SiLU()
+      (conv_out): Conv2d(320, 4, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    )
+  )
+)
+trainable params: 294,912 || all params: 123,355,392 || trainable%: 0.2391
+PeftModel(
+  (base_model): LoraModel(
+    (model): CLIPTextModel(
+      (text_model): CLIPTextTransformer(
+        (embeddings): CLIPTextEmbeddings(
+          (token_embedding): Embedding(49408, 768)
+          (position_embedding): Embedding(77, 768)
+        )
+        (encoder): CLIPEncoder(
+          (layers): ModuleList(
+            (0-11): 12 x CLIPEncoderLayer(
+              (self_attn): CLIPAttention(
+                (k_proj): Linear(in_features=768, out_features=768, bias=True)
+                (v_proj): lora.Linear(
+                  (base_layer): Linear(in_features=768, out_features=768, bias=True)
+                  (lora_dropout): ModuleDict(
+                    (default): Identity()
+                  )
+                  (lora_A): ModuleDict(
+                    (default): Linear(in_features=768, out_features=8, bias=False)
+                  )
+                  (lora_B): ModuleDict(
+                    (default): Linear(in_features=8, out_features=768, bias=False)
+                  )
+                  (lora_embedding_A): ParameterDict()
+                  (lora_embedding_B): ParameterDict()
+                  (lora_magnitude_vector): ModuleDict()
+                )
+                (q_proj): lora.Linear(
+                  (base_layer): Linear(in_features=768, out_features=768, bias=True)
+                  (lora_dropout): ModuleDict(
+                    (default): Identity()
+                  )
+                  (lora_A): ModuleDict(
+                    (default): Linear(in_features=768, out_features=8, bias=False)
+                  )
+                  (lora_B): ModuleDict(
+                    (default): Linear(in_features=8, out_features=768, bias=False)
+                  )
+                  (lora_embedding_A): ParameterDict()
+                  (lora_embedding_B): ParameterDict()
+                  (lora_magnitude_vector): ModuleDict()
+                )
+                (out_proj): Linear(in_features=768, out_features=768, bias=True)
+              )
+              (layer_norm1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+              (mlp): CLIPMLP(
+                (activation_fn): QuickGELUActivation()
+                (fc1): Linear(in_features=768, out_features=3072, bias=True)
+                (fc2): Linear(in_features=3072, out_features=768, bias=True)
+              )
+              (layer_norm2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            )
+          )
+        )
+        (final_layer_norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+      )
+    )
+  )
+)
+10/14/2025 09:45:09 - INFO - src.trainer - ***** Running training *****
+10/14/2025 09:45:09 - INFO - src.trainer -   Num examples = 50
+10/14/2025 09:45:09 - INFO - src.trainer -   Num batches each epoch = 25
+10/14/2025 09:45:09 - INFO - src.trainer -   Num Epochs = 24
+10/14/2025 09:45:09 - INFO - src.trainer -   Instantaneous batch size per device = 2
+10/14/2025 09:45:09 - INFO - src.trainer -   Total train batch size (w. parallel, distributed & accumulation) = 2
+10/14/2025 09:45:09 - INFO - src.trainer -   Gradient Accumulation steps = 1
+10/14/2025 09:45:09 - INFO - src.trainer -   Total optimization steps = 600
+  0%|          | 0/600 [00:00<?, ?it/s]Steps:   0%|          | 0/600 [00:00<?, ?it/s]Steps:   0%|          | 1/600 [00:01<11:31,  1.15s/it]Steps:   0%|          | 1/600 [00:01<11:31,  1.15s/it, loss=0.216, lr=5e-5]10/14/2025 09:45:10 - INFO - src.trainer - Running validation... 
+ Generating 2 images with prompt: a photo of sks dog.
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s][A
+Loading pipeline components...:  17%|#6        | 1/6 [00:00<00:01,  3.11it/s][A
+Loading pipeline components...:  83%|########3 | 5/6 [00:00<00:00, 13.11it/s][ALoading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 12.07it/s]
+Steps:   0%|          | 2/600 [00:05<32:22,  3.25s/it, loss=0.216, lr=5e-5]Steps:   0%|          | 2/600 [00:05<32:22,  3.25s/it, loss=0.16, lr=5e-5] Steps:   0%|          | 3/600 [00:06<21:28,  2.16s/it, loss=0.16, lr=5e-5]Steps:   0%|          | 3/600 [00:06<21:28,  2.16s/it, loss=0.286, lr=5e-5]Steps:   1%|          | 4/600 [00:07<16:19,  1.64s/it, loss=0.286, lr=5e-5]Steps:   1%|          | 4/600 [00:07<16:19,  1.64s/it, loss=0.0535, lr=5e-5]Steps:   1%|          | 5/600 [00:08<13:30,  1.36s/it, loss=0.0535, lr=5e-5]Steps:   1%|          | 5/600 [00:08<13:30,  1.36s/it, loss=0.0946, lr=5e-5]Steps:   1%|1         | 6/600 [00:09<11:47,  1.19s/it, loss=0.0946, lr=5e-5]Steps:   1%|1         | 6/600 [00:09<11:47,  1.19s/it, loss=0.366, lr=5e-5] Steps:   1%|1         | 7/600 [00:10<10:41,  1.08s/it, loss=0.366, lr=5e-5]Steps:   1%|1         | 7/600 [00:10<10:41,  1.08s/it, loss=0.473, lr=5e-5]Steps:   1%|1         | 8/600 [00:11<09:58,  1.01s/it, loss=0.473, lr=5e-5]Steps:   1%|1         | 8/600 [00:11<09:58,  1.01s/it, loss=0.72, lr=5e-5] Steps:   2%|1         | 9/600 [00:11<09:30,  1.04it/s, loss=0.72, lr=5e-5]Steps:   2%|1         | 9/600 [00:12<09:30,  1.04it/s, loss=0.356, lr=5e-5]Steps:   2%|1         | 10/600 [00:12<09:11,  1.07it/s, loss=0.356, lr=5e-5]Steps:   2%|1         | 10/600 [00:12<09:11,  1.07it/s, loss=0.0236, lr=5e-5]Steps:   2%|1         | 11/600 [00:13<08:56,  1.10it/s, loss=0.0236, lr=5e-5]Steps:   2%|1         | 11/600 [00:13<08:56,  1.10it/s, loss=0.263, lr=5e-5] Steps:   2%|2         | 12/600 [00:14<08:45,  1.12it/s, loss=0.263, lr=5e-5]Steps:   2%|2         | 12/600 [00:14<08:45,  1.12it/s, loss=0.28, lr=5e-5] Steps:   2%|2         | 13/600 [00:15<08:39,  1.13it/s, loss=0.28, lr=5e-5]Steps:   2%|2         | 13/600 [00:15<08:39,  1.13it/s, loss=0.282, lr=5e-5]Steps:   2%|2         | 14/600 [00:16<08:40,  1.13it/s, loss=0.282, lr=5e-5]Steps:   2%|2         | 14/600 [00:16<08:40,  1.13it/s, loss=0.139, lr=5e-5]Steps:   2%|2         | 15/600 [00:17<08:34,  1.14it/s, loss=0.139, lr=5e-5]Steps:   2%|2         | 15/600 [00:17<08:34,  1.14it/s, loss=0.442, lr=5e-5]Steps:   3%|2         | 16/600 [00:17<08:30,  1.14it/s, loss=0.442, lr=5e-5]Steps:   3%|2         | 16/600 [00:18<08:30,  1.14it/s, loss=0.302, lr=5e-5]Steps:   3%|2         | 17/600 [00:18<08:27,  1.15it/s, loss=0.302, lr=5e-5]Steps:   3%|2         | 17/600 [00:18<08:27,  1.15it/s, loss=0.06, lr=5e-5] Steps:   3%|3         | 18/600 [00:19<08:24,  1.15it/s, loss=0.06, lr=5e-5]Steps:   3%|3         | 18/600 [00:19<08:24,  1.15it/s, loss=0.417, lr=5e-5]Steps:   3%|3         | 19/600 [00:20<08:21,  1.16it/s, loss=0.417, lr=5e-5]Steps:   3%|3         | 19/600 [00:20<08:21,  1.16it/s, loss=0.227, lr=5e-5]Steps:   3%|3         | 20/600 [00:21<08:20,  1.16it/s, loss=0.227, lr=5e-5]Steps:   3%|3         | 20/600 [00:21<08:20,  1.16it/s, loss=0.45, lr=5e-5] Steps:   4%|3         | 21/600 [00:22<08:19,  1.16it/s, loss=0.45, lr=5e-5]Steps:   4%|3         | 21/600 [00:22<08:19,  1.16it/s, loss=0.128, lr=5e-5]Steps:   4%|3         | 22/600 [00:23<08:17,  1.16it/s, loss=0.128, lr=5e-5]Steps:   4%|3         | 22/600 [00:23<08:17,  1.16it/s, loss=0.221, lr=5e-5]Steps:   4%|3         | 23/600 [00:23<08:17,  1.16it/s, loss=0.221, lr=5e-5]Steps:   4%|3         | 23/600 [00:24<08:17,  1.16it/s, loss=0.307, lr=5e-5]Steps:   4%|4         | 24/600 [00:24<08:16,  1.16it/s, loss=0.307, lr=5e-5]Steps:   4%|4         | 24/600 [00:24<08:16,  1.16it/s, loss=0.145, lr=5e-5]Steps:   4%|4         | 25/600 [00:25<08:09,  1.18it/s, loss=0.145, lr=5e-5]Steps:   4%|4         | 25/600 [00:25<08:09,  1.18it/s, loss=0.258, lr=5e-5]Steps:   4%|4         | 26/600 [00:26<08:14,  1.16it/s, loss=0.258, lr=5e-5]Steps:   4%|4         | 26/600 [00:26<08:14,  1.16it/s, loss=0.228, lr=5e-5]Steps:   4%|4         | 27/600 [00:27<08:14,  1.16it/s, loss=0.228, lr=5e-5]Steps:   4%|4         | 27/600 [00:27<08:14,  1.16it/s, loss=0.117, lr=5e-5]Steps:   5%|4         | 28/600 [00:28<08:13,  1.16it/s, loss=0.117, lr=5e-5]Steps:   5%|4         | 28/600 [00:28<08:13,  1.16it/s, loss=0.265, lr=5e-5]Steps:   5%|4         | 29/600 [00:29<08:13,  1.16it/s, loss=0.265, lr=5e-5]Steps:   5%|4         | 29/600 [00:29<08:13,  1.16it/s, loss=0.0771, lr=5e-5]Steps:   5%|5         | 30/600 [00:30<08:13,  1.16it/s, loss=0.0771, lr=5e-5]Steps:   5%|5         | 30/600 [00:30<08:13,  1.16it/s, loss=0.368, lr=5e-5] Steps:   5%|5         | 31/600 [00:30<08:11,  1.16it/s, loss=0.368, lr=5e-5]Steps:   5%|5         | 31/600 [00:30<08:11,  1.16it/s, loss=0.31, lr=5e-5] Steps:   5%|5         | 32/600 [00:31<08:11,  1.16it/s, loss=0.31, lr=5e-5]Steps:   5%|5         | 32/600 [00:31<08:11,  1.16it/s, loss=0.415, lr=5e-5]Steps:   6%|5         | 33/600 [00:32<08:09,  1.16it/s, loss=0.415, lr=5e-5]Steps:   6%|5         | 33/600 [00:32<08:09,  1.16it/s, loss=0.207, lr=5e-5]Steps:   6%|5         | 34/600 [00:33<08:08,  1.16it/s, loss=0.207, lr=5e-5]Steps:   6%|5         | 34/600 [00:33<08:08,  1.16it/s, loss=0.521, lr=5e-5]Steps:   6%|5         | 35/600 [00:34<08:07,  1.16it/s, loss=0.521, lr=5e-5]Steps:   6%|5         | 35/600 [00:34<08:07,  1.16it/s, loss=0.626, lr=5e-5]Steps:   6%|6         | 36/600 [00:35<08:06,  1.16it/s, loss=0.626, lr=5e-5]Steps:   6%|6         | 36/600 [00:35<08:06,  1.16it/s, loss=0.15, lr=5e-5] Steps:   6%|6         | 37/600 [00:36<08:04,  1.16it/s, loss=0.15, lr=5e-5]Steps:   6%|6         | 37/600 [00:36<08:04,  1.16it/s, loss=0.276, lr=5e-5]Steps:   6%|6         | 38/600 [00:36<08:03,  1.16it/s, loss=0.276, lr=5e-5]Steps:   6%|6         | 38/600 [00:37<08:03,  1.16it/s, loss=0.387, lr=5e-5]Steps:   6%|6         | 39/600 [00:37<08:03,  1.16it/s, loss=0.387, lr=5e-5]Steps:   6%|6         | 39/600 [00:37<08:03,  1.16it/s, loss=0.0481, lr=5e-5]Steps:   7%|6         | 40/600 [00:38<08:03,  1.16it/s, loss=0.0481, lr=5e-5]Steps:   7%|6         | 40/600 [00:38<08:03,  1.16it/s, loss=0.132, lr=5e-5] Steps:   7%|6         | 41/600 [00:39<08:02,  1.16it/s, loss=0.132, lr=5e-5]Steps:   7%|6         | 41/600 [00:39<08:02,  1.16it/s, loss=0.127, lr=5e-5]Steps:   7%|7         | 42/600 [00:40<08:01,  1.16it/s, loss=0.127, lr=5e-5]Steps:   7%|7         | 42/600 [00:40<08:01,  1.16it/s, loss=0.0477, lr=5e-5]Steps:   7%|7         | 43/600 [00:41<07:59,  1.16it/s, loss=0.0477, lr=5e-5]Steps:   7%|7         | 43/600 [00:41<07:59,  1.16it/s, loss=0.00742, lr=5e-5]Steps:   7%|7         | 44/600 [00:42<07:59,  1.16it/s, loss=0.00742, lr=5e-5]Steps:   7%|7         | 44/600 [00:42<07:59,  1.16it/s, loss=0.3, lr=5e-5]    Steps:   8%|7         | 45/600 [00:42<07:57,  1.16it/s, loss=0.3, lr=5e-5]Steps:   8%|7         | 45/600 [00:43<07:57,  1.16it/s, loss=0.64, lr=5e-5]Steps:   8%|7         | 46/600 [00:43<07:56,  1.16it/s, loss=0.64, lr=5e-5]Steps:   8%|7         | 46/600 [00:43<07:56,  1.16it/s, loss=0.252, lr=5e-5]Steps:   8%|7         | 47/600 [00:44<07:56,  1.16it/s, loss=0.252, lr=5e-5]Steps:   8%|7         | 47/600 [00:44<07:56,  1.16it/s, loss=0.047, lr=5e-5]Steps:   8%|8         | 48/600 [00:45<07:56,  1.16it/s, loss=0.047, lr=5e-5]Steps:   8%|8         | 48/600 [00:45<07:56,  1.16it/s, loss=0.0459, lr=5e-5]Steps:   8%|8         | 49/600 [00:46<07:54,  1.16it/s, loss=0.0459, lr=5e-5]Steps:   8%|8         | 49/600 [00:46<07:54,  1.16it/s, loss=0.11, lr=5e-5]  Steps:   8%|8         | 50/600 [00:47<07:48,  1.18it/s, loss=0.11, lr=5e-5]Steps:   8%|8         | 50/600 [00:47<07:48,  1.18it/s, loss=0.109, lr=5e-5]Steps:   8%|8         | 51/600 [00:48<07:55,  1.16it/s, loss=0.109, lr=5e-5]Steps:   8%|8         | 51/600 [00:48<07:55,  1.16it/s, loss=0.0308, lr=5e-5]Steps:   9%|8         | 52/600 [00:48<07:53,  1.16it/s, loss=0.0308, lr=5e-5]Steps:   9%|8         | 52/600 [00:49<07:53,  1.16it/s, loss=0.219, lr=5e-5] Steps:   9%|8         | 53/600 [00:49<07:52,  1.16it/s, loss=0.219, lr=5e-5]Steps:   9%|8         | 53/600 [00:49<07:52,  1.16it/s, loss=0.122, lr=5e-5]Steps:   9%|9         | 54/600 [00:50<07:52,  1.16it/s, loss=0.122, lr=5e-5]Steps:   9%|9         | 54/600 [00:50<07:52,  1.16it/s, loss=0.127, lr=5e-5]Steps:   9%|9         | 55/600 [00:51<07:51,  1.16it/s, loss=0.127, lr=5e-5]Steps:   9%|9         | 55/600 [00:51<07:51,  1.16it/s, loss=0.101, lr=5e-5]Steps:   9%|9         | 56/600 [00:52<07:50,  1.16it/s, loss=0.101, lr=5e-5]Steps:   9%|9         | 56/600 [00:52<07:50,  1.16it/s, loss=0.166, lr=5e-5]Steps:  10%|9         | 57/600 [00:53<07:49,  1.16it/s, loss=0.166, lr=5e-5]Steps:  10%|9         | 57/600 [00:53<07:49,  1.16it/s, loss=0.366, lr=5e-5]Steps:  10%|9         | 58/600 [00:54<07:47,  1.16it/s, loss=0.366, lr=5e-5]Steps:  10%|9         | 58/600 [00:54<07:47,  1.16it/s, loss=0.181, lr=5e-5]Steps:  10%|9         | 59/600 [00:55<07:47,  1.16it/s, loss=0.181, lr=5e-5]Steps:  10%|9         | 59/600 [00:55<07:47,  1.16it/s, loss=0.108, lr=5e-5]Steps:  10%|#         | 60/600 [00:55<07:46,  1.16it/s, loss=0.108, lr=5e-5]Steps:  10%|#         | 60/600 [00:55<07:46,  1.16it/s, loss=0.0422, lr=5e-5]Steps:  10%|#         | 61/600 [00:56<07:45,  1.16it/s, loss=0.0422, lr=5e-5]Steps:  10%|#         | 61/600 [00:56<07:45,  1.16it/s, loss=0.0646, lr=5e-5]Steps:  10%|#         | 62/600 [00:57<07:45,  1.16it/s, loss=0.0646, lr=5e-5]Steps:  10%|#         | 62/600 [00:57<07:45,  1.16it/s, loss=0.171, lr=5e-5] Steps:  10%|#         | 63/600 [00:58<07:44,  1.16it/s, loss=0.171, lr=5e-5]Steps:  10%|#         | 63/600 [00:58<07:44,  1.16it/s, loss=0.169, lr=5e-5]Steps:  11%|#         | 64/600 [00:59<07:43,  1.16it/s, loss=0.169, lr=5e-5]Steps:  11%|#         | 64/600 [00:59<07:43,  1.16it/s, loss=0.397, lr=5e-5]Steps:  11%|#         | 65/600 [01:00<07:42,  1.16it/s, loss=0.397, lr=5e-5]Steps:  11%|#         | 65/600 [01:00<07:42,  1.16it/s, loss=0.116, lr=5e-5]Steps:  11%|#1        | 66/600 [01:01<07:41,  1.16it/s, loss=0.116, lr=5e-5]Steps:  11%|#1        | 66/600 [01:01<07:41,  1.16it/s, loss=0.0353, lr=5e-5]Steps:  11%|#1        | 67/600 [01:01<07:38,  1.16it/s, loss=0.0353, lr=5e-5]Steps:  11%|#1        | 67/600 [01:02<07:38,  1.16it/s, loss=0.347, lr=5e-5] Steps:  11%|#1        | 68/600 [01:02<07:37,  1.16it/s, loss=0.347, lr=5e-5]Steps:  11%|#1        | 68/600 [01:02<07:37,  1.16it/s, loss=0.18, lr=5e-5] Steps:  12%|#1        | 69/600 [01:03<07:36,  1.16it/s, loss=0.18, lr=5e-5]Steps:  12%|#1        | 69/600 [01:03<07:36,  1.16it/s, loss=0.284, lr=5e-5]Steps:  12%|#1        | 70/600 [01:04<07:35,  1.16it/s, loss=0.284, lr=5e-5]Steps:  12%|#1        | 70/600 [01:04<07:35,  1.16it/s, loss=0.243, lr=5e-5]Steps:  12%|#1        | 71/600 [01:05<07:35,  1.16it/s, loss=0.243, lr=5e-5]Steps:  12%|#1        | 71/600 [01:05<07:35,  1.16it/s, loss=0.281, lr=5e-5]Steps:  12%|#2        | 72/600 [01:06<07:33,  1.16it/s, loss=0.281, lr=5e-5]Steps:  12%|#2        | 72/600 [01:06<07:33,  1.16it/s, loss=0.129, lr=5e-5]Steps:  12%|#2        | 73/600 [01:07<07:33,  1.16it/s, loss=0.129, lr=5e-5]Steps:  12%|#2        | 73/600 [01:07<07:33,  1.16it/s, loss=0.0201, lr=5e-5]Steps:  12%|#2        | 74/600 [01:07<07:31,  1.16it/s, loss=0.0201, lr=5e-5]Steps:  12%|#2        | 74/600 [01:08<07:31,  1.16it/s, loss=0.162, lr=5e-5] Steps:  12%|#2        | 75/600 [01:08<07:25,  1.18it/s, loss=0.162, lr=5e-5]Steps:  12%|#2        | 75/600 [01:08<07:25,  1.18it/s, loss=0.154, lr=5e-5]Steps:  13%|#2        | 76/600 [01:09<07:33,  1.16it/s, loss=0.154, lr=5e-5]Steps:  13%|#2        | 76/600 [01:09<07:33,  1.16it/s, loss=0.354, lr=5e-5]Steps:  13%|#2        | 77/600 [01:10<07:31,  1.16it/s, loss=0.354, lr=5e-5]Steps:  13%|#2        | 77/600 [01:10<07:31,  1.16it/s, loss=0.0939, lr=5e-5]Steps:  13%|#3        | 78/600 [01:11<07:30,  1.16it/s, loss=0.0939, lr=5e-5]Steps:  13%|#3        | 78/600 [01:11<07:30,  1.16it/s, loss=0.2, lr=5e-5]   Steps:  13%|#3        | 79/600 [01:12<07:30,  1.16it/s, loss=0.2, lr=5e-5]Steps:  13%|#3        | 79/600 [01:12<07:30,  1.16it/s, loss=0.0454, lr=5e-5]Steps:  13%|#3        | 80/600 [01:13<07:28,  1.16it/s, loss=0.0454, lr=5e-5]Steps:  13%|#3        | 80/600 [01:13<07:28,  1.16it/s, loss=0.294, lr=5e-5] Steps:  14%|#3        | 81/600 [01:14<07:39,  1.13it/s, loss=0.294, lr=5e-5]Steps:  14%|#3        | 81/600 [01:14<07:39,  1.13it/s, loss=0.102, lr=5e-5]Steps:  14%|#3        | 82/600 [01:14<07:35,  1.14it/s, loss=0.102, lr=5e-5]Steps:  14%|#3        | 82/600 [01:15<07:35,  1.14it/s, loss=0.0957, lr=5e-5]Steps:  14%|#3        | 83/600 [01:15<07:32,  1.14it/s, loss=0.0957, lr=5e-5]Steps:  14%|#3        | 83/600 [01:15<07:32,  1.14it/s, loss=0.145, lr=5e-5] Steps:  14%|#4        | 84/600 [01:16<07:29,  1.15it/s, loss=0.145, lr=5e-5]Steps:  14%|#4        | 84/600 [01:16<07:29,  1.15it/s, loss=0.24, lr=5e-5] Steps:  14%|#4        | 85/600 [01:17<07:25,  1.16it/s, loss=0.24, lr=5e-5]Steps:  14%|#4        | 85/600 [01:17<07:25,  1.16it/s, loss=0.189, lr=5e-5]Steps:  14%|#4        | 86/600 [01:18<07:25,  1.15it/s, loss=0.189, lr=5e-5]Steps:  14%|#4        | 86/600 [01:18<07:25,  1.15it/s, loss=0.0316, lr=5e-5]Steps:  14%|#4        | 87/600 [01:19<07:22,  1.16it/s, loss=0.0316, lr=5e-5]Steps:  14%|#4        | 87/600 [01:19<07:22,  1.16it/s, loss=0.0745, lr=5e-5]Steps:  15%|#4        | 88/600 [01:20<07:21,  1.16it/s, loss=0.0745, lr=5e-5]Steps:  15%|#4        | 88/600 [01:20<07:21,  1.16it/s, loss=0.086, lr=5e-5] Steps:  15%|#4        | 89/600 [01:20<07:21,  1.16it/s, loss=0.086, lr=5e-5]Steps:  15%|#4        | 89/600 [01:21<07:21,  1.16it/s, loss=0.307, lr=5e-5]Steps:  15%|#5        | 90/600 [01:21<07:20,  1.16it/s, loss=0.307, lr=5e-5]Steps:  15%|#5        | 90/600 [01:21<07:20,  1.16it/s, loss=0.152, lr=5e-5]Steps:  15%|#5        | 91/600 [01:22<07:18,  1.16it/s, loss=0.152, lr=5e-5]Steps:  15%|#5        | 91/600 [01:22<07:18,  1.16it/s, loss=0.234, lr=5e-5]Steps:  15%|#5        | 92/600 [01:23<07:18,  1.16it/s, loss=0.234, lr=5e-5]Steps:  15%|#5        | 92/600 [01:23<07:18,  1.16it/s, loss=0.0938, lr=5e-5]Steps:  16%|#5        | 93/600 [01:24<07:17,  1.16it/s, loss=0.0938, lr=5e-5]Steps:  16%|#5        | 93/600 [01:24<07:17,  1.16it/s, loss=0.0399, lr=5e-5]Steps:  16%|#5        | 94/600 [01:25<07:16,  1.16it/s, loss=0.0399, lr=5e-5]Steps:  16%|#5        | 94/600 [01:25<07:16,  1.16it/s, loss=0.139, lr=5e-5] Steps:  16%|#5        | 95/600 [01:26<07:14,  1.16it/s, loss=0.139, lr=5e-5]Steps:  16%|#5        | 95/600 [01:26<07:14,  1.16it/s, loss=0.189, lr=5e-5]Steps:  16%|#6        | 96/600 [01:26<07:13,  1.16it/s, loss=0.189, lr=5e-5]Steps:  16%|#6        | 96/600 [01:27<07:13,  1.16it/s, loss=0.147, lr=5e-5]Steps:  16%|#6        | 97/600 [01:27<07:19,  1.14it/s, loss=0.147, lr=5e-5]Steps:  16%|#6        | 97/600 [01:27<07:19,  1.14it/s, loss=0.0738, lr=5e-5]Steps:  16%|#6        | 98/600 [01:28<07:24,  1.13it/s, loss=0.0738, lr=5e-5]Steps:  16%|#6        | 98/600 [01:28<07:24,  1.13it/s, loss=0.308, lr=5e-5] Steps:  16%|#6        | 99/600 [01:29<07:19,  1.14it/s, loss=0.308, lr=5e-5]Steps:  16%|#6        | 99/600 [01:29<07:19,  1.14it/s, loss=0.146, lr=5e-5]Steps:  17%|#6        | 100/600 [01:30<07:11,  1.16it/s, loss=0.146, lr=5e-5]Steps:  17%|#6        | 100/600 [01:30<07:11,  1.16it/s, loss=0.0662, lr=5e-5]Steps:  17%|#6        | 101/600 [01:31<07:16,  1.14it/s, loss=0.0662, lr=5e-5]Steps:  17%|#6        | 101/600 [01:31<07:16,  1.14it/s, loss=0.144, lr=5e-5] Steps:  17%|#7        | 102/600 [01:32<07:12,  1.15it/s, loss=0.144, lr=5e-5]Steps:  17%|#7        | 102/600 [01:32<07:12,  1.15it/s, loss=0.0607, lr=5e-5]Steps:  17%|#7        | 103/600 [01:33<07:10,  1.15it/s, loss=0.0607, lr=5e-5]Steps:  17%|#7        | 103/600 [01:33<07:10,  1.15it/s, loss=0.124, lr=5e-5] Steps:  17%|#7        | 104/600 [01:33<07:08,  1.16it/s, loss=0.124, lr=5e-5]Steps:  17%|#7        | 104/600 [01:34<07:08,  1.16it/s, loss=0.076, lr=5e-5]Steps:  18%|#7        | 105/600 [01:34<07:07,  1.16it/s, loss=0.076, lr=5e-5]Steps:  18%|#7        | 105/600 [01:34<07:07,  1.16it/s, loss=0.0268, lr=5e-5]Steps:  18%|#7        | 106/600 [01:35<07:05,  1.16it/s, loss=0.0268, lr=5e-5]Steps:  18%|#7        | 106/600 [01:35<07:05,  1.16it/s, loss=0.0863, lr=5e-5]Steps:  18%|#7        | 107/600 [01:36<07:04,  1.16it/s, loss=0.0863, lr=5e-5]Steps:  18%|#7        | 107/600 [01:36<07:04,  1.16it/s, loss=0.0762, lr=5e-5]Steps:  18%|#8        | 108/600 [01:37<07:03,  1.16it/s, loss=0.0762, lr=5e-5]Steps:  18%|#8        | 108/600 [01:37<07:03,  1.16it/s, loss=0.311, lr=5e-5] Steps:  18%|#8        | 109/600 [01:38<07:02,  1.16it/s, loss=0.311, lr=5e-5]Steps:  18%|#8        | 109/600 [01:38<07:02,  1.16it/s, loss=0.443, lr=5e-5]Steps:  18%|#8        | 110/600 [01:39<07:01,  1.16it/s, loss=0.443, lr=5e-5]Steps:  18%|#8        | 110/600 [01:39<07:01,  1.16it/s, loss=0.227, lr=5e-5]Steps:  18%|#8        | 111/600 [01:39<07:00,  1.16it/s, loss=0.227, lr=5e-5]Steps:  18%|#8        | 111/600 [01:40<07:00,  1.16it/s, loss=0.241, lr=5e-5]Steps:  19%|#8        | 112/600 [01:40<06:59,  1.16it/s, loss=0.241, lr=5e-5]Steps:  19%|#8        | 112/600 [01:40<06:59,  1.16it/s, loss=0.192, lr=5e-5]Steps:  19%|#8        | 113/600 [01:41<06:59,  1.16it/s, loss=0.192, lr=5e-5]Steps:  19%|#8        | 113/600 [01:41<06:59,  1.16it/s, loss=0.468, lr=5e-5]Steps:  19%|#9        | 114/600 [01:42<06:58,  1.16it/s, loss=0.468, lr=5e-5]Steps:  19%|#9        | 114/600 [01:42<06:58,  1.16it/s, loss=0.0467, lr=5e-5]Steps:  19%|#9        | 115/600 [01:43<06:58,  1.16it/s, loss=0.0467, lr=5e-5]Steps:  19%|#9        | 115/600 [01:43<06:58,  1.16it/s, loss=0.173, lr=5e-5] Steps:  19%|#9        | 116/600 [01:44<06:57,  1.16it/s, loss=0.173, lr=5e-5]Steps:  19%|#9        | 116/600 [01:44<06:57,  1.16it/s, loss=0.168, lr=5e-5]Steps:  20%|#9        | 117/600 [01:45<06:57,  1.16it/s, loss=0.168, lr=5e-5]Steps:  20%|#9        | 117/600 [01:45<06:57,  1.16it/s, loss=0.0632, lr=5e-5]Steps:  20%|#9        | 118/600 [01:46<06:56,  1.16it/s, loss=0.0632, lr=5e-5]Steps:  20%|#9        | 118/600 [01:46<06:56,  1.16it/s, loss=0.0929, lr=5e-5]Steps:  20%|#9        | 119/600 [01:46<06:54,  1.16it/s, loss=0.0929, lr=5e-5]Steps:  20%|#9        | 119/600 [01:46<06:54,  1.16it/s, loss=0.0291, lr=5e-5]Steps:  20%|##        | 120/600 [01:47<06:54,  1.16it/s, loss=0.0291, lr=5e-5]Steps:  20%|##        | 120/600 [01:47<06:54,  1.16it/s, loss=0.0614, lr=5e-5]Steps:  20%|##        | 121/600 [01:48<06:54,  1.16it/s, loss=0.0614, lr=5e-5]Steps:  20%|##        | 121/600 [01:48<06:54,  1.16it/s, loss=0.169, lr=5e-5] Steps:  20%|##        | 122/600 [01:49<06:53,  1.16it/s, loss=0.169, lr=5e-5]Steps:  20%|##        | 122/600 [01:49<06:53,  1.16it/s, loss=0.17, lr=5e-5] Steps:  20%|##        | 123/600 [01:50<06:51,  1.16it/s, loss=0.17, lr=5e-5]Steps:  20%|##        | 123/600 [01:50<06:51,  1.16it/s, loss=0.245, lr=5e-5]Steps:  21%|##        | 124/600 [01:51<06:50,  1.16it/s, loss=0.245, lr=5e-5]Steps:  21%|##        | 124/600 [01:51<06:50,  1.16it/s, loss=0.266, lr=5e-5]Steps:  21%|##        | 125/600 [01:52<06:44,  1.17it/s, loss=0.266, lr=5e-5]Steps:  21%|##        | 125/600 [01:52<06:44,  1.17it/s, loss=0.105, lr=5e-5]Steps:  21%|##1       | 126/600 [01:52<06:51,  1.15it/s, loss=0.105, lr=5e-5]Steps:  21%|##1       | 126/600 [01:53<06:51,  1.15it/s, loss=0.156, lr=5e-5]Steps:  21%|##1       | 127/600 [01:53<06:49,  1.16it/s, loss=0.156, lr=5e-5]Steps:  21%|##1       | 127/600 [01:53<06:49,  1.16it/s, loss=0.0598, lr=5e-5]Steps:  21%|##1       | 128/600 [01:54<06:48,  1.16it/s, loss=0.0598, lr=5e-5]Steps:  21%|##1       | 128/600 [01:54<06:48,  1.16it/s, loss=0.258, lr=5e-5] Steps:  22%|##1       | 129/600 [01:55<06:47,  1.16it/s, loss=0.258, lr=5e-5]Steps:  22%|##1       | 129/600 [01:55<06:47,  1.16it/s, loss=0.396, lr=5e-5]Steps:  22%|##1       | 130/600 [01:56<06:46,  1.16it/s, loss=0.396, lr=5e-5]Steps:  22%|##1       | 130/600 [01:56<06:46,  1.16it/s, loss=0.281, lr=5e-5]Steps:  22%|##1       | 131/600 [01:57<06:44,  1.16it/s, loss=0.281, lr=5e-5]Steps:  22%|##1       | 131/600 [01:57<06:44,  1.16it/s, loss=0.147, lr=5e-5]Steps:  22%|##2       | 132/600 [01:58<06:43,  1.16it/s, loss=0.147, lr=5e-5]Steps:  22%|##2       | 132/600 [01:58<06:43,  1.16it/s, loss=0.14, lr=5e-5] Steps:  22%|##2       | 133/600 [01:58<06:42,  1.16it/s, loss=0.14, lr=5e-5]Steps:  22%|##2       | 133/600 [01:59<06:42,  1.16it/s, loss=0.118, lr=5e-5]Steps:  22%|##2       | 134/600 [01:59<06:41,  1.16it/s, loss=0.118, lr=5e-5]Steps:  22%|##2       | 134/600 [01:59<06:41,  1.16it/s, loss=0.11, lr=5e-5] Steps:  22%|##2       | 135/600 [02:00<06:40,  1.16it/s, loss=0.11, lr=5e-5]Steps:  22%|##2       | 135/600 [02:00<06:40,  1.16it/s, loss=0.234, lr=5e-5]Steps:  23%|##2       | 136/600 [02:01<06:39,  1.16it/s, loss=0.234, lr=5e-5]Steps:  23%|##2       | 136/600 [02:01<06:39,  1.16it/s, loss=0.173, lr=5e-5]Steps:  23%|##2       | 137/600 [02:02<06:39,  1.16it/s, loss=0.173, lr=5e-5]Steps:  23%|##2       | 137/600 [02:02<06:39,  1.16it/s, loss=0.089, lr=5e-5]Steps:  23%|##3       | 138/600 [02:03<06:37,  1.16it/s, loss=0.089, lr=5e-5]Steps:  23%|##3       | 138/600 [02:03<06:37,  1.16it/s, loss=0.0968, lr=5e-5]Steps:  23%|##3       | 139/600 [02:04<06:36,  1.16it/s, loss=0.0968, lr=5e-5]Steps:  23%|##3       | 139/600 [02:04<06:36,  1.16it/s, loss=0.313, lr=5e-5] Steps:  23%|##3       | 140/600 [02:04<06:35,  1.16it/s, loss=0.313, lr=5e-5]Steps:  23%|##3       | 140/600 [02:05<06:35,  1.16it/s, loss=0.218, lr=5e-5]Steps:  24%|##3       | 141/600 [02:05<06:35,  1.16it/s, loss=0.218, lr=5e-5]Steps:  24%|##3       | 141/600 [02:05<06:35,  1.16it/s, loss=0.036, lr=5e-5]Steps:  24%|##3       | 142/600 [02:06<06:35,  1.16it/s, loss=0.036, lr=5e-5]Steps:  24%|##3       | 142/600 [02:06<06:35,  1.16it/s, loss=0.0226, lr=5e-5]Steps:  24%|##3       | 143/600 [02:07<06:34,  1.16it/s, loss=0.0226, lr=5e-5]Steps:  24%|##3       | 143/600 [02:07<06:34,  1.16it/s, loss=0.297, lr=5e-5] Steps:  24%|##4       | 144/600 [02:08<06:33,  1.16it/s, loss=0.297, lr=5e-5]Steps:  24%|##4       | 144/600 [02:08<06:33,  1.16it/s, loss=0.117, lr=5e-5]Steps:  24%|##4       | 145/600 [02:09<06:32,  1.16it/s, loss=0.117, lr=5e-5]Steps:  24%|##4       | 145/600 [02:09<06:32,  1.16it/s, loss=0.175, lr=5e-5]Steps:  24%|##4       | 146/600 [02:10<06:30,  1.16it/s, loss=0.175, lr=5e-5]Steps:  24%|##4       | 146/600 [02:10<06:30,  1.16it/s, loss=0.351, lr=5e-5]Steps:  24%|##4       | 147/600 [02:11<06:30,  1.16it/s, loss=0.351, lr=5e-5]Steps:  24%|##4       | 147/600 [02:11<06:30,  1.16it/s, loss=0.206, lr=5e-5]Steps:  25%|##4       | 148/600 [02:11<06:29,  1.16it/s, loss=0.206, lr=5e-5]Steps:  25%|##4       | 148/600 [02:12<06:29,  1.16it/s, loss=0.496, lr=5e-5]Steps:  25%|##4       | 149/600 [02:12<06:29,  1.16it/s, loss=0.496, lr=5e-5]Steps:  25%|##4       | 149/600 [02:12<06:29,  1.16it/s, loss=0.14, lr=5e-5] Steps:  25%|##5       | 150/600 [02:13<06:23,  1.17it/s, loss=0.14, lr=5e-5]Steps:  25%|##5       | 150/600 [02:13<06:23,  1.17it/s, loss=0.404, lr=5e-5]Steps:  25%|##5       | 151/600 [02:14<06:28,  1.15it/s, loss=0.404, lr=5e-5]Steps:  25%|##5       | 151/600 [02:14<06:28,  1.15it/s, loss=0.188, lr=5e-5]Steps:  25%|##5       | 152/600 [02:15<06:28,  1.15it/s, loss=0.188, lr=5e-5]Steps:  25%|##5       | 152/600 [02:15<06:28,  1.15it/s, loss=0.151, lr=5e-5]Steps:  26%|##5       | 153/600 [02:16<06:26,  1.16it/s, loss=0.151, lr=5e-5]Steps:  26%|##5       | 153/600 [02:16<06:26,  1.16it/s, loss=0.137, lr=5e-5]Steps:  26%|##5       | 154/600 [02:17<06:25,  1.16it/s, loss=0.137, lr=5e-5]Steps:  26%|##5       | 154/600 [02:17<06:25,  1.16it/s, loss=0.232, lr=5e-5]Steps:  26%|##5       | 155/600 [02:17<06:25,  1.15it/s, loss=0.232, lr=5e-5]Steps:  26%|##5       | 155/600 [02:18<06:25,  1.15it/s, loss=0.0877, lr=5e-5]Steps:  26%|##6       | 156/600 [02:18<06:24,  1.15it/s, loss=0.0877, lr=5e-5]Steps:  26%|##6       | 156/600 [02:18<06:24,  1.15it/s, loss=0.273, lr=5e-5] Steps:  26%|##6       | 157/600 [02:19<06:22,  1.16it/s, loss=0.273, lr=5e-5]Steps:  26%|##6       | 157/600 [02:19<06:22,  1.16it/s, loss=0.147, lr=5e-5]Steps:  26%|##6       | 158/600 [02:20<06:20,  1.16it/s, loss=0.147, lr=5e-5]Steps:  26%|##6       | 158/600 [02:20<06:20,  1.16it/s, loss=0.157, lr=5e-5]Steps:  26%|##6       | 159/600 [02:21<06:19,  1.16it/s, loss=0.157, lr=5e-5]Steps:  26%|##6       | 159/600 [02:21<06:19,  1.16it/s, loss=0.216, lr=5e-5]Steps:  27%|##6       | 160/600 [02:22<06:19,  1.16it/s, loss=0.216, lr=5e-5]Steps:  27%|##6       | 160/600 [02:22<06:19,  1.16it/s, loss=0.591, lr=5e-5]Steps:  27%|##6       | 161/600 [02:23<06:17,  1.16it/s, loss=0.591, lr=5e-5]Steps:  27%|##6       | 161/600 [02:23<06:17,  1.16it/s, loss=0.414, lr=5e-5]Steps:  27%|##7       | 162/600 [02:23<06:16,  1.16it/s, loss=0.414, lr=5e-5]Steps:  27%|##7       | 162/600 [02:24<06:16,  1.16it/s, loss=0.244, lr=5e-5]Steps:  27%|##7       | 163/600 [02:24<06:16,  1.16it/s, loss=0.244, lr=5e-5]Steps:  27%|##7       | 163/600 [02:24<06:16,  1.16it/s, loss=0.305, lr=5e-5]Steps:  27%|##7       | 164/600 [02:25<06:15,  1.16it/s, loss=0.305, lr=5e-5]Steps:  27%|##7       | 164/600 [02:25<06:15,  1.16it/s, loss=0.0655, lr=5e-5]Steps:  28%|##7       | 165/600 [02:26<06:15,  1.16it/s, loss=0.0655, lr=5e-5]Steps:  28%|##7       | 165/600 [02:26<06:15,  1.16it/s, loss=0.282, lr=5e-5] Steps:  28%|##7       | 166/600 [02:27<06:14,  1.16it/s, loss=0.282, lr=5e-5]Steps:  28%|##7       | 166/600 [02:27<06:14,  1.16it/s, loss=0.13, lr=5e-5] Steps:  28%|##7       | 167/600 [02:28<06:12,  1.16it/s, loss=0.13, lr=5e-5]Steps:  28%|##7       | 167/600 [02:28<06:12,  1.16it/s, loss=0.212, lr=5e-5]Steps:  28%|##8       | 168/600 [02:29<06:11,  1.16it/s, loss=0.212, lr=5e-5]Steps:  28%|##8       | 168/600 [02:29<06:11,  1.16it/s, loss=0.199, lr=5e-5]Steps:  28%|##8       | 169/600 [02:29<06:10,  1.16it/s, loss=0.199, lr=5e-5]Steps:  28%|##8       | 169/600 [02:30<06:10,  1.16it/s, loss=0.39, lr=5e-5] Steps:  28%|##8       | 170/600 [02:30<06:10,  1.16it/s, loss=0.39, lr=5e-5]Steps:  28%|##8       | 170/600 [02:30<06:10,  1.16it/s, loss=0.0809, lr=5e-5]Steps:  28%|##8       | 171/600 [02:31<06:08,  1.16it/s, loss=0.0809, lr=5e-5]Steps:  28%|##8       | 171/600 [02:31<06:08,  1.16it/s, loss=0.286, lr=5e-5] Steps:  29%|##8       | 172/600 [02:32<06:08,  1.16it/s, loss=0.286, lr=5e-5]Steps:  29%|##8       | 172/600 [02:32<06:08,  1.16it/s, loss=0.0475, lr=5e-5]Steps:  29%|##8       | 173/600 [02:33<06:07,  1.16it/s, loss=0.0475, lr=5e-5]Steps:  29%|##8       | 173/600 [02:33<06:07,  1.16it/s, loss=0.0647, lr=5e-5]Steps:  29%|##9       | 174/600 [02:34<06:06,  1.16it/s, loss=0.0647, lr=5e-5]Steps:  29%|##9       | 174/600 [02:34<06:06,  1.16it/s, loss=0.0962, lr=5e-5]Steps:  29%|##9       | 175/600 [02:35<06:01,  1.18it/s, loss=0.0962, lr=5e-5]Steps:  29%|##9       | 175/600 [02:35<06:01,  1.18it/s, loss=0.061, lr=5e-5] Steps:  29%|##9       | 176/600 [02:36<06:06,  1.16it/s, loss=0.061, lr=5e-5]Steps:  29%|##9       | 176/600 [02:36<06:06,  1.16it/s, loss=0.472, lr=5e-5]Steps:  30%|##9       | 177/600 [02:36<06:05,  1.16it/s, loss=0.472, lr=5e-5]Steps:  30%|##9       | 177/600 [02:37<06:05,  1.16it/s, loss=0.215, lr=5e-5]Steps:  30%|##9       | 178/600 [02:37<06:05,  1.15it/s, loss=0.215, lr=5e-5]Steps:  30%|##9       | 178/600 [02:37<06:05,  1.15it/s, loss=0.12, lr=5e-5] Steps:  30%|##9       | 179/600 [02:38<06:03,  1.16it/s, loss=0.12, lr=5e-5]Steps:  30%|##9       | 179/600 [02:38<06:03,  1.16it/s, loss=0.256, lr=5e-5]Steps:  30%|###       | 180/600 [02:39<06:02,  1.16it/s, loss=0.256, lr=5e-5]Steps:  30%|###       | 180/600 [02:39<06:02,  1.16it/s, loss=0.377, lr=5e-5]Steps:  30%|###       | 181/600 [02:40<06:00,  1.16it/s, loss=0.377, lr=5e-5]Steps:  30%|###       | 181/600 [02:40<06:00,  1.16it/s, loss=0.141, lr=5e-5]Steps:  30%|###       | 182/600 [02:41<05:59,  1.16it/s, loss=0.141, lr=5e-5]Steps:  30%|###       | 182/600 [02:41<05:59,  1.16it/s, loss=0.279, lr=5e-5]Steps:  30%|###       | 183/600 [02:42<05:59,  1.16it/s, loss=0.279, lr=5e-5]Steps:  30%|###       | 183/600 [02:42<05:59,  1.16it/s, loss=0.0699, lr=5e-5]Steps:  31%|###       | 184/600 [02:42<06:03,  1.14it/s, loss=0.0699, lr=5e-5]Steps:  31%|###       | 184/600 [02:43<06:03,  1.14it/s, loss=0.0157, lr=5e-5]Steps:  31%|###       | 185/600 [02:43<06:01,  1.15it/s, loss=0.0157, lr=5e-5]Steps:  31%|###       | 185/600 [02:43<06:01,  1.15it/s, loss=0.316, lr=5e-5] Steps:  31%|###1      | 186/600 [02:44<05:59,  1.15it/s, loss=0.316, lr=5e-5]Steps:  31%|###1      | 186/600 [02:44<05:59,  1.15it/s, loss=0.298, lr=5e-5]Steps:  31%|###1      | 187/600 [02:45<06:21,  1.08it/s, loss=0.298, lr=5e-5]Steps:  31%|###1      | 187/600 [02:45<06:21,  1.08it/s, loss=0.259, lr=5e-5]Steps:  31%|###1      | 188/600 [02:46<06:38,  1.03it/s, loss=0.259, lr=5e-5]Steps:  31%|###1      | 188/600 [02:46<06:38,  1.03it/s, loss=0.127, lr=5e-5]Steps:  32%|###1      | 189/600 [02:47<06:25,  1.07it/s, loss=0.127, lr=5e-5]Steps:  32%|###1      | 189/600 [02:47<06:25,  1.07it/s, loss=0.127, lr=5e-5]Steps:  32%|###1      | 190/600 [02:48<06:19,  1.08it/s, loss=0.127, lr=5e-5]Steps:  32%|###1      | 190/600 [02:48<06:19,  1.08it/s, loss=0.195, lr=5e-5]Steps:  32%|###1      | 191/600 [02:49<06:10,  1.10it/s, loss=0.195, lr=5e-5]Steps:  32%|###1      | 191/600 [02:49<06:10,  1.10it/s, loss=0.155, lr=5e-5]Steps:  32%|###2      | 192/600 [02:50<06:04,  1.12it/s, loss=0.155, lr=5e-5]Steps:  32%|###2      | 192/600 [02:50<06:04,  1.12it/s, loss=0.109, lr=5e-5]Steps:  32%|###2      | 193/600 [02:51<06:00,  1.13it/s, loss=0.109, lr=5e-5]Steps:  32%|###2      | 193/600 [02:51<06:00,  1.13it/s, loss=0.302, lr=5e-5]Steps:  32%|###2      | 194/600 [02:52<05:57,  1.14it/s, loss=0.302, lr=5e-5]Steps:  32%|###2      | 194/600 [02:52<05:57,  1.14it/s, loss=0.164, lr=5e-5]Steps:  32%|###2      | 195/600 [02:52<05:54,  1.14it/s, loss=0.164, lr=5e-5]Steps:  32%|###2      | 195/600 [02:53<05:54,  1.14it/s, loss=0.0651, lr=5e-5]Steps:  33%|###2      | 196/600 [02:53<05:52,  1.15it/s, loss=0.0651, lr=5e-5]Steps:  33%|###2      | 196/600 [02:53<05:52,  1.15it/s, loss=0.632, lr=5e-5] Steps:  33%|###2      | 197/600 [02:54<05:49,  1.15it/s, loss=0.632, lr=5e-5]Steps:  33%|###2      | 197/600 [02:54<05:49,  1.15it/s, loss=0.222, lr=5e-5]Steps:  33%|###3      | 198/600 [02:55<05:53,  1.14it/s, loss=0.222, lr=5e-5]Steps:  33%|###3      | 198/600 [02:55<05:53,  1.14it/s, loss=0.201, lr=5e-5]Steps:  33%|###3      | 199/600 [02:56<05:51,  1.14it/s, loss=0.201, lr=5e-5]Steps:  33%|###3      | 199/600 [02:56<05:51,  1.14it/s, loss=0.181, lr=5e-5]Steps:  33%|###3      | 200/600 [02:57<05:44,  1.16it/s, loss=0.181, lr=5e-5]Steps:  33%|###3      | 200/600 [02:57<05:44,  1.16it/s, loss=0.0951, lr=5e-5]Steps:  34%|###3      | 201/600 [02:58<05:57,  1.12it/s, loss=0.0951, lr=5e-5]Steps:  34%|###3      | 201/600 [02:58<05:57,  1.12it/s, loss=0.155, lr=5e-5] Steps:  34%|###3      | 202/600 [02:59<05:52,  1.13it/s, loss=0.155, lr=5e-5]Steps:  34%|###3      | 202/600 [02:59<05:52,  1.13it/s, loss=0.0584, lr=5e-5]Steps:  34%|###3      | 203/600 [02:59<05:49,  1.13it/s, loss=0.0584, lr=5e-5]Steps:  34%|###3      | 203/600 [03:00<05:49,  1.13it/s, loss=0.222, lr=5e-5] Steps:  34%|###4      | 204/600 [03:00<05:47,  1.14it/s, loss=0.222, lr=5e-5]Steps:  34%|###4      | 204/600 [03:00<05:47,  1.14it/s, loss=0.105, lr=5e-5]Steps:  34%|###4      | 205/600 [03:01<05:45,  1.14it/s, loss=0.105, lr=5e-5]Steps:  34%|###4      | 205/600 [03:01<05:45,  1.14it/s, loss=0.126, lr=5e-5]Steps:  34%|###4      | 206/600 [03:02<05:43,  1.15it/s, loss=0.126, lr=5e-5]Steps:  34%|###4      | 206/600 [03:02<05:43,  1.15it/s, loss=0.293, lr=5e-5]Steps:  34%|###4      | 207/600 [03:03<05:42,  1.15it/s, loss=0.293, lr=5e-5]Steps:  34%|###4      | 207/600 [03:03<05:42,  1.15it/s, loss=0.227, lr=5e-5]Steps:  35%|###4      | 208/600 [03:04<05:40,  1.15it/s, loss=0.227, lr=5e-5]Steps:  35%|###4      | 208/600 [03:04<05:40,  1.15it/s, loss=0.0532, lr=5e-5]Steps:  35%|###4      | 209/600 [03:05<05:39,  1.15it/s, loss=0.0532, lr=5e-5]Steps:  35%|###4      | 209/600 [03:05<05:39,  1.15it/s, loss=0.246, lr=5e-5] Steps:  35%|###5      | 210/600 [03:05<05:37,  1.16it/s, loss=0.246, lr=5e-5]Steps:  35%|###5      | 210/600 [03:06<05:37,  1.16it/s, loss=0.173, lr=5e-5]Steps:  35%|###5      | 211/600 [03:06<05:36,  1.16it/s, loss=0.173, lr=5e-5]Steps:  35%|###5      | 211/600 [03:06<05:36,  1.16it/s, loss=0.0649, lr=5e-5]Steps:  35%|###5      | 212/600 [03:07<05:36,  1.15it/s, loss=0.0649, lr=5e-5]Steps:  35%|###5      | 212/600 [03:07<05:36,  1.15it/s, loss=0.172, lr=5e-5] Steps:  36%|###5      | 213/600 [03:08<05:34,  1.16it/s, loss=0.172, lr=5e-5]Steps:  36%|###5      | 213/600 [03:08<05:34,  1.16it/s, loss=0.177, lr=5e-5]Steps:  36%|###5      | 214/600 [03:09<05:33,  1.16it/s, loss=0.177, lr=5e-5]Steps:  36%|###5      | 214/600 [03:09<05:33,  1.16it/s, loss=0.00555, lr=5e-5]Steps:  36%|###5      | 215/600 [03:10<05:33,  1.15it/s, loss=0.00555, lr=5e-5]Steps:  36%|###5      | 215/600 [03:10<05:33,  1.15it/s, loss=0.39, lr=5e-5]   Steps:  36%|###6      | 216/600 [03:11<05:32,  1.16it/s, loss=0.39, lr=5e-5]Steps:  36%|###6      | 216/600 [03:11<05:32,  1.16it/s, loss=0.224, lr=5e-5]Steps:  36%|###6      | 217/600 [03:12<05:30,  1.16it/s, loss=0.224, lr=5e-5]Steps:  36%|###6      | 217/600 [03:12<05:30,  1.16it/s, loss=0.0801, lr=5e-5]Steps:  36%|###6      | 218/600 [03:12<05:30,  1.16it/s, loss=0.0801, lr=5e-5]Steps:  36%|###6      | 218/600 [03:13<05:30,  1.16it/s, loss=0.113, lr=5e-5] Steps:  36%|###6      | 219/600 [03:13<05:29,  1.16it/s, loss=0.113, lr=5e-5]Steps:  36%|###6      | 219/600 [03:13<05:29,  1.16it/s, loss=0.1, lr=5e-5]  Steps:  37%|###6      | 220/600 [03:14<05:28,  1.16it/s, loss=0.1, lr=5e-5]Steps:  37%|###6      | 220/600 [03:14<05:28,  1.16it/s, loss=0.16, lr=5e-5]Steps:  37%|###6      | 221/600 [03:15<05:27,  1.16it/s, loss=0.16, lr=5e-5]Steps:  37%|###6      | 221/600 [03:15<05:27,  1.16it/s, loss=0.309, lr=5e-5]Steps:  37%|###7      | 222/600 [03:16<05:27,  1.15it/s, loss=0.309, lr=5e-5]Steps:  37%|###7      | 222/600 [03:16<05:27,  1.15it/s, loss=0.0343, lr=5e-5]Steps:  37%|###7      | 223/600 [03:17<05:26,  1.15it/s, loss=0.0343, lr=5e-5]Steps:  37%|###7      | 223/600 [03:17<05:26,  1.15it/s, loss=0.129, lr=5e-5] Steps:  37%|###7      | 224/600 [03:18<05:25,  1.16it/s, loss=0.129, lr=5e-5]Steps:  37%|###7      | 224/600 [03:18<05:25,  1.16it/s, loss=0.0944, lr=5e-5]Steps:  38%|###7      | 225/600 [03:18<05:20,  1.17it/s, loss=0.0944, lr=5e-5]Steps:  38%|###7      | 225/600 [03:19<05:20,  1.17it/s, loss=0.189, lr=5e-5] Steps:  38%|###7      | 226/600 [03:19<05:29,  1.14it/s, loss=0.189, lr=5e-5]Steps:  38%|###7      | 226/600 [03:19<05:29,  1.14it/s, loss=0.142, lr=5e-5]Steps:  38%|###7      | 227/600 [03:20<05:26,  1.14it/s, loss=0.142, lr=5e-5]Steps:  38%|###7      | 227/600 [03:20<05:26,  1.14it/s, loss=0.0686, lr=5e-5]Steps:  38%|###8      | 228/600 [03:21<05:24,  1.15it/s, loss=0.0686, lr=5e-5]Steps:  38%|###8      | 228/600 [03:21<05:24,  1.15it/s, loss=0.0501, lr=5e-5]Steps:  38%|###8      | 229/600 [03:22<05:22,  1.15it/s, loss=0.0501, lr=5e-5]Steps:  38%|###8      | 229/600 [03:22<05:22,  1.15it/s, loss=0.33, lr=5e-5]  Steps:  38%|###8      | 230/600 [03:23<05:21,  1.15it/s, loss=0.33, lr=5e-5]Steps:  38%|###8      | 230/600 [03:23<05:21,  1.15it/s, loss=0.139, lr=5e-5]Steps:  38%|###8      | 231/600 [03:24<05:19,  1.15it/s, loss=0.139, lr=5e-5]Steps:  38%|###8      | 231/600 [03:24<05:19,  1.15it/s, loss=0.0842, lr=5e-5]Steps:  39%|###8      | 232/600 [03:25<05:17,  1.16it/s, loss=0.0842, lr=5e-5]Steps:  39%|###8      | 232/600 [03:25<05:17,  1.16it/s, loss=0.0215, lr=5e-5]Steps:  39%|###8      | 233/600 [03:25<05:17,  1.16it/s, loss=0.0215, lr=5e-5]Steps:  39%|###8      | 233/600 [03:26<05:17,  1.16it/s, loss=0.149, lr=5e-5] Steps:  39%|###9      | 234/600 [03:26<05:16,  1.16it/s, loss=0.149, lr=5e-5]Steps:  39%|###9      | 234/600 [03:26<05:16,  1.16it/s, loss=0.521, lr=5e-5]Steps:  39%|###9      | 235/600 [03:27<05:15,  1.16it/s, loss=0.521, lr=5e-5]Steps:  39%|###9      | 235/600 [03:27<05:15,  1.16it/s, loss=0.128, lr=5e-5]Steps:  39%|###9      | 236/600 [03:28<05:13,  1.16it/s, loss=0.128, lr=5e-5]Steps:  39%|###9      | 236/600 [03:28<05:13,  1.16it/s, loss=0.0936, lr=5e-5]Steps:  40%|###9      | 237/600 [03:29<05:13,  1.16it/s, loss=0.0936, lr=5e-5]Steps:  40%|###9      | 237/600 [03:29<05:13,  1.16it/s, loss=0.337, lr=5e-5] Steps:  40%|###9      | 238/600 [03:30<05:11,  1.16it/s, loss=0.337, lr=5e-5]Steps:  40%|###9      | 238/600 [03:30<05:11,  1.16it/s, loss=0.233, lr=5e-5]Steps:  40%|###9      | 239/600 [03:31<05:11,  1.16it/s, loss=0.233, lr=5e-5]Steps:  40%|###9      | 239/600 [03:31<05:11,  1.16it/s, loss=0.728, lr=5e-5]Steps:  40%|####      | 240/600 [03:31<05:10,  1.16it/s, loss=0.728, lr=5e-5]Steps:  40%|####      | 240/600 [03:32<05:10,  1.16it/s, loss=0.125, lr=5e-5]Steps:  40%|####      | 241/600 [03:32<05:13,  1.15it/s, loss=0.125, lr=5e-5]Steps:  40%|####      | 241/600 [03:32<05:13,  1.15it/s, loss=0.056, lr=5e-5]Steps:  40%|####      | 242/600 [03:33<05:15,  1.13it/s, loss=0.056, lr=5e-5]Steps:  40%|####      | 242/600 [03:33<05:15,  1.13it/s, loss=0.198, lr=5e-5]Steps:  40%|####      | 243/600 [03:34<05:13,  1.14it/s, loss=0.198, lr=5e-5]Steps:  40%|####      | 243/600 [03:34<05:13,  1.14it/s, loss=0.26, lr=5e-5] Steps:  41%|####      | 244/600 [03:35<05:15,  1.13it/s, loss=0.26, lr=5e-5]Steps:  41%|####      | 244/600 [03:35<05:15,  1.13it/s, loss=0.328, lr=5e-5]Steps:  41%|####      | 245/600 [03:36<05:11,  1.14it/s, loss=0.328, lr=5e-5]Steps:  41%|####      | 245/600 [03:36<05:11,  1.14it/s, loss=0.0427, lr=5e-5]Steps:  41%|####1     | 246/600 [03:37<05:09,  1.15it/s, loss=0.0427, lr=5e-5]Steps:  41%|####1     | 246/600 [03:37<05:09,  1.15it/s, loss=0.0654, lr=5e-5]Steps:  41%|####1     | 247/600 [03:38<05:07,  1.15it/s, loss=0.0654, lr=5e-5]Steps:  41%|####1     | 247/600 [03:38<05:07,  1.15it/s, loss=0.626, lr=5e-5] Steps:  41%|####1     | 248/600 [03:39<05:26,  1.08it/s, loss=0.626, lr=5e-5]Steps:  41%|####1     | 248/600 [03:39<05:26,  1.08it/s, loss=0.0842, lr=5e-5]Steps:  42%|####1     | 249/600 [03:40<05:38,  1.04it/s, loss=0.0842, lr=5e-5]Steps:  42%|####1     | 249/600 [03:40<05:38,  1.04it/s, loss=0.165, lr=5e-5] Steps:  42%|####1     | 250/600 [03:41<05:23,  1.08it/s, loss=0.165, lr=5e-5]Steps:  42%|####1     | 250/600 [03:41<05:23,  1.08it/s, loss=0.362, lr=5e-5]Steps:  42%|####1     | 251/600 [03:42<05:59,  1.03s/it, loss=0.362, lr=5e-5]Steps:  42%|####1     | 251/600 [03:42<05:59,  1.03s/it, loss=0.0465, lr=5e-5]Steps:  42%|####2     | 252/600 [03:43<06:02,  1.04s/it, loss=0.0465, lr=5e-5]Steps:  42%|####2     | 252/600 [03:43<06:02,  1.04s/it, loss=0.169, lr=5e-5] Steps:  42%|####2     | 253/600 [03:44<06:03,  1.05s/it, loss=0.169, lr=5e-5]Steps:  42%|####2     | 253/600 [03:44<06:03,  1.05s/it, loss=0.472, lr=5e-5]Steps:  42%|####2     | 254/600 [03:45<06:03,  1.05s/it, loss=0.472, lr=5e-5]Steps:  42%|####2     | 254/600 [03:45<06:03,  1.05s/it, loss=0.382, lr=5e-5]Steps:  42%|####2     | 255/600 [03:46<06:02,  1.05s/it, loss=0.382, lr=5e-5]Steps:  42%|####2     | 255/600 [03:46<06:02,  1.05s/it, loss=0.0716, lr=5e-5]Steps:  43%|####2     | 256/600 [03:47<06:00,  1.05s/it, loss=0.0716, lr=5e-5]Steps:  43%|####2     | 256/600 [03:47<06:00,  1.05s/it, loss=0.189, lr=5e-5] Steps:  43%|####2     | 257/600 [03:48<05:40,  1.01it/s, loss=0.189, lr=5e-5]Steps:  43%|####2     | 257/600 [03:48<05:40,  1.01it/s, loss=0.19, lr=5e-5] Steps:  43%|####3     | 258/600 [03:49<05:25,  1.05it/s, loss=0.19, lr=5e-5]Steps:  43%|####3     | 258/600 [03:49<05:25,  1.05it/s, loss=0.142, lr=5e-5]Steps:  43%|####3     | 259/600 [03:50<05:16,  1.08it/s, loss=0.142, lr=5e-5]Steps:  43%|####3     | 259/600 [03:50<05:16,  1.08it/s, loss=0.204, lr=5e-5]Steps:  43%|####3     | 260/600 [03:51<05:08,  1.10it/s, loss=0.204, lr=5e-5]Steps:  43%|####3     | 260/600 [03:51<05:08,  1.10it/s, loss=0.084, lr=5e-5]Steps:  44%|####3     | 261/600 [03:51<05:02,  1.12it/s, loss=0.084, lr=5e-5]Steps:  44%|####3     | 261/600 [03:52<05:02,  1.12it/s, loss=0.0276, lr=5e-5]Steps:  44%|####3     | 262/600 [03:52<04:58,  1.13it/s, loss=0.0276, lr=5e-5]Steps:  44%|####3     | 262/600 [03:52<04:58,  1.13it/s, loss=0.277, lr=5e-5] Steps:  44%|####3     | 263/600 [03:53<04:56,  1.14it/s, loss=0.277, lr=5e-5]Steps:  44%|####3     | 263/600 [03:53<04:56,  1.14it/s, loss=0.0927, lr=5e-5]Steps:  44%|####4     | 264/600 [03:54<05:14,  1.07it/s, loss=0.0927, lr=5e-5]Steps:  44%|####4     | 264/600 [03:54<05:14,  1.07it/s, loss=0.306, lr=5e-5] Steps:  44%|####4     | 265/600 [03:55<05:26,  1.03it/s, loss=0.306, lr=5e-5]Steps:  44%|####4     | 265/600 [03:55<05:26,  1.03it/s, loss=0.154, lr=5e-5]Steps:  44%|####4     | 266/600 [03:56<05:22,  1.04it/s, loss=0.154, lr=5e-5]Steps:  44%|####4     | 266/600 [03:56<05:22,  1.04it/s, loss=0.282, lr=5e-5]Steps:  44%|####4     | 267/600 [03:57<05:12,  1.07it/s, loss=0.282, lr=5e-5]Steps:  44%|####4     | 267/600 [03:57<05:12,  1.07it/s, loss=0.348, lr=5e-5]Steps:  45%|####4     | 268/600 [03:58<05:03,  1.09it/s, loss=0.348, lr=5e-5]Steps:  45%|####4     | 268/600 [03:58<05:03,  1.09it/s, loss=0.248, lr=5e-5]Steps:  45%|####4     | 269/600 [03:59<05:01,  1.10it/s, loss=0.248, lr=5e-5]Steps:  45%|####4     | 269/600 [03:59<05:01,  1.10it/s, loss=0.332, lr=5e-5]Steps:  45%|####5     | 270/600 [04:00<04:55,  1.12it/s, loss=0.332, lr=5e-5]Steps:  45%|####5     | 270/600 [04:00<04:55,  1.12it/s, loss=0.163, lr=5e-5]Steps:  45%|####5     | 271/600 [04:01<04:51,  1.13it/s, loss=0.163, lr=5e-5]Steps:  45%|####5     | 271/600 [04:01<04:51,  1.13it/s, loss=0.199, lr=5e-5]Steps:  45%|####5     | 272/600 [04:01<04:48,  1.14it/s, loss=0.199, lr=5e-5]Steps:  45%|####5     | 272/600 [04:02<04:48,  1.14it/s, loss=0.165, lr=5e-5]Steps:  46%|####5     | 273/600 [04:02<04:46,  1.14it/s, loss=0.165, lr=5e-5]Steps:  46%|####5     | 273/600 [04:02<04:46,  1.14it/s, loss=0.252, lr=5e-5]Steps:  46%|####5     | 274/600 [04:03<04:44,  1.15it/s, loss=0.252, lr=5e-5]Steps:  46%|####5     | 274/600 [04:03<04:44,  1.15it/s, loss=0.142, lr=5e-5]Steps:  46%|####5     | 275/600 [04:04<04:39,  1.16it/s, loss=0.142, lr=5e-5]Steps:  46%|####5     | 275/600 [04:04<04:39,  1.16it/s, loss=0.0449, lr=5e-5]Steps:  46%|####6     | 276/600 [04:05<04:41,  1.15it/s, loss=0.0449, lr=5e-5]Steps:  46%|####6     | 276/600 [04:05<04:41,  1.15it/s, loss=0.204, lr=5e-5] Steps:  46%|####6     | 277/600 [04:06<04:40,  1.15it/s, loss=0.204, lr=5e-5]Steps:  46%|####6     | 277/600 [04:06<04:40,  1.15it/s, loss=0.162, lr=5e-5]Steps:  46%|####6     | 278/600 [04:07<04:38,  1.16it/s, loss=0.162, lr=5e-5]Steps:  46%|####6     | 278/600 [04:07<04:38,  1.16it/s, loss=0.373, lr=5e-5]Steps:  46%|####6     | 279/600 [04:07<04:37,  1.16it/s, loss=0.373, lr=5e-5]Steps:  46%|####6     | 279/600 [04:08<04:37,  1.16it/s, loss=0.135, lr=5e-5]Steps:  47%|####6     | 280/600 [04:08<04:37,  1.15it/s, loss=0.135, lr=5e-5]Steps:  47%|####6     | 280/600 [04:08<04:37,  1.15it/s, loss=0.26, lr=5e-5] Steps:  47%|####6     | 281/600 [04:09<04:35,  1.16it/s, loss=0.26, lr=5e-5]Steps:  47%|####6     | 281/600 [04:09<04:35,  1.16it/s, loss=0.192, lr=5e-5]Steps:  47%|####6     | 282/600 [04:10<04:34,  1.16it/s, loss=0.192, lr=5e-5]Steps:  47%|####6     | 282/600 [04:10<04:34,  1.16it/s, loss=0.577, lr=5e-5]Steps:  47%|####7     | 283/600 [04:11<04:34,  1.16it/s, loss=0.577, lr=5e-5]Steps:  47%|####7     | 283/600 [04:11<04:34,  1.16it/s, loss=0.2, lr=5e-5]  Steps:  47%|####7     | 284/600 [04:12<04:33,  1.16it/s, loss=0.2, lr=5e-5]Steps:  47%|####7     | 284/600 [04:12<04:33,  1.16it/s, loss=0.591, lr=5e-5]Steps:  48%|####7     | 285/600 [04:13<04:32,  1.16it/s, loss=0.591, lr=5e-5]Steps:  48%|####7     | 285/600 [04:13<04:32,  1.16it/s, loss=0.265, lr=5e-5]Steps:  48%|####7     | 286/600 [04:14<04:31,  1.16it/s, loss=0.265, lr=5e-5]Steps:  48%|####7     | 286/600 [04:14<04:31,  1.16it/s, loss=0.13, lr=5e-5] Steps:  48%|####7     | 287/600 [04:14<04:30,  1.16it/s, loss=0.13, lr=5e-5]Steps:  48%|####7     | 287/600 [04:15<04:30,  1.16it/s, loss=0.25, lr=5e-5]Steps:  48%|####8     | 288/600 [04:15<04:29,  1.16it/s, loss=0.25, lr=5e-5]Steps:  48%|####8     | 288/600 [04:15<04:29,  1.16it/s, loss=0.108, lr=5e-5]Steps:  48%|####8     | 289/600 [04:16<04:28,  1.16it/s, loss=0.108, lr=5e-5]Steps:  48%|####8     | 289/600 [04:16<04:28,  1.16it/s, loss=0.147, lr=5e-5]Steps:  48%|####8     | 290/600 [04:17<04:27,  1.16it/s, loss=0.147, lr=5e-5]Steps:  48%|####8     | 290/600 [04:17<04:27,  1.16it/s, loss=0.414, lr=5e-5]Steps:  48%|####8     | 291/600 [04:18<04:26,  1.16it/s, loss=0.414, lr=5e-5]Steps:  48%|####8     | 291/600 [04:18<04:26,  1.16it/s, loss=0.0664, lr=5e-5]Steps:  49%|####8     | 292/600 [04:19<04:25,  1.16it/s, loss=0.0664, lr=5e-5]Steps:  49%|####8     | 292/600 [04:19<04:25,  1.16it/s, loss=0.135, lr=5e-5] Steps:  49%|####8     | 293/600 [04:20<04:24,  1.16it/s, loss=0.135, lr=5e-5]Steps:  49%|####8     | 293/600 [04:20<04:24,  1.16it/s, loss=0.188, lr=5e-5]Steps:  49%|####9     | 294/600 [04:20<04:23,  1.16it/s, loss=0.188, lr=5e-5]Steps:  49%|####9     | 294/600 [04:21<04:23,  1.16it/s, loss=0.0713, lr=5e-5]Steps:  49%|####9     | 295/600 [04:21<04:22,  1.16it/s, loss=0.0713, lr=5e-5]Steps:  49%|####9     | 295/600 [04:21<04:22,  1.16it/s, loss=0.142, lr=5e-5] Steps:  49%|####9     | 296/600 [04:22<04:22,  1.16it/s, loss=0.142, lr=5e-5]Steps:  49%|####9     | 296/600 [04:22<04:22,  1.16it/s, loss=0.123, lr=5e-5]Steps:  50%|####9     | 297/600 [04:23<04:21,  1.16it/s, loss=0.123, lr=5e-5]Steps:  50%|####9     | 297/600 [04:23<04:21,  1.16it/s, loss=0.0547, lr=5e-5]Steps:  50%|####9     | 298/600 [04:24<04:20,  1.16it/s, loss=0.0547, lr=5e-5]Steps:  50%|####9     | 298/600 [04:24<04:20,  1.16it/s, loss=0.158, lr=5e-5] Steps:  50%|####9     | 299/600 [04:25<04:20,  1.16it/s, loss=0.158, lr=5e-5]Steps:  50%|####9     | 299/600 [04:25<04:20,  1.16it/s, loss=0.211, lr=5e-5]Steps:  50%|#####     | 300/600 [04:26<04:16,  1.17it/s, loss=0.211, lr=5e-5]Steps:  50%|#####     | 300/600 [04:26<04:16,  1.17it/s, loss=0.0725, lr=5e-5]Steps:  50%|#####     | 301/600 [04:26<04:20,  1.15it/s, loss=0.0725, lr=5e-5]Steps:  50%|#####     | 301/600 [04:27<04:20,  1.15it/s, loss=0.478, lr=5e-5] Steps:  50%|#####     | 302/600 [04:27<04:18,  1.15it/s, loss=0.478, lr=5e-5]Steps:  50%|#####     | 302/600 [04:27<04:18,  1.15it/s, loss=0.136, lr=5e-5]Steps:  50%|#####     | 303/600 [04:28<04:17,  1.16it/s, loss=0.136, lr=5e-5]Steps:  50%|#####     | 303/600 [04:28<04:17,  1.16it/s, loss=0.164, lr=5e-5]Steps:  51%|#####     | 304/600 [04:29<04:15,  1.16it/s, loss=0.164, lr=5e-5]Steps:  51%|#####     | 304/600 [04:29<04:15,  1.16it/s, loss=0.506, lr=5e-5]Steps:  51%|#####     | 305/600 [04:30<04:15,  1.16it/s, loss=0.506, lr=5e-5]Steps:  51%|#####     | 305/600 [04:30<04:15,  1.16it/s, loss=0.228, lr=5e-5]Steps:  51%|#####1    | 306/600 [04:31<04:13,  1.16it/s, loss=0.228, lr=5e-5]Steps:  51%|#####1    | 306/600 [04:31<04:13,  1.16it/s, loss=0.115, lr=5e-5]Steps:  51%|#####1    | 307/600 [04:32<04:12,  1.16it/s, loss=0.115, lr=5e-5]Steps:  51%|#####1    | 307/600 [04:32<04:12,  1.16it/s, loss=0.0677, lr=5e-5]Steps:  51%|#####1    | 308/600 [04:33<04:12,  1.16it/s, loss=0.0677, lr=5e-5]Steps:  51%|#####1    | 308/600 [04:33<04:12,  1.16it/s, loss=0.191, lr=5e-5] Steps:  52%|#####1    | 309/600 [04:33<04:10,  1.16it/s, loss=0.191, lr=5e-5]Steps:  52%|#####1    | 309/600 [04:34<04:10,  1.16it/s, loss=0.025, lr=5e-5]Steps:  52%|#####1    | 310/600 [04:34<04:09,  1.16it/s, loss=0.025, lr=5e-5]Steps:  52%|#####1    | 310/600 [04:34<04:09,  1.16it/s, loss=0.2, lr=5e-5]  Steps:  52%|#####1    | 311/600 [04:35<04:09,  1.16it/s, loss=0.2, lr=5e-5]Steps:  52%|#####1    | 311/600 [04:35<04:09,  1.16it/s, loss=0.0495, lr=5e-5]Steps:  52%|#####2    | 312/600 [04:36<04:08,  1.16it/s, loss=0.0495, lr=5e-5]Steps:  52%|#####2    | 312/600 [04:36<04:08,  1.16it/s, loss=0.0938, lr=5e-5]Steps:  52%|#####2    | 313/600 [04:37<04:08,  1.16it/s, loss=0.0938, lr=5e-5]Steps:  52%|#####2    | 313/600 [04:37<04:08,  1.16it/s, loss=0.427, lr=5e-5] Steps:  52%|#####2    | 314/600 [04:38<04:07,  1.16it/s, loss=0.427, lr=5e-5]Steps:  52%|#####2    | 314/600 [04:38<04:07,  1.16it/s, loss=0.11, lr=5e-5] Steps:  52%|#####2    | 315/600 [04:39<04:06,  1.16it/s, loss=0.11, lr=5e-5]Steps:  52%|#####2    | 315/600 [04:39<04:06,  1.16it/s, loss=0.422, lr=5e-5]Steps:  53%|#####2    | 316/600 [04:39<04:05,  1.16it/s, loss=0.422, lr=5e-5]Steps:  53%|#####2    | 316/600 [04:40<04:05,  1.16it/s, loss=0.134, lr=5e-5]Steps:  53%|#####2    | 317/600 [04:40<04:04,  1.16it/s, loss=0.134, lr=5e-5]Steps:  53%|#####2    | 317/600 [04:40<04:04,  1.16it/s, loss=0.137, lr=5e-5]Steps:  53%|#####3    | 318/600 [04:41<04:04,  1.16it/s, loss=0.137, lr=5e-5]Steps:  53%|#####3    | 318/600 [04:41<04:04,  1.16it/s, loss=0.0218, lr=5e-5]Steps:  53%|#####3    | 319/600 [04:42<04:03,  1.16it/s, loss=0.0218, lr=5e-5]Steps:  53%|#####3    | 319/600 [04:42<04:03,  1.16it/s, loss=0.21, lr=5e-5]  Steps:  53%|#####3    | 320/600 [04:43<04:01,  1.16it/s, loss=0.21, lr=5e-5]Steps:  53%|#####3    | 320/600 [04:43<04:01,  1.16it/s, loss=0.118, lr=5e-5]Steps:  54%|#####3    | 321/600 [04:44<04:01,  1.16it/s, loss=0.118, lr=5e-5]Steps:  54%|#####3    | 321/600 [04:44<04:01,  1.16it/s, loss=0.0908, lr=5e-5]Steps:  54%|#####3    | 322/600 [04:45<03:59,  1.16it/s, loss=0.0908, lr=5e-5]Steps:  54%|#####3    | 322/600 [04:45<03:59,  1.16it/s, loss=0.227, lr=5e-5] Steps:  54%|#####3    | 323/600 [04:45<03:59,  1.16it/s, loss=0.227, lr=5e-5]Steps:  54%|#####3    | 323/600 [04:46<03:59,  1.16it/s, loss=0.457, lr=5e-5]Steps:  54%|#####4    | 324/600 [04:46<03:58,  1.16it/s, loss=0.457, lr=5e-5]Steps:  54%|#####4    | 324/600 [04:46<03:58,  1.16it/s, loss=0.421, lr=5e-5]Steps:  54%|#####4    | 325/600 [04:47<03:54,  1.17it/s, loss=0.421, lr=5e-5]Steps:  54%|#####4    | 325/600 [04:47<03:54,  1.17it/s, loss=0.131, lr=5e-5]Steps:  54%|#####4    | 326/600 [04:48<03:58,  1.15it/s, loss=0.131, lr=5e-5]Steps:  54%|#####4    | 326/600 [04:48<03:58,  1.15it/s, loss=0.0769, lr=5e-5]Steps:  55%|#####4    | 327/600 [04:49<03:56,  1.15it/s, loss=0.0769, lr=5e-5]Steps:  55%|#####4    | 327/600 [04:49<03:56,  1.15it/s, loss=0.101, lr=5e-5] Steps:  55%|#####4    | 328/600 [04:50<03:55,  1.15it/s, loss=0.101, lr=5e-5]Steps:  55%|#####4    | 328/600 [04:50<03:55,  1.15it/s, loss=0.203, lr=5e-5]Steps:  55%|#####4    | 329/600 [04:51<03:54,  1.15it/s, loss=0.203, lr=5e-5]Steps:  55%|#####4    | 329/600 [04:51<03:54,  1.15it/s, loss=0.419, lr=5e-5]Steps:  55%|#####5    | 330/600 [04:52<03:54,  1.15it/s, loss=0.419, lr=5e-5]Steps:  55%|#####5    | 330/600 [04:52<03:54,  1.15it/s, loss=0.194, lr=5e-5]Steps:  55%|#####5    | 331/600 [04:52<03:53,  1.15it/s, loss=0.194, lr=5e-5]Steps:  55%|#####5    | 331/600 [04:53<03:53,  1.15it/s, loss=0.143, lr=5e-5]Steps:  55%|#####5    | 332/600 [04:53<03:52,  1.15it/s, loss=0.143, lr=5e-5]Steps:  55%|#####5    | 332/600 [04:53<03:52,  1.15it/s, loss=0.191, lr=5e-5]Steps:  56%|#####5    | 333/600 [04:54<03:51,  1.16it/s, loss=0.191, lr=5e-5]Steps:  56%|#####5    | 333/600 [04:54<03:51,  1.16it/s, loss=0.107, lr=5e-5]Steps:  56%|#####5    | 334/600 [04:55<03:49,  1.16it/s, loss=0.107, lr=5e-5]Steps:  56%|#####5    | 334/600 [04:55<03:49,  1.16it/s, loss=0.303, lr=5e-5]Steps:  56%|#####5    | 335/600 [04:56<03:48,  1.16it/s, loss=0.303, lr=5e-5]Steps:  56%|#####5    | 335/600 [04:56<03:48,  1.16it/s, loss=0.25, lr=5e-5] Steps:  56%|#####6    | 336/600 [04:57<03:47,  1.16it/s, loss=0.25, lr=5e-5]Steps:  56%|#####6    | 336/600 [04:57<03:47,  1.16it/s, loss=0.163, lr=5e-5]Steps:  56%|#####6    | 337/600 [04:58<03:47,  1.16it/s, loss=0.163, lr=5e-5]Steps:  56%|#####6    | 337/600 [04:58<03:47,  1.16it/s, loss=0.0514, lr=5e-5]Steps:  56%|#####6    | 338/600 [04:58<03:46,  1.16it/s, loss=0.0514, lr=5e-5]Steps:  56%|#####6    | 338/600 [04:59<03:46,  1.16it/s, loss=0.234, lr=5e-5] Steps:  56%|#####6    | 339/600 [04:59<03:45,  1.16it/s, loss=0.234, lr=5e-5]Steps:  56%|#####6    | 339/600 [04:59<03:45,  1.16it/s, loss=0.0852, lr=5e-5]Steps:  57%|#####6    | 340/600 [05:00<03:44,  1.16it/s, loss=0.0852, lr=5e-5]Steps:  57%|#####6    | 340/600 [05:00<03:44,  1.16it/s, loss=0.0782, lr=5e-5]Steps:  57%|#####6    | 341/600 [05:01<03:43,  1.16it/s, loss=0.0782, lr=5e-5]Steps:  57%|#####6    | 341/600 [05:01<03:43,  1.16it/s, loss=0.221, lr=5e-5] Steps:  57%|#####6    | 342/600 [05:02<03:41,  1.16it/s, loss=0.221, lr=5e-5]Steps:  57%|#####6    | 342/600 [05:02<03:41,  1.16it/s, loss=0.0396, lr=5e-5]Steps:  57%|#####7    | 343/600 [05:03<03:41,  1.16it/s, loss=0.0396, lr=5e-5]Steps:  57%|#####7    | 343/600 [05:03<03:41,  1.16it/s, loss=0.0246, lr=5e-5]Steps:  57%|#####7    | 344/600 [05:04<03:40,  1.16it/s, loss=0.0246, lr=5e-5]Steps:  57%|#####7    | 344/600 [05:04<03:40,  1.16it/s, loss=0.299, lr=5e-5] Steps:  57%|#####7    | 345/600 [05:04<03:39,  1.16it/s, loss=0.299, lr=5e-5]Steps:  57%|#####7    | 345/600 [05:05<03:39,  1.16it/s, loss=0.122, lr=5e-5]Steps:  58%|#####7    | 346/600 [05:05<03:39,  1.16it/s, loss=0.122, lr=5e-5]Steps:  58%|#####7    | 346/600 [05:05<03:39,  1.16it/s, loss=0.0434, lr=5e-5]Steps:  58%|#####7    | 347/600 [05:06<03:38,  1.16it/s, loss=0.0434, lr=5e-5]Steps:  58%|#####7    | 347/600 [05:06<03:38,  1.16it/s, loss=0.166, lr=5e-5] Steps:  58%|#####8    | 348/600 [05:07<03:37,  1.16it/s, loss=0.166, lr=5e-5]Steps:  58%|#####8    | 348/600 [05:07<03:37,  1.16it/s, loss=0.202, lr=5e-5]Steps:  58%|#####8    | 349/600 [05:08<03:36,  1.16it/s, loss=0.202, lr=5e-5]Steps:  58%|#####8    | 349/600 [05:08<03:36,  1.16it/s, loss=0.707, lr=5e-5]Steps:  58%|#####8    | 350/600 [05:09<03:33,  1.17it/s, loss=0.707, lr=5e-5]Steps:  58%|#####8    | 350/600 [05:09<03:33,  1.17it/s, loss=0.0981, lr=5e-5]Steps:  58%|#####8    | 351/600 [05:10<03:36,  1.15it/s, loss=0.0981, lr=5e-5]Steps:  58%|#####8    | 351/600 [05:10<03:36,  1.15it/s, loss=0.293, lr=5e-5] Steps:  59%|#####8    | 352/600 [05:11<03:34,  1.15it/s, loss=0.293, lr=5e-5]Steps:  59%|#####8    | 352/600 [05:11<03:34,  1.15it/s, loss=0.222, lr=5e-5]Steps:  59%|#####8    | 353/600 [05:11<03:34,  1.15it/s, loss=0.222, lr=5e-5]Steps:  59%|#####8    | 353/600 [05:12<03:34,  1.15it/s, loss=0.116, lr=5e-5]Steps:  59%|#####8    | 354/600 [05:12<03:32,  1.16it/s, loss=0.116, lr=5e-5]Steps:  59%|#####8    | 354/600 [05:12<03:32,  1.16it/s, loss=0.31, lr=5e-5] Steps:  59%|#####9    | 355/600 [05:13<03:31,  1.16it/s, loss=0.31, lr=5e-5]Steps:  59%|#####9    | 355/600 [05:13<03:31,  1.16it/s, loss=0.29, lr=5e-5]Steps:  59%|#####9    | 356/600 [05:14<03:30,  1.16it/s, loss=0.29, lr=5e-5]Steps:  59%|#####9    | 356/600 [05:14<03:30,  1.16it/s, loss=0.308, lr=5e-5]Steps:  60%|#####9    | 357/600 [05:15<03:34,  1.13it/s, loss=0.308, lr=5e-5]Steps:  60%|#####9    | 357/600 [05:15<03:34,  1.13it/s, loss=0.0668, lr=5e-5]Steps:  60%|#####9    | 358/600 [05:16<03:40,  1.10it/s, loss=0.0668, lr=5e-5]Steps:  60%|#####9    | 358/600 [05:16<03:40,  1.10it/s, loss=0.0927, lr=5e-5]Steps:  60%|#####9    | 359/600 [05:17<03:45,  1.07it/s, loss=0.0927, lr=5e-5]Steps:  60%|#####9    | 359/600 [05:17<03:45,  1.07it/s, loss=0.212, lr=5e-5] Steps:  60%|######    | 360/600 [05:18<03:39,  1.09it/s, loss=0.212, lr=5e-5]Steps:  60%|######    | 360/600 [05:18<03:39,  1.09it/s, loss=0.152, lr=5e-5]Steps:  60%|######    | 361/600 [05:19<03:34,  1.11it/s, loss=0.152, lr=5e-5]Steps:  60%|######    | 361/600 [05:19<03:34,  1.11it/s, loss=0.149, lr=5e-5]Steps:  60%|######    | 362/600 [05:19<03:31,  1.12it/s, loss=0.149, lr=5e-5]Steps:  60%|######    | 362/600 [05:20<03:31,  1.12it/s, loss=0.222, lr=5e-5]Steps:  60%|######    | 363/600 [05:20<03:28,  1.13it/s, loss=0.222, lr=5e-5]Steps:  60%|######    | 363/600 [05:20<03:28,  1.13it/s, loss=0.0465, lr=5e-5]Steps:  61%|######    | 364/600 [05:21<03:29,  1.13it/s, loss=0.0465, lr=5e-5]Steps:  61%|######    | 364/600 [05:21<03:29,  1.13it/s, loss=0.0704, lr=5e-5]Steps:  61%|######    | 365/600 [05:22<03:29,  1.12it/s, loss=0.0704, lr=5e-5]Steps:  61%|######    | 365/600 [05:22<03:29,  1.12it/s, loss=0.0912, lr=5e-5]Steps:  61%|######1   | 366/600 [05:23<03:26,  1.13it/s, loss=0.0912, lr=5e-5]Steps:  61%|######1   | 366/600 [05:23<03:26,  1.13it/s, loss=0.168, lr=5e-5] Steps:  61%|######1   | 367/600 [05:24<03:24,  1.14it/s, loss=0.168, lr=5e-5]Steps:  61%|######1   | 367/600 [05:24<03:24,  1.14it/s, loss=0.131, lr=5e-5]Steps:  61%|######1   | 368/600 [05:25<03:22,  1.15it/s, loss=0.131, lr=5e-5]Steps:  61%|######1   | 368/600 [05:25<03:22,  1.15it/s, loss=0.327, lr=5e-5]Steps:  62%|######1   | 369/600 [05:26<03:21,  1.15it/s, loss=0.327, lr=5e-5]Steps:  62%|######1   | 369/600 [05:26<03:21,  1.15it/s, loss=0.169, lr=5e-5]Steps:  62%|######1   | 370/600 [05:26<03:19,  1.15it/s, loss=0.169, lr=5e-5]Steps:  62%|######1   | 370/600 [05:27<03:19,  1.15it/s, loss=0.0776, lr=5e-5]Steps:  62%|######1   | 371/600 [05:27<03:18,  1.15it/s, loss=0.0776, lr=5e-5]Steps:  62%|######1   | 371/600 [05:27<03:18,  1.15it/s, loss=0.0315, lr=5e-5]Steps:  62%|######2   | 372/600 [05:28<03:17,  1.15it/s, loss=0.0315, lr=5e-5]Steps:  62%|######2   | 372/600 [05:28<03:17,  1.15it/s, loss=0.232, lr=5e-5] Steps:  62%|######2   | 373/600 [05:29<03:16,  1.16it/s, loss=0.232, lr=5e-5]Steps:  62%|######2   | 373/600 [05:29<03:16,  1.16it/s, loss=0.0775, lr=5e-5]Steps:  62%|######2   | 374/600 [05:30<03:15,  1.16it/s, loss=0.0775, lr=5e-5]Steps:  62%|######2   | 374/600 [05:30<03:15,  1.16it/s, loss=0.107, lr=5e-5] Steps:  62%|######2   | 375/600 [05:31<03:11,  1.17it/s, loss=0.107, lr=5e-5]Steps:  62%|######2   | 375/600 [05:31<03:11,  1.17it/s, loss=0.184, lr=5e-5]Steps:  63%|######2   | 376/600 [05:32<03:14,  1.15it/s, loss=0.184, lr=5e-5]Steps:  63%|######2   | 376/600 [05:32<03:14,  1.15it/s, loss=0.292, lr=5e-5]Steps:  63%|######2   | 377/600 [05:33<03:13,  1.15it/s, loss=0.292, lr=5e-5]Steps:  63%|######2   | 377/600 [05:33<03:13,  1.15it/s, loss=0.11, lr=5e-5] Steps:  63%|######3   | 378/600 [05:33<03:12,  1.15it/s, loss=0.11, lr=5e-5]Steps:  63%|######3   | 378/600 [05:33<03:12,  1.15it/s, loss=0.0963, lr=5e-5]Steps:  63%|######3   | 379/600 [05:34<03:11,  1.15it/s, loss=0.0963, lr=5e-5]Steps:  63%|######3   | 379/600 [05:34<03:11,  1.15it/s, loss=0.137, lr=5e-5] Steps:  63%|######3   | 380/600 [05:35<03:10,  1.16it/s, loss=0.137, lr=5e-5]Steps:  63%|######3   | 380/600 [05:35<03:10,  1.16it/s, loss=0.468, lr=5e-5]Steps:  64%|######3   | 381/600 [05:36<03:09,  1.16it/s, loss=0.468, lr=5e-5]Steps:  64%|######3   | 381/600 [05:36<03:09,  1.16it/s, loss=0.12, lr=5e-5] Steps:  64%|######3   | 382/600 [05:37<03:08,  1.16it/s, loss=0.12, lr=5e-5]Steps:  64%|######3   | 382/600 [05:37<03:08,  1.16it/s, loss=0.0224, lr=5e-5]Steps:  64%|######3   | 383/600 [05:38<03:07,  1.16it/s, loss=0.0224, lr=5e-5]Steps:  64%|######3   | 383/600 [05:38<03:07,  1.16it/s, loss=0.196, lr=5e-5] Steps:  64%|######4   | 384/600 [05:39<03:06,  1.16it/s, loss=0.196, lr=5e-5]Steps:  64%|######4   | 384/600 [05:39<03:06,  1.16it/s, loss=0.139, lr=5e-5]Steps:  64%|######4   | 385/600 [05:39<03:05,  1.16it/s, loss=0.139, lr=5e-5]Steps:  64%|######4   | 385/600 [05:40<03:05,  1.16it/s, loss=0.0228, lr=5e-5]Steps:  64%|######4   | 386/600 [05:40<03:07,  1.14it/s, loss=0.0228, lr=5e-5]Steps:  64%|######4   | 386/600 [05:40<03:07,  1.14it/s, loss=0.125, lr=5e-5] Steps:  64%|######4   | 387/600 [05:41<03:05,  1.15it/s, loss=0.125, lr=5e-5]Steps:  64%|######4   | 387/600 [05:41<03:05,  1.15it/s, loss=0.435, lr=5e-5]Steps:  65%|######4   | 388/600 [05:42<03:03,  1.15it/s, loss=0.435, lr=5e-5]Steps:  65%|######4   | 388/600 [05:42<03:03,  1.15it/s, loss=0.0461, lr=5e-5]Steps:  65%|######4   | 389/600 [05:43<03:02,  1.15it/s, loss=0.0461, lr=5e-5]Steps:  65%|######4   | 389/600 [05:43<03:02,  1.15it/s, loss=0.0757, lr=5e-5]Steps:  65%|######5   | 390/600 [05:44<03:02,  1.15it/s, loss=0.0757, lr=5e-5]Steps:  65%|######5   | 390/600 [05:44<03:02,  1.15it/s, loss=0.184, lr=5e-5] Steps:  65%|######5   | 391/600 [05:45<03:01,  1.15it/s, loss=0.184, lr=5e-5]Steps:  65%|######5   | 391/600 [05:45<03:01,  1.15it/s, loss=0.183, lr=5e-5]Steps:  65%|######5   | 392/600 [05:46<02:59,  1.16it/s, loss=0.183, lr=5e-5]Steps:  65%|######5   | 392/600 [05:46<02:59,  1.16it/s, loss=0.0627, lr=5e-5]Steps:  66%|######5   | 393/600 [05:46<02:59,  1.16it/s, loss=0.0627, lr=5e-5]Steps:  66%|######5   | 393/600 [05:46<02:59,  1.16it/s, loss=0.252, lr=5e-5] Steps:  66%|######5   | 394/600 [05:47<02:57,  1.16it/s, loss=0.252, lr=5e-5]Steps:  66%|######5   | 394/600 [05:47<02:57,  1.16it/s, loss=0.0133, lr=5e-5]Steps:  66%|######5   | 395/600 [05:48<02:57,  1.16it/s, loss=0.0133, lr=5e-5]Steps:  66%|######5   | 395/600 [05:48<02:57,  1.16it/s, loss=0.067, lr=5e-5] Steps:  66%|######6   | 396/600 [05:49<02:56,  1.16it/s, loss=0.067, lr=5e-5]Steps:  66%|######6   | 396/600 [05:49<02:56,  1.16it/s, loss=0.0699, lr=5e-5]Steps:  66%|######6   | 397/600 [05:50<02:55,  1.16it/s, loss=0.0699, lr=5e-5]Steps:  66%|######6   | 397/600 [05:50<02:55,  1.16it/s, loss=0.313, lr=5e-5] Steps:  66%|######6   | 398/600 [05:51<02:54,  1.16it/s, loss=0.313, lr=5e-5]Steps:  66%|######6   | 398/600 [05:51<02:54,  1.16it/s, loss=0.228, lr=5e-5]Steps:  66%|######6   | 399/600 [05:52<02:53,  1.16it/s, loss=0.228, lr=5e-5]Steps:  66%|######6   | 399/600 [05:52<02:53,  1.16it/s, loss=0.0561, lr=5e-5]Steps:  67%|######6   | 400/600 [05:52<02:50,  1.17it/s, loss=0.0561, lr=5e-5]Steps:  67%|######6   | 400/600 [05:52<02:50,  1.17it/s, loss=0.0253, lr=5e-5]Steps:  67%|######6   | 401/600 [05:53<02:52,  1.15it/s, loss=0.0253, lr=5e-5]Steps:  67%|######6   | 401/600 [05:53<02:52,  1.15it/s, loss=0.0828, lr=5e-5]10/14/2025 09:51:03 - INFO - src.trainer - Running validation... 
+ Generating 2 images with prompt: a photo of sks dog.
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s][A
+Loading pipeline components...:  17%|#6        | 1/6 [00:00<00:00,  6.90it/s][A
+Loading pipeline components...:  83%|########3 | 5/6 [00:00<00:00, 19.88it/s][ALoading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 18.64it/s]
+Steps:  67%|######7   | 402/600 [05:58<06:34,  1.99s/it, loss=0.0828, lr=5e-5]Steps:  67%|######7   | 402/600 [05:58<06:34,  1.99s/it, loss=0.409, lr=5e-5] Steps:  67%|######7   | 403/600 [05:59<05:25,  1.65s/it, loss=0.409, lr=5e-5]Steps:  67%|######7   | 403/600 [05:59<05:25,  1.65s/it, loss=0.245, lr=5e-5]Steps:  67%|######7   | 404/600 [06:00<04:37,  1.42s/it, loss=0.245, lr=5e-5]Steps:  67%|######7   | 404/600 [06:00<04:37,  1.42s/it, loss=0.249, lr=5e-5]Steps:  68%|######7   | 405/600 [06:00<04:03,  1.25s/it, loss=0.249, lr=5e-5]Steps:  68%|######7   | 405/600 [06:01<04:03,  1.25s/it, loss=0.224, lr=5e-5]Steps:  68%|######7   | 406/600 [06:01<03:40,  1.14s/it, loss=0.224, lr=5e-5]Steps:  68%|######7   | 406/600 [06:01<03:40,  1.14s/it, loss=0.0204, lr=5e-5]Steps:  68%|######7   | 407/600 [06:02<03:23,  1.05s/it, loss=0.0204, lr=5e-5]Steps:  68%|######7   | 407/600 [06:02<03:23,  1.05s/it, loss=0.0427, lr=5e-5]Steps:  68%|######8   | 408/600 [06:03<03:11,  1.00it/s, loss=0.0427, lr=5e-5]Steps:  68%|######8   | 408/600 [06:03<03:11,  1.00it/s, loss=0.192, lr=5e-5] Steps:  68%|######8   | 409/600 [06:04<03:03,  1.04it/s, loss=0.192, lr=5e-5]Steps:  68%|######8   | 409/600 [06:04<03:03,  1.04it/s, loss=0.292, lr=5e-5]Steps:  68%|######8   | 410/600 [06:05<02:56,  1.07it/s, loss=0.292, lr=5e-5]Steps:  68%|######8   | 410/600 [06:05<02:56,  1.07it/s, loss=0.168, lr=5e-5]Steps:  68%|######8   | 411/600 [06:06<02:55,  1.08it/s, loss=0.168, lr=5e-5]Steps:  68%|######8   | 411/600 [06:06<02:55,  1.08it/s, loss=0.204, lr=5e-5]Steps:  69%|######8   | 412/600 [06:07<02:50,  1.10it/s, loss=0.204, lr=5e-5]Steps:  69%|######8   | 412/600 [06:07<02:50,  1.10it/s, loss=0.491, lr=5e-5]Steps:  69%|######8   | 413/600 [06:07<02:47,  1.12it/s, loss=0.491, lr=5e-5]Steps:  69%|######8   | 413/600 [06:08<02:47,  1.12it/s, loss=0.0673, lr=5e-5]Steps:  69%|######9   | 414/600 [06:08<02:44,  1.13it/s, loss=0.0673, lr=5e-5]Steps:  69%|######9   | 414/600 [06:08<02:44,  1.13it/s, loss=0.0441, lr=5e-5]Steps:  69%|######9   | 415/600 [06:09<02:42,  1.14it/s, loss=0.0441, lr=5e-5]Steps:  69%|######9   | 415/600 [06:09<02:42,  1.14it/s, loss=0.318, lr=5e-5] Steps:  69%|######9   | 416/600 [06:10<02:40,  1.14it/s, loss=0.318, lr=5e-5]Steps:  69%|######9   | 416/600 [06:10<02:40,  1.14it/s, loss=0.0919, lr=5e-5]Steps:  70%|######9   | 417/600 [06:11<02:41,  1.13it/s, loss=0.0919, lr=5e-5]Steps:  70%|######9   | 417/600 [06:11<02:41,  1.13it/s, loss=0.445, lr=5e-5] Steps:  70%|######9   | 418/600 [06:12<02:39,  1.14it/s, loss=0.445, lr=5e-5]Steps:  70%|######9   | 418/600 [06:12<02:39,  1.14it/s, loss=0.183, lr=5e-5]Steps:  70%|######9   | 419/600 [06:13<02:37,  1.15it/s, loss=0.183, lr=5e-5]Steps:  70%|######9   | 419/600 [06:13<02:37,  1.15it/s, loss=0.198, lr=5e-5]Steps:  70%|#######   | 420/600 [06:14<02:36,  1.15it/s, loss=0.198, lr=5e-5]Steps:  70%|#######   | 420/600 [06:14<02:36,  1.15it/s, loss=0.209, lr=5e-5]Steps:  70%|#######   | 421/600 [06:14<02:35,  1.15it/s, loss=0.209, lr=5e-5]Steps:  70%|#######   | 421/600 [06:15<02:35,  1.15it/s, loss=0.123, lr=5e-5]Steps:  70%|#######   | 422/600 [06:15<02:36,  1.14it/s, loss=0.123, lr=5e-5]Steps:  70%|#######   | 422/600 [06:15<02:36,  1.14it/s, loss=0.119, lr=5e-5]Steps:  70%|#######   | 423/600 [06:16<02:34,  1.14it/s, loss=0.119, lr=5e-5]Steps:  70%|#######   | 423/600 [06:16<02:34,  1.14it/s, loss=0.62, lr=5e-5] Steps:  71%|#######   | 424/600 [06:17<02:33,  1.15it/s, loss=0.62, lr=5e-5]Steps:  71%|#######   | 424/600 [06:17<02:33,  1.15it/s, loss=0.367, lr=5e-5]Steps:  71%|#######   | 425/600 [06:18<02:30,  1.16it/s, loss=0.367, lr=5e-5]Steps:  71%|#######   | 425/600 [06:18<02:30,  1.16it/s, loss=0.521, lr=5e-5]Steps:  71%|#######1  | 426/600 [06:19<02:32,  1.14it/s, loss=0.521, lr=5e-5]Steps:  71%|#######1  | 426/600 [06:19<02:32,  1.14it/s, loss=0.355, lr=5e-5]Steps:  71%|#######1  | 427/600 [06:20<02:30,  1.15it/s, loss=0.355, lr=5e-5]Steps:  71%|#######1  | 427/600 [06:20<02:30,  1.15it/s, loss=0.105, lr=5e-5]Steps:  71%|#######1  | 428/600 [06:21<02:29,  1.15it/s, loss=0.105, lr=5e-5]Steps:  71%|#######1  | 428/600 [06:21<02:29,  1.15it/s, loss=0.0302, lr=5e-5]Steps:  72%|#######1  | 429/600 [06:21<02:27,  1.16it/s, loss=0.0302, lr=5e-5]Steps:  72%|#######1  | 429/600 [06:21<02:27,  1.16it/s, loss=0.0587, lr=5e-5]Steps:  72%|#######1  | 430/600 [06:22<02:33,  1.11it/s, loss=0.0587, lr=5e-5]Steps:  72%|#######1  | 430/600 [06:22<02:33,  1.11it/s, loss=0.221, lr=5e-5] Steps:  72%|#######1  | 431/600 [06:23<02:40,  1.05it/s, loss=0.221, lr=5e-5]Steps:  72%|#######1  | 431/600 [06:24<02:40,  1.05it/s, loss=0.231, lr=5e-5]Steps:  72%|#######2  | 432/600 [06:24<02:45,  1.01it/s, loss=0.231, lr=5e-5]Steps:  72%|#######2  | 432/600 [06:25<02:45,  1.01it/s, loss=0.125, lr=5e-5]Steps:  72%|#######2  | 433/600 [06:25<02:38,  1.05it/s, loss=0.125, lr=5e-5]Steps:  72%|#######2  | 433/600 [06:25<02:38,  1.05it/s, loss=0.154, lr=5e-5]Steps:  72%|#######2  | 434/600 [06:26<02:33,  1.08it/s, loss=0.154, lr=5e-5]Steps:  72%|#######2  | 434/600 [06:26<02:33,  1.08it/s, loss=0.409, lr=5e-5]Steps:  72%|#######2  | 435/600 [06:27<02:29,  1.10it/s, loss=0.409, lr=5e-5]Steps:  72%|#######2  | 435/600 [06:27<02:29,  1.10it/s, loss=0.0907, lr=5e-5]Steps:  73%|#######2  | 436/600 [06:28<02:26,  1.12it/s, loss=0.0907, lr=5e-5]Steps:  73%|#######2  | 436/600 [06:28<02:26,  1.12it/s, loss=0.0198, lr=5e-5]Steps:  73%|#######2  | 437/600 [06:29<02:24,  1.13it/s, loss=0.0198, lr=5e-5]Steps:  73%|#######2  | 437/600 [06:29<02:24,  1.13it/s, loss=0.0347, lr=5e-5]Steps:  73%|#######3  | 438/600 [06:30<02:22,  1.14it/s, loss=0.0347, lr=5e-5]Steps:  73%|#######3  | 438/600 [06:30<02:22,  1.14it/s, loss=0.139, lr=5e-5] Steps:  73%|#######3  | 439/600 [06:31<02:20,  1.15it/s, loss=0.139, lr=5e-5]Steps:  73%|#######3  | 439/600 [06:31<02:20,  1.15it/s, loss=0.538, lr=5e-5]Steps:  73%|#######3  | 440/600 [06:31<02:19,  1.15it/s, loss=0.538, lr=5e-5]Steps:  73%|#######3  | 440/600 [06:32<02:19,  1.15it/s, loss=0.0278, lr=5e-5]Steps:  74%|#######3  | 441/600 [06:32<02:18,  1.15it/s, loss=0.0278, lr=5e-5]Steps:  74%|#######3  | 441/600 [06:32<02:18,  1.15it/s, loss=0.184, lr=5e-5] Steps:  74%|#######3  | 442/600 [06:33<02:16,  1.15it/s, loss=0.184, lr=5e-5]Steps:  74%|#######3  | 442/600 [06:33<02:16,  1.15it/s, loss=0.11, lr=5e-5] Steps:  74%|#######3  | 443/600 [06:34<02:15,  1.16it/s, loss=0.11, lr=5e-5]Steps:  74%|#######3  | 443/600 [06:34<02:15,  1.16it/s, loss=0.247, lr=5e-5]Steps:  74%|#######4  | 444/600 [06:35<02:14,  1.16it/s, loss=0.247, lr=5e-5]Steps:  74%|#######4  | 444/600 [06:35<02:14,  1.16it/s, loss=0.132, lr=5e-5]Steps:  74%|#######4  | 445/600 [06:36<02:14,  1.16it/s, loss=0.132, lr=5e-5]Steps:  74%|#######4  | 445/600 [06:36<02:14,  1.16it/s, loss=0.241, lr=5e-5]Steps:  74%|#######4  | 446/600 [06:37<02:13,  1.16it/s, loss=0.241, lr=5e-5]Steps:  74%|#######4  | 446/600 [06:37<02:13,  1.16it/s, loss=0.249, lr=5e-5]Steps:  74%|#######4  | 447/600 [06:37<02:12,  1.16it/s, loss=0.249, lr=5e-5]Steps:  74%|#######4  | 447/600 [06:38<02:12,  1.16it/s, loss=0.0838, lr=5e-5]Steps:  75%|#######4  | 448/600 [06:38<02:11,  1.16it/s, loss=0.0838, lr=5e-5]Steps:  75%|#######4  | 448/600 [06:38<02:11,  1.16it/s, loss=0.268, lr=5e-5] Steps:  75%|#######4  | 449/600 [06:39<02:10,  1.15it/s, loss=0.268, lr=5e-5]Steps:  75%|#######4  | 449/600 [06:39<02:10,  1.15it/s, loss=0.209, lr=5e-5]Steps:  75%|#######5  | 450/600 [06:40<02:08,  1.17it/s, loss=0.209, lr=5e-5]Steps:  75%|#######5  | 450/600 [06:40<02:08,  1.17it/s, loss=0.243, lr=5e-5]Steps:  75%|#######5  | 451/600 [06:41<02:09,  1.15it/s, loss=0.243, lr=5e-5]Steps:  75%|#######5  | 451/600 [06:41<02:09,  1.15it/s, loss=0.26, lr=5e-5] Steps:  75%|#######5  | 452/600 [06:42<02:17,  1.08it/s, loss=0.26, lr=5e-5]Steps:  75%|#######5  | 452/600 [06:42<02:17,  1.08it/s, loss=0.105, lr=5e-5]Steps:  76%|#######5  | 453/600 [06:43<02:15,  1.09it/s, loss=0.105, lr=5e-5]Steps:  76%|#######5  | 453/600 [06:43<02:15,  1.09it/s, loss=0.0331, lr=5e-5]Steps:  76%|#######5  | 454/600 [06:44<02:12,  1.10it/s, loss=0.0331, lr=5e-5]Steps:  76%|#######5  | 454/600 [06:44<02:12,  1.10it/s, loss=0.152, lr=5e-5] Steps:  76%|#######5  | 455/600 [06:45<02:09,  1.12it/s, loss=0.152, lr=5e-5]Steps:  76%|#######5  | 455/600 [06:45<02:09,  1.12it/s, loss=0.0973, lr=5e-5]Steps:  76%|#######6  | 456/600 [06:45<02:07,  1.13it/s, loss=0.0973, lr=5e-5]Steps:  76%|#######6  | 456/600 [06:46<02:07,  1.13it/s, loss=0.175, lr=5e-5] Steps:  76%|#######6  | 457/600 [06:46<02:05,  1.14it/s, loss=0.175, lr=5e-5]Steps:  76%|#######6  | 457/600 [06:46<02:05,  1.14it/s, loss=0.0862, lr=5e-5]Steps:  76%|#######6  | 458/600 [06:47<02:03,  1.15it/s, loss=0.0862, lr=5e-5]Steps:  76%|#######6  | 458/600 [06:47<02:03,  1.15it/s, loss=0.421, lr=5e-5] Steps:  76%|#######6  | 459/600 [06:48<02:02,  1.15it/s, loss=0.421, lr=5e-5]Steps:  76%|#######6  | 459/600 [06:48<02:02,  1.15it/s, loss=0.227, lr=5e-5]Steps:  77%|#######6  | 460/600 [06:49<02:01,  1.16it/s, loss=0.227, lr=5e-5]Steps:  77%|#######6  | 460/600 [06:49<02:01,  1.16it/s, loss=0.214, lr=5e-5]Steps:  77%|#######6  | 461/600 [06:50<02:00,  1.16it/s, loss=0.214, lr=5e-5]Steps:  77%|#######6  | 461/600 [06:50<02:00,  1.16it/s, loss=0.27, lr=5e-5] Steps:  77%|#######7  | 462/600 [06:51<01:59,  1.16it/s, loss=0.27, lr=5e-5]Steps:  77%|#######7  | 462/600 [06:51<01:59,  1.16it/s, loss=0.385, lr=5e-5]Steps:  77%|#######7  | 463/600 [06:52<01:58,  1.16it/s, loss=0.385, lr=5e-5]Steps:  77%|#######7  | 463/600 [06:52<01:58,  1.16it/s, loss=0.0717, lr=5e-5]Steps:  77%|#######7  | 464/600 [06:52<01:57,  1.16it/s, loss=0.0717, lr=5e-5]Steps:  77%|#######7  | 464/600 [06:52<01:57,  1.16it/s, loss=0.23, lr=5e-5]  Steps:  78%|#######7  | 465/600 [06:53<01:56,  1.16it/s, loss=0.23, lr=5e-5]Steps:  78%|#######7  | 465/600 [06:53<01:56,  1.16it/s, loss=0.193, lr=5e-5]Steps:  78%|#######7  | 466/600 [06:54<01:55,  1.16it/s, loss=0.193, lr=5e-5]Steps:  78%|#######7  | 466/600 [06:54<01:55,  1.16it/s, loss=0.444, lr=5e-5]Steps:  78%|#######7  | 467/600 [06:55<01:54,  1.16it/s, loss=0.444, lr=5e-5]Steps:  78%|#######7  | 467/600 [06:55<01:54,  1.16it/s, loss=0.125, lr=5e-5]Steps:  78%|#######8  | 468/600 [06:56<01:54,  1.16it/s, loss=0.125, lr=5e-5]Steps:  78%|#######8  | 468/600 [06:56<01:54,  1.16it/s, loss=0.144, lr=5e-5]Steps:  78%|#######8  | 469/600 [06:57<01:53,  1.16it/s, loss=0.144, lr=5e-5]Steps:  78%|#######8  | 469/600 [06:57<01:53,  1.16it/s, loss=0.131, lr=5e-5]Steps:  78%|#######8  | 470/600 [06:58<01:52,  1.16it/s, loss=0.131, lr=5e-5]Steps:  78%|#######8  | 470/600 [06:58<01:52,  1.16it/s, loss=0.178, lr=5e-5]Steps:  78%|#######8  | 471/600 [06:58<01:51,  1.16it/s, loss=0.178, lr=5e-5]Steps:  78%|#######8  | 471/600 [06:59<01:51,  1.16it/s, loss=0.351, lr=5e-5]Steps:  79%|#######8  | 472/600 [06:59<01:50,  1.16it/s, loss=0.351, lr=5e-5]Steps:  79%|#######8  | 472/600 [06:59<01:50,  1.16it/s, loss=0.312, lr=5e-5]Steps:  79%|#######8  | 473/600 [07:00<01:49,  1.16it/s, loss=0.312, lr=5e-5]Steps:  79%|#######8  | 473/600 [07:00<01:49,  1.16it/s, loss=0.0709, lr=5e-5]Steps:  79%|#######9  | 474/600 [07:01<01:48,  1.16it/s, loss=0.0709, lr=5e-5]Steps:  79%|#######9  | 474/600 [07:01<01:48,  1.16it/s, loss=0.159, lr=5e-5] Steps:  79%|#######9  | 475/600 [07:02<01:46,  1.17it/s, loss=0.159, lr=5e-5]Steps:  79%|#######9  | 475/600 [07:02<01:46,  1.17it/s, loss=0.453, lr=5e-5]Steps:  79%|#######9  | 476/600 [07:03<01:47,  1.16it/s, loss=0.453, lr=5e-5]Steps:  79%|#######9  | 476/600 [07:03<01:47,  1.16it/s, loss=0.759, lr=5e-5]Steps:  80%|#######9  | 477/600 [07:04<01:46,  1.16it/s, loss=0.759, lr=5e-5]Steps:  80%|#######9  | 477/600 [07:04<01:46,  1.16it/s, loss=0.0314, lr=5e-5]Steps:  80%|#######9  | 478/600 [07:04<01:45,  1.16it/s, loss=0.0314, lr=5e-5]Steps:  80%|#######9  | 478/600 [07:05<01:45,  1.16it/s, loss=0.0365, lr=5e-5]Steps:  80%|#######9  | 479/600 [07:05<01:44,  1.16it/s, loss=0.0365, lr=5e-5]Steps:  80%|#######9  | 479/600 [07:05<01:44,  1.16it/s, loss=0.0695, lr=5e-5]Steps:  80%|########  | 480/600 [07:06<01:43,  1.16it/s, loss=0.0695, lr=5e-5]Steps:  80%|########  | 480/600 [07:06<01:43,  1.16it/s, loss=0.214, lr=5e-5] Steps:  80%|########  | 481/600 [07:07<01:42,  1.16it/s, loss=0.214, lr=5e-5]Steps:  80%|########  | 481/600 [07:07<01:42,  1.16it/s, loss=0.391, lr=5e-5]Steps:  80%|########  | 482/600 [07:08<01:41,  1.16it/s, loss=0.391, lr=5e-5]Steps:  80%|########  | 482/600 [07:08<01:41,  1.16it/s, loss=0.446, lr=5e-5]Steps:  80%|########  | 483/600 [07:09<01:40,  1.16it/s, loss=0.446, lr=5e-5]Steps:  80%|########  | 483/600 [07:09<01:40,  1.16it/s, loss=0.161, lr=5e-5]Steps:  81%|########  | 484/600 [07:10<01:39,  1.16it/s, loss=0.161, lr=5e-5]Steps:  81%|########  | 484/600 [07:10<01:39,  1.16it/s, loss=0.268, lr=5e-5]Steps:  81%|########  | 485/600 [07:10<01:38,  1.16it/s, loss=0.268, lr=5e-5]Steps:  81%|########  | 485/600 [07:11<01:38,  1.16it/s, loss=0.435, lr=5e-5]Steps:  81%|########1 | 486/600 [07:11<01:37,  1.16it/s, loss=0.435, lr=5e-5]Steps:  81%|########1 | 486/600 [07:11<01:37,  1.16it/s, loss=0.156, lr=5e-5]Steps:  81%|########1 | 487/600 [07:12<01:37,  1.16it/s, loss=0.156, lr=5e-5]Steps:  81%|########1 | 487/600 [07:12<01:37,  1.16it/s, loss=0.405, lr=5e-5]Steps:  81%|########1 | 488/600 [07:13<01:36,  1.17it/s, loss=0.405, lr=5e-5]Steps:  81%|########1 | 488/600 [07:13<01:36,  1.17it/s, loss=0.161, lr=5e-5]Steps:  82%|########1 | 489/600 [07:14<01:35,  1.17it/s, loss=0.161, lr=5e-5]Steps:  82%|########1 | 489/600 [07:14<01:35,  1.17it/s, loss=0.0479, lr=5e-5]Steps:  82%|########1 | 490/600 [07:15<01:34,  1.16it/s, loss=0.0479, lr=5e-5]Steps:  82%|########1 | 490/600 [07:15<01:34,  1.16it/s, loss=0.0774, lr=5e-5]Steps:  82%|########1 | 491/600 [07:16<01:33,  1.16it/s, loss=0.0774, lr=5e-5]Steps:  82%|########1 | 491/600 [07:16<01:33,  1.16it/s, loss=0.211, lr=5e-5] Steps:  82%|########2 | 492/600 [07:16<01:32,  1.16it/s, loss=0.211, lr=5e-5]Steps:  82%|########2 | 492/600 [07:17<01:32,  1.16it/s, loss=0.116, lr=5e-5]Steps:  82%|########2 | 493/600 [07:17<01:32,  1.16it/s, loss=0.116, lr=5e-5]Steps:  82%|########2 | 493/600 [07:17<01:32,  1.16it/s, loss=0.214, lr=5e-5]Steps:  82%|########2 | 494/600 [07:18<01:31,  1.16it/s, loss=0.214, lr=5e-5]Steps:  82%|########2 | 494/600 [07:18<01:31,  1.16it/s, loss=0.404, lr=5e-5]Steps:  82%|########2 | 495/600 [07:19<01:30,  1.16it/s, loss=0.404, lr=5e-5]Steps:  82%|########2 | 495/600 [07:19<01:30,  1.16it/s, loss=0.133, lr=5e-5]Steps:  83%|########2 | 496/600 [07:20<01:29,  1.16it/s, loss=0.133, lr=5e-5]Steps:  83%|########2 | 496/600 [07:20<01:29,  1.16it/s, loss=0.277, lr=5e-5]Steps:  83%|########2 | 497/600 [07:21<01:28,  1.16it/s, loss=0.277, lr=5e-5]Steps:  83%|########2 | 497/600 [07:21<01:28,  1.16it/s, loss=0.367, lr=5e-5]Steps:  83%|########2 | 498/600 [07:22<01:28,  1.16it/s, loss=0.367, lr=5e-5]Steps:  83%|########2 | 498/600 [07:22<01:28,  1.16it/s, loss=0.282, lr=5e-5]Steps:  83%|########3 | 499/600 [07:23<01:27,  1.16it/s, loss=0.282, lr=5e-5]Steps:  83%|########3 | 499/600 [07:23<01:27,  1.16it/s, loss=0.0435, lr=5e-5]Steps:  83%|########3 | 500/600 [07:23<01:25,  1.17it/s, loss=0.0435, lr=5e-5]Steps:  83%|########3 | 500/600 [07:23<01:25,  1.17it/s, loss=0.166, lr=5e-5] Steps:  84%|########3 | 501/600 [07:24<01:25,  1.16it/s, loss=0.166, lr=5e-5]Steps:  84%|########3 | 501/600 [07:24<01:25,  1.16it/s, loss=0.261, lr=5e-5]Steps:  84%|########3 | 502/600 [07:25<01:24,  1.16it/s, loss=0.261, lr=5e-5]Steps:  84%|########3 | 502/600 [07:25<01:24,  1.16it/s, loss=0.3, lr=5e-5]  Steps:  84%|########3 | 503/600 [07:26<01:23,  1.16it/s, loss=0.3, lr=5e-5]Steps:  84%|########3 | 503/600 [07:26<01:23,  1.16it/s, loss=0.0909, lr=5e-5]Steps:  84%|########4 | 504/600 [07:27<01:22,  1.16it/s, loss=0.0909, lr=5e-5]Steps:  84%|########4 | 504/600 [07:27<01:22,  1.16it/s, loss=0.0805, lr=5e-5]Steps:  84%|########4 | 505/600 [07:28<01:22,  1.16it/s, loss=0.0805, lr=5e-5]Steps:  84%|########4 | 505/600 [07:28<01:22,  1.16it/s, loss=0.185, lr=5e-5] Steps:  84%|########4 | 506/600 [07:29<01:21,  1.16it/s, loss=0.185, lr=5e-5]Steps:  84%|########4 | 506/600 [07:29<01:21,  1.16it/s, loss=0.23, lr=5e-5] Steps:  84%|########4 | 507/600 [07:29<01:20,  1.16it/s, loss=0.23, lr=5e-5]Steps:  84%|########4 | 507/600 [07:30<01:20,  1.16it/s, loss=0.013, lr=5e-5]Steps:  85%|########4 | 508/600 [07:30<01:19,  1.16it/s, loss=0.013, lr=5e-5]Steps:  85%|########4 | 508/600 [07:30<01:19,  1.16it/s, loss=0.173, lr=5e-5]Steps:  85%|########4 | 509/600 [07:31<01:18,  1.16it/s, loss=0.173, lr=5e-5]Steps:  85%|########4 | 509/600 [07:31<01:18,  1.16it/s, loss=0.0862, lr=5e-5]Steps:  85%|########5 | 510/600 [07:32<01:17,  1.16it/s, loss=0.0862, lr=5e-5]Steps:  85%|########5 | 510/600 [07:32<01:17,  1.16it/s, loss=0.0342, lr=5e-5]Steps:  85%|########5 | 511/600 [07:33<01:16,  1.16it/s, loss=0.0342, lr=5e-5]Steps:  85%|########5 | 511/600 [07:33<01:16,  1.16it/s, loss=0.0462, lr=5e-5]Steps:  85%|########5 | 512/600 [07:34<01:16,  1.16it/s, loss=0.0462, lr=5e-5]Steps:  85%|########5 | 512/600 [07:34<01:16,  1.16it/s, loss=0.0563, lr=5e-5]Steps:  86%|########5 | 513/600 [07:35<01:15,  1.16it/s, loss=0.0563, lr=5e-5]Steps:  86%|########5 | 513/600 [07:35<01:15,  1.16it/s, loss=0.0809, lr=5e-5]Steps:  86%|########5 | 514/600 [07:35<01:14,  1.16it/s, loss=0.0809, lr=5e-5]Steps:  86%|########5 | 514/600 [07:36<01:14,  1.16it/s, loss=0.0227, lr=5e-5]Steps:  86%|########5 | 515/600 [07:36<01:13,  1.16it/s, loss=0.0227, lr=5e-5]Steps:  86%|########5 | 515/600 [07:36<01:13,  1.16it/s, loss=0.146, lr=5e-5] Steps:  86%|########6 | 516/600 [07:37<01:12,  1.16it/s, loss=0.146, lr=5e-5]Steps:  86%|########6 | 516/600 [07:37<01:12,  1.16it/s, loss=0.178, lr=5e-5]Steps:  86%|########6 | 517/600 [07:38<01:11,  1.16it/s, loss=0.178, lr=5e-5]Steps:  86%|########6 | 517/600 [07:38<01:11,  1.16it/s, loss=0.025, lr=5e-5]Steps:  86%|########6 | 518/600 [07:39<01:10,  1.16it/s, loss=0.025, lr=5e-5]Steps:  86%|########6 | 518/600 [07:39<01:10,  1.16it/s, loss=0.0353, lr=5e-5]Steps:  86%|########6 | 519/600 [07:40<01:09,  1.16it/s, loss=0.0353, lr=5e-5]Steps:  86%|########6 | 519/600 [07:40<01:09,  1.16it/s, loss=0.115, lr=5e-5] Steps:  87%|########6 | 520/600 [07:41<01:08,  1.16it/s, loss=0.115, lr=5e-5]Steps:  87%|########6 | 520/600 [07:41<01:08,  1.16it/s, loss=0.223, lr=5e-5]Steps:  87%|########6 | 521/600 [07:41<01:07,  1.16it/s, loss=0.223, lr=5e-5]Steps:  87%|########6 | 521/600 [07:42<01:07,  1.16it/s, loss=0.22, lr=5e-5] Steps:  87%|########7 | 522/600 [07:42<01:07,  1.16it/s, loss=0.22, lr=5e-5]Steps:  87%|########7 | 522/600 [07:42<01:07,  1.16it/s, loss=0.0833, lr=5e-5]Steps:  87%|########7 | 523/600 [07:43<01:06,  1.16it/s, loss=0.0833, lr=5e-5]Steps:  87%|########7 | 523/600 [07:43<01:06,  1.16it/s, loss=0.104, lr=5e-5] Steps:  87%|########7 | 524/600 [07:44<01:05,  1.16it/s, loss=0.104, lr=5e-5]Steps:  87%|########7 | 524/600 [07:44<01:05,  1.16it/s, loss=0.299, lr=5e-5]Steps:  88%|########7 | 525/600 [07:45<01:04,  1.17it/s, loss=0.299, lr=5e-5]Steps:  88%|########7 | 525/600 [07:45<01:04,  1.17it/s, loss=0.112, lr=5e-5]Steps:  88%|########7 | 526/600 [07:46<01:04,  1.15it/s, loss=0.112, lr=5e-5]Steps:  88%|########7 | 526/600 [07:46<01:04,  1.15it/s, loss=0.302, lr=5e-5]Steps:  88%|########7 | 527/600 [07:47<01:03,  1.15it/s, loss=0.302, lr=5e-5]Steps:  88%|########7 | 527/600 [07:47<01:03,  1.15it/s, loss=0.106, lr=5e-5]Steps:  88%|########8 | 528/600 [07:48<01:02,  1.15it/s, loss=0.106, lr=5e-5]Steps:  88%|########8 | 528/600 [07:48<01:02,  1.15it/s, loss=0.213, lr=5e-5]Steps:  88%|########8 | 529/600 [07:48<01:01,  1.15it/s, loss=0.213, lr=5e-5]Steps:  88%|########8 | 529/600 [07:49<01:01,  1.15it/s, loss=0.51, lr=5e-5] Steps:  88%|########8 | 530/600 [07:49<01:00,  1.16it/s, loss=0.51, lr=5e-5]Steps:  88%|########8 | 530/600 [07:49<01:00,  1.16it/s, loss=0.0782, lr=5e-5]Steps:  88%|########8 | 531/600 [07:50<00:59,  1.15it/s, loss=0.0782, lr=5e-5]Steps:  88%|########8 | 531/600 [07:50<00:59,  1.15it/s, loss=0.27, lr=5e-5]  Steps:  89%|########8 | 532/600 [07:51<00:58,  1.16it/s, loss=0.27, lr=5e-5]Steps:  89%|########8 | 532/600 [07:51<00:58,  1.16it/s, loss=0.162, lr=5e-5]Steps:  89%|########8 | 533/600 [07:52<00:57,  1.16it/s, loss=0.162, lr=5e-5]Steps:  89%|########8 | 533/600 [07:52<00:57,  1.16it/s, loss=0.0852, lr=5e-5]Steps:  89%|########9 | 534/600 [07:53<00:56,  1.16it/s, loss=0.0852, lr=5e-5]Steps:  89%|########9 | 534/600 [07:53<00:56,  1.16it/s, loss=0.242, lr=5e-5] Steps:  89%|########9 | 535/600 [07:54<00:55,  1.16it/s, loss=0.242, lr=5e-5]Steps:  89%|########9 | 535/600 [07:54<00:55,  1.16it/s, loss=0.108, lr=5e-5]Steps:  89%|########9 | 536/600 [07:54<00:55,  1.16it/s, loss=0.108, lr=5e-5]Steps:  89%|########9 | 536/600 [07:55<00:55,  1.16it/s, loss=0.116, lr=5e-5]Steps:  90%|########9 | 537/600 [07:55<00:54,  1.16it/s, loss=0.116, lr=5e-5]Steps:  90%|########9 | 537/600 [07:55<00:54,  1.16it/s, loss=0.0141, lr=5e-5]Steps:  90%|########9 | 538/600 [07:56<00:53,  1.16it/s, loss=0.0141, lr=5e-5]Steps:  90%|########9 | 538/600 [07:56<00:53,  1.16it/s, loss=0.0505, lr=5e-5]Steps:  90%|########9 | 539/600 [07:57<00:52,  1.16it/s, loss=0.0505, lr=5e-5]Steps:  90%|########9 | 539/600 [07:57<00:52,  1.16it/s, loss=0.685, lr=5e-5] Steps:  90%|######### | 540/600 [07:58<00:51,  1.16it/s, loss=0.685, lr=5e-5]Steps:  90%|######### | 540/600 [07:58<00:51,  1.16it/s, loss=0.15, lr=5e-5] Steps:  90%|######### | 541/600 [07:59<00:50,  1.16it/s, loss=0.15, lr=5e-5]Steps:  90%|######### | 541/600 [07:59<00:50,  1.16it/s, loss=0.114, lr=5e-5]Steps:  90%|######### | 542/600 [08:00<00:50,  1.16it/s, loss=0.114, lr=5e-5]Steps:  90%|######### | 542/600 [08:00<00:50,  1.16it/s, loss=0.0889, lr=5e-5]Steps:  90%|######### | 543/600 [08:01<00:49,  1.16it/s, loss=0.0889, lr=5e-5]Steps:  90%|######### | 543/600 [08:01<00:49,  1.16it/s, loss=0.319, lr=5e-5] Steps:  91%|######### | 544/600 [08:01<00:48,  1.16it/s, loss=0.319, lr=5e-5]Steps:  91%|######### | 544/600 [08:01<00:48,  1.16it/s, loss=0.091, lr=5e-5]Steps:  91%|######### | 545/600 [08:02<00:47,  1.16it/s, loss=0.091, lr=5e-5]Steps:  91%|######### | 545/600 [08:02<00:47,  1.16it/s, loss=0.0991, lr=5e-5]Steps:  91%|#########1| 546/600 [08:03<00:46,  1.16it/s, loss=0.0991, lr=5e-5]Steps:  91%|#########1| 546/600 [08:03<00:46,  1.16it/s, loss=0.163, lr=5e-5] Steps:  91%|#########1| 547/600 [08:04<00:45,  1.16it/s, loss=0.163, lr=5e-5]Steps:  91%|#########1| 547/600 [08:04<00:45,  1.16it/s, loss=0.0987, lr=5e-5]Steps:  91%|#########1| 548/600 [08:05<00:44,  1.16it/s, loss=0.0987, lr=5e-5]Steps:  91%|#########1| 548/600 [08:05<00:44,  1.16it/s, loss=0.202, lr=5e-5] Steps:  92%|#########1| 549/600 [08:06<00:44,  1.16it/s, loss=0.202, lr=5e-5]Steps:  92%|#########1| 549/600 [08:06<00:44,  1.16it/s, loss=0.0481, lr=5e-5]Steps:  92%|#########1| 550/600 [08:07<00:42,  1.17it/s, loss=0.0481, lr=5e-5]Steps:  92%|#########1| 550/600 [08:07<00:42,  1.17it/s, loss=0.14, lr=5e-5]  Steps:  92%|#########1| 551/600 [08:07<00:42,  1.16it/s, loss=0.14, lr=5e-5]Steps:  92%|#########1| 551/600 [08:08<00:42,  1.16it/s, loss=0.143, lr=5e-5]Steps:  92%|#########2| 552/600 [08:08<00:41,  1.16it/s, loss=0.143, lr=5e-5]Steps:  92%|#########2| 552/600 [08:08<00:41,  1.16it/s, loss=0.0503, lr=5e-5]Steps:  92%|#########2| 553/600 [08:09<00:40,  1.16it/s, loss=0.0503, lr=5e-5]Steps:  92%|#########2| 553/600 [08:09<00:40,  1.16it/s, loss=0.35, lr=5e-5]  Steps:  92%|#########2| 554/600 [08:10<00:39,  1.16it/s, loss=0.35, lr=5e-5]Steps:  92%|#########2| 554/600 [08:10<00:39,  1.16it/s, loss=0.0909, lr=5e-5]Steps:  92%|#########2| 555/600 [08:11<00:38,  1.16it/s, loss=0.0909, lr=5e-5]Steps:  92%|#########2| 555/600 [08:11<00:38,  1.16it/s, loss=0.0264, lr=5e-5]Steps:  93%|#########2| 556/600 [08:12<00:38,  1.16it/s, loss=0.0264, lr=5e-5]Steps:  93%|#########2| 556/600 [08:12<00:38,  1.16it/s, loss=0.0468, lr=5e-5]Steps:  93%|#########2| 557/600 [08:13<00:37,  1.16it/s, loss=0.0468, lr=5e-5]Steps:  93%|#########2| 557/600 [08:13<00:37,  1.16it/s, loss=0.205, lr=5e-5] Steps:  93%|#########3| 558/600 [08:13<00:36,  1.16it/s, loss=0.205, lr=5e-5]Steps:  93%|#########3| 558/600 [08:14<00:36,  1.16it/s, loss=0.178, lr=5e-5]Steps:  93%|#########3| 559/600 [08:14<00:35,  1.16it/s, loss=0.178, lr=5e-5]Steps:  93%|#########3| 559/600 [08:14<00:35,  1.16it/s, loss=0.14, lr=5e-5] Steps:  93%|#########3| 560/600 [08:15<00:34,  1.16it/s, loss=0.14, lr=5e-5]Steps:  93%|#########3| 560/600 [08:15<00:34,  1.16it/s, loss=0.183, lr=5e-5]Steps:  94%|#########3| 561/600 [08:16<00:33,  1.16it/s, loss=0.183, lr=5e-5]Steps:  94%|#########3| 561/600 [08:16<00:33,  1.16it/s, loss=0.148, lr=5e-5]Steps:  94%|#########3| 562/600 [08:17<00:32,  1.16it/s, loss=0.148, lr=5e-5]Steps:  94%|#########3| 562/600 [08:17<00:32,  1.16it/s, loss=0.306, lr=5e-5]Steps:  94%|#########3| 563/600 [08:18<00:32,  1.14it/s, loss=0.306, lr=5e-5]Steps:  94%|#########3| 563/600 [08:18<00:32,  1.14it/s, loss=0.0548, lr=5e-5]Steps:  94%|#########3| 564/600 [08:19<00:31,  1.15it/s, loss=0.0548, lr=5e-5]Steps:  94%|#########3| 564/600 [08:19<00:31,  1.15it/s, loss=0.121, lr=5e-5] Steps:  94%|#########4| 565/600 [08:20<00:30,  1.15it/s, loss=0.121, lr=5e-5]Steps:  94%|#########4| 565/600 [08:20<00:30,  1.15it/s, loss=0.147, lr=5e-5]Steps:  94%|#########4| 566/600 [08:20<00:29,  1.15it/s, loss=0.147, lr=5e-5]Steps:  94%|#########4| 566/600 [08:21<00:29,  1.15it/s, loss=0.103, lr=5e-5]Steps:  94%|#########4| 567/600 [08:21<00:29,  1.11it/s, loss=0.103, lr=5e-5]Steps:  94%|#########4| 567/600 [08:21<00:29,  1.11it/s, loss=0.25, lr=5e-5] Steps:  95%|#########4| 568/600 [08:22<00:29,  1.09it/s, loss=0.25, lr=5e-5]Steps:  95%|#########4| 568/600 [08:22<00:29,  1.09it/s, loss=0.308, lr=5e-5]Steps:  95%|#########4| 569/600 [08:23<00:27,  1.11it/s, loss=0.308, lr=5e-5]Steps:  95%|#########4| 569/600 [08:23<00:27,  1.11it/s, loss=0.0682, lr=5e-5]Steps:  95%|#########5| 570/600 [08:24<00:26,  1.12it/s, loss=0.0682, lr=5e-5]Steps:  95%|#########5| 570/600 [08:24<00:26,  1.12it/s, loss=0.0979, lr=5e-5]Steps:  95%|#########5| 571/600 [08:25<00:25,  1.13it/s, loss=0.0979, lr=5e-5]Steps:  95%|#########5| 571/600 [08:25<00:25,  1.13it/s, loss=0.506, lr=5e-5] Steps:  95%|#########5| 572/600 [08:26<00:24,  1.14it/s, loss=0.506, lr=5e-5]Steps:  95%|#########5| 572/600 [08:26<00:24,  1.14it/s, loss=0.0432, lr=5e-5]Steps:  96%|#########5| 573/600 [08:27<00:23,  1.14it/s, loss=0.0432, lr=5e-5]Steps:  96%|#########5| 573/600 [08:27<00:23,  1.14it/s, loss=0.139, lr=5e-5] Steps:  96%|#########5| 574/600 [08:28<00:22,  1.15it/s, loss=0.139, lr=5e-5]Steps:  96%|#########5| 574/600 [08:28<00:22,  1.15it/s, loss=0.0337, lr=5e-5]Steps:  96%|#########5| 575/600 [08:28<00:21,  1.17it/s, loss=0.0337, lr=5e-5]Steps:  96%|#########5| 575/600 [08:28<00:21,  1.17it/s, loss=0.258, lr=5e-5] Steps:  96%|#########6| 576/600 [08:29<00:21,  1.13it/s, loss=0.258, lr=5e-5]Steps:  96%|#########6| 576/600 [08:29<00:21,  1.13it/s, loss=0.0872, lr=5e-5]Steps:  96%|#########6| 577/600 [08:30<00:20,  1.12it/s, loss=0.0872, lr=5e-5]Steps:  96%|#########6| 577/600 [08:30<00:20,  1.12it/s, loss=0.327, lr=5e-5] Steps:  96%|#########6| 578/600 [08:31<00:19,  1.13it/s, loss=0.327, lr=5e-5]Steps:  96%|#########6| 578/600 [08:31<00:19,  1.13it/s, loss=0.371, lr=5e-5]Steps:  96%|#########6| 579/600 [08:32<00:18,  1.14it/s, loss=0.371, lr=5e-5]Steps:  96%|#########6| 579/600 [08:32<00:18,  1.14it/s, loss=0.104, lr=5e-5]Steps:  97%|#########6| 580/600 [08:33<00:17,  1.15it/s, loss=0.104, lr=5e-5]Steps:  97%|#########6| 580/600 [08:33<00:17,  1.15it/s, loss=0.44, lr=5e-5] Steps:  97%|#########6| 581/600 [08:34<00:16,  1.15it/s, loss=0.44, lr=5e-5]Steps:  97%|#########6| 581/600 [08:34<00:16,  1.15it/s, loss=0.0509, lr=5e-5]Steps:  97%|#########7| 582/600 [08:35<00:16,  1.12it/s, loss=0.0509, lr=5e-5]Steps:  97%|#########7| 582/600 [08:35<00:16,  1.12it/s, loss=0.0849, lr=5e-5]Steps:  97%|#########7| 583/600 [08:35<00:15,  1.13it/s, loss=0.0849, lr=5e-5]Steps:  97%|#########7| 583/600 [08:36<00:15,  1.13it/s, loss=0.0535, lr=5e-5]Steps:  97%|#########7| 584/600 [08:36<00:14,  1.14it/s, loss=0.0535, lr=5e-5]Steps:  97%|#########7| 584/600 [08:36<00:14,  1.14it/s, loss=0.0199, lr=5e-5]Steps:  98%|#########7| 585/600 [08:37<00:13,  1.14it/s, loss=0.0199, lr=5e-5]Steps:  98%|#########7| 585/600 [08:37<00:13,  1.14it/s, loss=0.27, lr=5e-5]  Steps:  98%|#########7| 586/600 [08:38<00:12,  1.14it/s, loss=0.27, lr=5e-5]Steps:  98%|#########7| 586/600 [08:38<00:12,  1.14it/s, loss=0.343, lr=5e-5]Steps:  98%|#########7| 587/600 [08:39<00:11,  1.15it/s, loss=0.343, lr=5e-5]Steps:  98%|#########7| 587/600 [08:39<00:11,  1.15it/s, loss=0.128, lr=5e-5]Steps:  98%|#########8| 588/600 [08:40<00:10,  1.15it/s, loss=0.128, lr=5e-5]Steps:  98%|#########8| 588/600 [08:40<00:10,  1.15it/s, loss=0.126, lr=5e-5]Steps:  98%|#########8| 589/600 [08:41<00:09,  1.15it/s, loss=0.126, lr=5e-5]Steps:  98%|#########8| 589/600 [08:41<00:09,  1.15it/s, loss=0.14, lr=5e-5] Steps:  98%|#########8| 590/600 [08:42<00:08,  1.15it/s, loss=0.14, lr=5e-5]Steps:  98%|#########8| 590/600 [08:42<00:08,  1.15it/s, loss=0.0811, lr=5e-5]Steps:  98%|#########8| 591/600 [08:42<00:07,  1.16it/s, loss=0.0811, lr=5e-5]Steps:  98%|#########8| 591/600 [08:43<00:07,  1.16it/s, loss=0.0672, lr=5e-5]Steps:  99%|#########8| 592/600 [08:43<00:06,  1.16it/s, loss=0.0672, lr=5e-5]Steps:  99%|#########8| 592/600 [08:43<00:06,  1.16it/s, loss=0.0476, lr=5e-5]Steps:  99%|#########8| 593/600 [08:44<00:06,  1.16it/s, loss=0.0476, lr=5e-5]Steps:  99%|#########8| 593/600 [08:44<00:06,  1.16it/s, loss=0.134, lr=5e-5] Steps:  99%|#########9| 594/600 [08:45<00:05,  1.16it/s, loss=0.134, lr=5e-5]Steps:  99%|#########9| 594/600 [08:45<00:05,  1.16it/s, loss=0.285, lr=5e-5]Steps:  99%|#########9| 595/600 [08:46<00:04,  1.16it/s, loss=0.285, lr=5e-5]Steps:  99%|#########9| 595/600 [08:46<00:04,  1.16it/s, loss=0.415, lr=5e-5]Steps:  99%|#########9| 596/600 [08:47<00:03,  1.16it/s, loss=0.415, lr=5e-5]Steps:  99%|#########9| 596/600 [08:47<00:03,  1.16it/s, loss=0.187, lr=5e-5]Steps: 100%|#########9| 597/600 [08:48<00:02,  1.16it/s, loss=0.187, lr=5e-5]Steps: 100%|#########9| 597/600 [08:48<00:02,  1.16it/s, loss=0.113, lr=5e-5]Steps: 100%|#########9| 598/600 [08:48<00:01,  1.16it/s, loss=0.113, lr=5e-5]Steps: 100%|#########9| 598/600 [08:49<00:01,  1.16it/s, loss=0.101, lr=5e-5]Steps: 100%|#########9| 599/600 [08:49<00:00,  1.16it/s, loss=0.101, lr=5e-5]Steps: 100%|#########9| 599/600 [08:49<00:00,  1.16it/s, loss=0.0519, lr=5e-5]Steps: 100%|##########| 600/600 [08:50<00:00,  1.18it/s, loss=0.0519, lr=5e-5]Steps: 100%|##########| 600/600 [08:50<00:00,  1.18it/s, loss=0.128, lr=5e-5] Steps: 100%|##########| 600/600 [08:50<00:00,  1.13it/s, loss=0.128, lr=5e-5]
+/root/miniconda3/envs/nullbooth/lib/python3.12/site-packages/peft/utils/save_and_load.py:286: UserWarning: Could not find a config file in /root/bluewolf/NullBooth/LCM - will assume that the vocabulary was not modified.
+  warnings.warn(
+Training completed successfully!
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-14 09:54:00
+Log saved to: logs/20251014_094452_train.txt
+================================================================================
+

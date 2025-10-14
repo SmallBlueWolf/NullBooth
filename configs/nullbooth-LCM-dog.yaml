@@ -3,7 +3,7 @@
 # 基于LCM论文Algorithm 4，保持模型的快速推理能力
 
 # Model Configuration
-pretrained_model_name_or_path: "./LCM"  # Local Latent Consistency Model directory
+pretrained_model_name_or_path: "/root/bluewolf/NullBooth/LCM"  # Local Latent Consistency Model directory
 model_type: "LCM"  # 指定LCM模型类型，用于正确加载调度器
 revision: null
 tokenizer_name: null
@@ -12,9 +12,9 @@ tokenizer_name: null
 lcf_mode: true  # 启用Latent Consistency Fine-tuning
 
 # Data Configuration
-instance_data_dir: "./dataset/dog"  # Required - path to instance images
-class_data_dir: "./dataset/class_img_cache"
-instance_prompt: "a photo of sks dog"  # Required - prompt with identifier
+instance_data_dir: "/root/bluewolf/NullBooth/dataset/dog"  
+class_data_dir: "/root/bluewolf/NullBooth/dataset/class_img_cache"
+instance_prompt: "a photo of sks dog"  # Special token for DreamBooth-style training
 class_prompt: "a photo of a dog"
 
 # Prior Preservation - LCF不需要
@@ -24,11 +24,11 @@ num_class_images: 0
 
 # Validation
 validation_prompt: "a photo of sks dog"
-num_validation_images: 4
-validation_steps: 25  # LCF收敛快，频繁验证
+num_validation_images: 1
+validation_steps: 5000  # LCF收敛快，频繁验证
 
 # Output Configuration
-output_dir: "outputs/nullbooth-lcm-model-dog"
+output_dir: "outputs/nullbooth-lcm-model-1000dog"
 seed: 42
 resolution: 512
 center_crop: false
@@ -47,20 +47,20 @@ lora_text_encoder_alpha: null
 lora_text_encoder_dropout: null
 lora_text_encoder_bias: null
 
-# Training Configuration - LCF优化
-train_batch_size: 1
-sample_batch_size: 2
+# Training Configuration - LCF (遵循论文推荐设置)
+train_batch_size: 2  # 每个GPU处理2张图，提高吞吐
+sample_batch_size: 4
 num_train_epochs: null
-max_train_steps: 50  # 极短训练，LCF收敛快
-checkpointing_steps: 25  # 在25和50步保存
+max_train_steps: 15000  # 总样本曝光量保持不变 (原先4*30000=新8*15000)
+checkpointing_steps: 1000
 resume_from_checkpoint: null
-gradient_accumulation_steps: 1  # 不累积梯度
-gradient_checkpointing: false  # 短训练不需要
-num_dataloader_workers: 2
+gradient_accumulation_steps: 1
+gradient_checkpointing: false
+num_dataloader_workers: 0
 no_tracemalloc: true
 
-# Optimization - LCF专用参数
-learning_rate: 0.000001  # 1e-6: 比LCD低很多！
+# Optimization - LCF推荐超参
+learning_rate: 0.000008  # 8e-6 (LCM论文LCF设置)
 scale_lr: false
 lr_scheduler: "constant"  # 无需调度
 lr_warmup_steps: 0  # 无需warmup
@@ -78,9 +78,9 @@ lcf_parameters:
   consistency_weight: 1.0  # 一致性损失权重
   skipping_step: 20  # k=20 如论文所述
   huber_c: 0.001  # Huber损失参数
-  w_min: 3.0  # 最小CFG scale
-  w_max: 15.0  # 最大CFG scale
-  ema_decay: 0.95  # 快速EMA更新
+  w_min: 2.0  # 依据论文 [2,14]
+  w_max: 14.0
+  ema_decay: 0.9999  # 慢速EMA，贴合论文设置
   use_teacher_model: false  # LCF不需要教师模型
   use_ode_solver: false  # LCF不需要ODE求解器
 
@@ -96,43 +96,44 @@ wandb_key: null
 wandb_project_name: null
 
 # Hardware Configuration
-allow_tf32: true
+allow_tf32: true  # Enable for RTX 4090
 mixed_precision: "no"  # 关闭混合精度，LCF需要稳定性
 prior_generation_precision: null
 local_rank: -1
-enable_xformers_memory_efficient_attention: true
+enable_xformers_memory_efficient_attention: false  # CPU运行禁用xformers
+find_unused_parameters: true  # 多GPU下避免DDP未用参数报错
 
-# NullBooth Configuration for LCM - 为LCF优化
+# NullBooth Configuration for LCM - 为LCF投影启用
 nullbooth:
   enable: true
-  original_knowledge_prompts: "./dataset/wordnet/wordnet_vision_all.txt"
-  cov_matrices_output_dir: "/home/public/public_nas/bluewolf/cov_matrices_LCM"
+  original_knowledge_prompts: "/root/bluewolf/NullBooth/dataset/dog_prompts_1000.txt"
+  cov_matrices_output_dir: "/home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog"
   visual_attention_map: false  # 减少计算开销
 
   # LCM-specific configuration
-  num_denoising_steps: 4  # 恢复为4步以匹配已有的Phase 1结果
+  num_denoising_steps: 6  # 最优: 6步推理 (测试确认)
   sampler_strategy: "LCM"  # 使用LCM采样策略
   lcm_original_inference_steps: 50  # 原始教师模型步数
   timestep_mode: "all_steps"  # 使用所有步骤
 
   # Projection configuration - LCF极其温和
-  nullspace_threshold: 0.1  # 极高阈值(最小限制)
-  threshold_percent: 10  # 第10百分位数
+  nullspace_threshold: 0.02  # 更温和的投影阈值
+  threshold_percent: 25  # 使用分位阈值选择null-space
   projection_mode: "weight_update"  # 投影权重更新
-  use_interpolation: false
+  use_interpolation: true
   debug: false
-  cache_size: 10
+  cache_size: 50
 
   # Feature collection mode
   feature_collection_mode: "inference"
   inference_mode: "partial_denoise"
 
-  # Memory Management (adjusted to avoid deadlock)
-  covariance_batch_size: 150    # 适中的协方差批处理大小
-  feature_batch_size: 800       # 适中的特征批处理大小
-  gpu_memory_batch_size: 1500   # 降低GPU批处理大小避免内存问题
-  prompt_batch_size: 2          # 降低prompt批处理大小
-  async_io_workers: 4          # 减少I/O线程数避免NAS拥塞
+  # Memory Management (LCF稳定性优先)
+  covariance_batch_size: 150
+  feature_batch_size: 800
+  gpu_memory_batch_size: 2000
+  prompt_batch_size: 2
+  async_io_workers: 8
 
   collect_features:
     q_features: true
@@ -146,12 +147,12 @@ nullbooth:
 inference:
   prompts:
     - "A photo of sks dog"
-    - "A photo of sks dog, high quality, detailed"
+    - "A photo of sks dog, high quality, detailed"  # Quality keywords help
     - "A portrait of sks dog, sharp focus"
     - "A photo of dog"
-  negative_prompt: ""  # LCM不使用负提示词
-  num_inference_steps: 4  # 恢复为4步以保持一致性
-  guidance_scale: 7.5  # 确认最优值 (不是1.0!)
+  negative_prompt: ""  # LCM doesn't effectively use negative prompts
+  num_inference_steps: 6  # 最优: 6步 (锐度577.61) > 4步 (550.35) > 8步 (354.05)
+  guidance_scale: 7.5  # 确认最优值7.5 (不是1.0也不是8.0!)
   num_images_per_prompt: 1
   height: 512
   width: 512

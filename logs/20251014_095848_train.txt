@@ -1,0 +1,25 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-14 09:58:48
+Log File: logs/20251014_095848_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251014_095848_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM-dog-dreambooth-fast.yaml
+
+❌ Script failed with exception: ParserError: while parsing a block mapping
+  in "configs/nullbooth-LCM-dog-dreambooth-fast.yaml", line 8, column 1
+expected <block end>, but found '<block mapping start>'
+  in "configs/nullbooth-LCM-dog-dreambooth-fast.yaml", line 146, column 2
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-14 09:58:48
+Log saved to: logs/20251014_095848_train.txt
+================================================================================
+

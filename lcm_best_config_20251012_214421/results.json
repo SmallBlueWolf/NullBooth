@@ -1,0 +1,36 @@
+{
+  "config": {
+    "name": "steps_6",
+    "steps": 6,
+    "guidance": 7.5,
+    "eta": 0.0,
+    "scheduler": "lcm"
+  },
+  "prompts": [
+    "A photo of a dog",
+    "A portrait of a golden retriever, high quality, detailed",
+    "A cute puppy playing in the garden, sharp focus"
+  ],
+  "metrics": [
+    {
+      "sharpness": 546.7504747178821,
+      "contrast": 36.56626267878645,
+      "color_richness": 38.38999290010162
+    },
+    {
+      "sharpness": 405.5231077406141,
+      "contrast": 41.08326020075611,
+      "color_richness": 41.38499020853127
+    },
+    {
+      "sharpness": 780.5427254570855,
+      "contrast": 34.69239154645507,
+      "color_richness": 35.93901506940455
+    }
+  ],
+  "avg_metrics": {
+    "sharpness": 577.6054359718605,
+    "contrast": 37.447304808665876,
+    "color_richness": 38.57133272601248
+  }
+}

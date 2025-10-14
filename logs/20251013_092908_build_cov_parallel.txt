@@ -1,0 +1,30 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-10-13 09:29:08
+Log File: logs/20251013_092908_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20251013_092908_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Process 2: Found unified cache directory: /home/public/public_nas/bluewolf/cov_matrices_LCM/cache
+Process 2: Calling _merge_features_from_cache_dirs...
+DEBUG: _merge_features_from_cache_dirs called with 1 cache dirs
+DEBUG: Scanning cache dir: /home/public/public_nas/bluewolf/cov_matrices_LCM/cache
+DEBUG: Found 22110 prompt directories (counted quickly)
+Analyzing cache structure from prompt_2226 (assuming uniform structure)...
+DEBUG: Scanning timestep files in /home/public/public_nas/bluewolf/cov_matrices_LCM/cache/prompt_2226...
+DEBUG: Found 4 timestep keys
+Found 22110 prompt directories
+Found 4 unique timesteps
+Found 64 unique layer/feature combinations
+Process 2: _merge_features_from_cache_dirs returned with 3 keys
+Process 2: Processing 1 timesteps
+Process 2: Computing covariance matrices with optimized batch processing...
+Process 2: Processing 1 timesteps × 64 layer/feature combinations
+
+    Processing 64 layer/feature combinations for alpha_02_0259...

@@ -1,0 +1,148 @@
+# NullBooth configuration for DreamBooth-style LoRA tuning on LCM
+
+# Model
+pretrained_model_name_or_path: "/root/bluewolf/NullBooth/LCM"
+model_type: "LCM"
+revision: null
+tokenizer_name: null
+
+# Disable LCF, use DreamBooth-style objective
+lcf_mode: false
+
+# Data
+instance_data_dir: "/root/bluewolf/NullBooth/dataset/dog"
+class_data_dir: "/root/bluewolf/NullBooth/dataset/class_img_cache"
+instance_prompt: "a photo of sks dog"
+class_prompt: "a photo of a dog"
+
+# DreamBooth prior preservation
+with_prior_preservation: true
+prior_loss_weight: 1.0
+num_class_images: 200
+
+# Validation
+validation_prompt: "a photo of sks dog, studio lighting"
+num_validation_images: 2
+validation_steps: 400
+
+# Output
+output_dir: "outputs/nullbooth-lcm-dreambooth-lora-dog"
+seed: 42
+resolution: 512
+center_crop: false
+
+# LoRA
+use_lora: true
+lora_r: 16
+lora_alpha: 16
+lora_dropout: 0.1
+lora_bias: "none"
+
+# Text encoder remains frozen
+train_text_encoder: false
+lora_text_encoder_r: null
+lora_text_encoder_alpha: null
+lora_text_encoder_dropout: null
+lora_text_encoder_bias: null
+
+# Training
+train_batch_size: 2
+sample_batch_size: 4
+num_train_epochs: null
+max_train_steps: 1200
+checkpointing_steps: 200
+resume_from_checkpoint: null
+gradient_accumulation_steps: 1
+gradient_checkpointing: false
+num_dataloader_workers: 0
+no_tracemalloc: true
+
+# Optimizer
+learning_rate: 0.0001
+scale_lr: false
+lr_scheduler: "constant"
+lr_warmup_steps: 0
+lr_num_cycles: 1
+lr_power: 1.0
+use_8bit_adam: false
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_weight_decay: 0.0
+adam_epsilon: 0.00000001
+max_grad_norm: 1.0
+
+# LCF parameters unused in this mode but kept for compatibility
+lcf_parameters:
+  consistency_weight: 1.0
+  skipping_step: 20
+  huber_c: 0.001
+  w_min: 5.0
+  w_max: 9.0
+  ema_decay: 0.9999
+  use_teacher_model: false
+  use_ode_solver: false
+
+# Hub
+push_to_hub: false
+hub_token: null
+hub_model_id: null
+
+# Logging
+logging_dir: "logs"
+report_to: "tensorboard"
+wandb_key: null
+wandb_project_name: null
+
+# Hardware
+allow_tf32: true
+mixed_precision: "no"
+prior_generation_precision: null
+local_rank: -1
+enable_xformers_memory_efficient_attention: false
+find_unused_parameters: true
+
+# NullBooth
+nullbooth:
+  enable: true
+  original_knowledge_prompts: "/root/bluewolf/NullBooth/dataset/dog_prompts_1000.txt"
+  cov_matrices_output_dir: "/home/public/public_nas/bluewolf/cov_matrices_LCM_1000dog"
+  visual_attention_map: false
+  num_denoising_steps: 6
+  sampler_strategy: "LCM"
+  lcm_original_inference_steps: 50
+  timestep_mode: "all_steps"
+  nullspace_threshold: 0.02
+  threshold_percent: 25
+  projection_mode: "weight_update"
+  use_interpolation: true
+  debug: false
+  cache_size: 50
+  feature_collection_mode: "inference"
+  inference_mode: "partial_denoise"
+  covariance_batch_size: 150
+  feature_batch_size: 800
+  gpu_memory_batch_size: 2000
+  prompt_batch_size: 2
+  async_io_workers: 8
+  collect_features:
+    q_features: true
+    k_features: true
+    v_features: true
+    out_features: true
+  cross_attention_layers: "all"
+
+# Inference defaults
+inference:
+  prompts:
+    - "A portrait of sks dog, high quality, detailed fur"
+    - "A photo of sks dog running on the beach"
+    - "A photo of sks dog wearing a red bandana"
+  negative_prompt: ""
+  num_inference_steps: 6
+  guidance_scale: 7.5
+  num_images_per_prompt: 1
+  height: 512
+  width: 512
+  generator_seed: 42
+  output_dir: "inference_results/"
+  compare_with_base_model: true

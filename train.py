@@ -1,4 +1,5 @@
 import sys
+import argparse
 from pathlib import Path
 from accelerate.utils import set_seed
 
@@ -28,17 +29,57 @@ from src import (
 from src.logger import log_script_execution
 
 
-def main():
+def parse_args():
+    """Parse command-line arguments, allowing unknown args (e.g., from Accelerate)."""
+    parser = argparse.ArgumentParser(description="NullBooth / DreamBooth Training")
+    parser.add_argument(
+        "--config",
+        "-c",
+        default="configs/config.yaml",
+        help="Path to training configuration YAML"
+    )
+    args, unknown = parser.parse_known_args()
+
+    # Preserve unknown args for downstream libraries (e.g., Accelerate)
+    if unknown:
+        sys.argv = [sys.argv[0]] + unknown
+
+    return args
+
+
+def main(config_path: str):
     """Main training function."""
     # Setup logging
     with log_script_execution("train"):
-        # Load configuration
-        config_path = "configs/config.yaml"
-        if len(sys.argv) > 1:
-            config_path = sys.argv[1]
-        
         print(f"Loading configuration from: {config_path}")
         config = load_config(config_path)
+
+        # Resolve paths relative to the config file for robustness
+        config_path_obj = Path(config_path).expanduser().resolve()
+        config_dir = config_path_obj.parent
+
+        def resolve_path(path_value):
+            """Resolve a path relative to the config directory."""
+            path = Path(path_value).expanduser()
+            if not path.is_absolute():
+                path = (config_dir / path).resolve(strict=False)
+            else:
+                path = path.resolve(strict=False)
+            return str(path)
+
+        # Resolve key filesystem paths if they are provided
+        if config.pretrained_model_name_or_path:
+            config.pretrained_model_name_or_path = resolve_path(config.pretrained_model_name_or_path)
+        if config.instance_data_dir:
+            config.instance_data_dir = resolve_path(config.instance_data_dir)
+        if config.class_data_dir:
+            config.class_data_dir = resolve_path(config.class_data_dir)
+        if config.output_dir:
+            config.output_dir = resolve_path(config.output_dir)
+        if hasattr(config, 'nullbooth') and getattr(config.nullbooth, 'cov_matrices_output_dir', None):
+            config.nullbooth.cov_matrices_output_dir = resolve_path(config.nullbooth.cov_matrices_output_dir)
+        if hasattr(config, 'nullbooth') and getattr(config.nullbooth, 'original_knowledge_prompts', None):
+            config.nullbooth.original_knowledge_prompts = resolve_path(config.nullbooth.original_knowledge_prompts)
         
         # Validate configuration
         validate_config(config)
@@ -152,4 +193,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    cli_args = parse_args()
+    main(cli_args.config)

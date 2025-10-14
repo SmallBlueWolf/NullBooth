@@ -1,0 +1,152 @@
+# Correct LCF (Latent Consistency Fine-tuning) Configuration
+# Based on Algorithm 4 from LCM paper - for fine-tuning pre-distilled LCM models
+# This uses the pre-distilled LCM model, NOT the base model directory
+
+# Model Configuration - CRITICAL: Use pre-distilled LCM model
+pretrained_model_name_or_path: "/root/bluewolf/NullBooth/LCM"  # This contains the pre-distilled LCM
+model_type: "LCM"  # Specify LCM type for correct scheduler loading
+revision: null
+tokenizer_name: null
+
+# LCF Mode - Enable Latent Consistency Fine-tuning
+lcf_mode: true  # This enables Algorithm 4 (non-distillation fine-tuning)
+use_teacher_model: false  # NO teacher model needed for LCF
+use_ode_solver: false  # NO ODE solver needed for LCF
+
+# Data Configuration
+instance_data_dir: "/root/bluewolf/NullBooth/dataset/dog"
+class_data_dir: null  # Not needed for LCF
+instance_prompt: "a photo of sks dog"
+class_prompt: null
+
+# Prior Preservation - Not needed for LCF
+with_prior_preservation: false
+prior_loss_weight: 0.0
+num_class_images: 0
+
+# Validation
+validation_prompt: "a photo of sks dog"
+num_validation_images: 4
+validation_steps: 100  # More frequent validation
+
+# Output Configuration
+output_dir: "outputs/nullbooth-LCF-correct-dog"
+seed: 42
+resolution: 512
+center_crop: false
+
+# LoRA Configuration (Disabled for LCF)
+use_lora: false
+lora_r: null
+lora_alpha: null
+lora_dropout: null
+lora_bias: null
+
+# Text Encoder Training (Disabled for LCF)
+train_text_encoder: false
+lora_text_encoder_r: null
+lora_text_encoder_alpha: null
+lora_text_encoder_dropout: null
+lora_text_encoder_bias: null
+
+# Training Configuration - Optimized for LCF
+train_batch_size: 1
+sample_batch_size: 2
+num_train_epochs: null
+max_train_steps: 500  # More steps for better fine-tuning (paper uses 30K for custom datasets)
+checkpointing_steps: 100
+resume_from_checkpoint: null
+gradient_accumulation_steps: 1
+gradient_checkpointing: false
+num_dataloader_workers: 2
+no_tracemalloc: true
+
+# Optimization - LCF specific (from paper Section 5.3)
+learning_rate: 0.000008  # 8e-6 as used in paper
+scale_lr: false
+lr_scheduler: "constant"  # Keep constant for LCF
+lr_warmup_steps: 0
+use_8bit_adam: false
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_weight_decay: 0.0
+adam_epsilon: 0.00000001
+max_grad_norm: 1.0
+
+# LCF-specific parameters (Algorithm 4)
+lcf_parameters:
+  # Core LCF parameters
+  skipping_step: 20  # k=20 (same as LCD for consistency)
+  consistency_weight: 1.0  # Self-consistency loss weight
+  huber_c: 0.001  # Pseudo-Huber loss parameter
+
+  # CFG scale sampling range
+  w_min: 3.0  # Minimum CFG scale during training
+  w_max: 15.0  # Maximum CFG scale during training
+
+  # EMA parameters for target model
+  ema_decay: 0.9999  # Slower EMA for fine-tuning stability
+
+  # Important flags
+  preserve_noise_schedule: true  # Don't change the noise schedule
+  use_same_noise: true  # Use same noise for both timesteps (critical!)
+
+# NullBooth Configuration - Can work with LCF
+nullbooth:
+  enable: true  # Enable NullBooth for knowledge preservation
+  original_knowledge_prompts: "/root/bluewolf/NullBooth/dataset/dog_prompts_1000.txt"
+  cov_matrices_output_dir: "/home/public/public_nas/bluewolf/cov_matrices_LCF_dog"
+
+  # LCM-specific settings
+  num_denoising_steps: 6  # LCM uses few steps
+  sampler_strategy: "LCM"
+  lcm_original_inference_steps: 50
+  timestep_mode: "all_steps"
+
+  # Gentler projection for LCF
+  nullspace_threshold: 0.02  # More balanced (was 0.1)
+  threshold_percent: 25  # Less restrictive
+  projection_mode: "weight_update"
+
+  # Feature collection
+  feature_collection_mode: "inference"
+  collect_features:
+    q_features: true
+    k_features: true
+    v_features: true
+    out_features: true
+
+# Inference Configuration
+inference:
+  prompts:
+    - "A photo of sks dog"
+    - "A portrait of sks dog"
+    - "A photo of sks dog playing"
+    - "A photo of dog"  # Test general concept
+  negative_prompt: ""
+  num_inference_steps: 6  # LCM optimal
+  guidance_scale: 8.0  # Standard CFG scale
+  num_images_per_prompt: 2
+  height: 512
+  width: 512
+  generator_seed: 42
+  output_dir: "inference_results/"
+  compare_with_base_model: true
+
+# Hub Configuration
+push_to_hub: false
+hub_token: null
+hub_model_id: null
+
+# Logging
+logging_dir: "logs"
+report_to: "tensorboard"
+wandb_key: null
+wandb_project_name: null
+
+# Hardware Configuration
+prior_generation_precision: null
+local_rank: -1
+allow_tf32: true
+mixed_precision: "no"  # Keep stable for LCF
+enable_xformers_memory_efficient_attention: true

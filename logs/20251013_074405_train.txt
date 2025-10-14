@@ -1,0 +1,39 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-13 07:44:05
+Log File: logs/20251013_074405_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251013_074405_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM-dog.yaml
+/root/bluewolf/NullBooth/src/training_utils.py:141: UserWarning: You need not use class_data_dir without with_prior_preservation.
+  warnings.warn("You need not use class_data_dir without with_prior_preservation.")
+/root/bluewolf/NullBooth/src/training_utils.py:143: UserWarning: You need not use class_prompt without with_prior_preservation.
+  warnings.warn("You need not use class_prompt without with_prior_preservation.")
+10/13/2025 07:44:05 - INFO - src.training_utils - Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cpu
+
+Mixed precision type: no
+
+Loading LCM model from: /root/bluewolf/NullBooth/LCM
+LCM model loaded successfully
+  Scheduler: LCMScheduler
+  Text Encoder: CLIPTextModel
+  UNet: UNet2DConditionModel
+
+❌ Script failed with exception: ValueError: torch.cuda.is_available() should be True but is False. xformers' memory efficient attention is only available for GPU 
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-13 07:44:05
+Log saved to: logs/20251013_074405_train.txt
+================================================================================
+

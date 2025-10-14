@@ -1,0 +1,59 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: build_cov_parallel
+Start Time: 2025-10-13 09:25:13
+Log File: logs/20251013_092513_build_cov_parallel.txt
+================================================================================
+
+
+🔍 Logging started for 'build_cov_parallel' script
+📝 Output will be saved to: logs/20251013_092513_build_cov_parallel.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM.yaml
+DEBUG: Configuration loaded successfully
+DEBUG: args.phase = 2
+DEBUG: args.resume = True
+\n============================================================
+SYSTEM CONFIGURATION VERIFICATION
+============================================================
+🔍 GPU Memory Check: 4 GPUs detected
+  ✅ GPU 0: 47.5GB memory available
+  ✅ GPU 1: 47.5GB memory available
+  ✅ GPU 2: 47.5GB memory available
+  ✅ GPU 3: 47.5GB memory available
+🔍 Configuration Check:
+  GPU batch size: 1500
+  Covariance batch size: 150
+  Number of processes: 4
+✅ Output directory writable: /home/public/public_nas/bluewolf/cov_matrices_LCM
+✅ Prompts file valid: 22110 prompts loaded from ./dataset/wordnet/wordnet_vision_all.txt
+🔍 NCCL Configuration:
+  NCCL_DEBUG: Not set
+  NCCL_SOCKET_IFNAME: Not set
+  NCCL_P2P_DISABLE: Not set
+  NCCL_SHM_DISABLE: Not set
+✅ Disk space sufficient: 240901.2GB available
+\n============================================================
+✅ All system checks passed!
+============================================================\n
+Using output directory: /home/public/public_nas/bluewolf/cov_matrices_LCM
+DEBUG: ProgressTracker initialized
+DEBUG: Phase 1 status: not_started
+DEBUG: Phase 1 completed timesteps: []
+Total prompts loaded: 22110
+Using 4 GPUs: ['cuda:0', 'cuda:1', 'cuda:2', 'cuda:3']
+Timestep generation strategy: LCM
+Timestep mode: all_steps
+Phase 2: Detecting timesteps from completed Phase 1 cache...
+DEBUG: args.phase = 2
+DEBUG: About to access progress_tracker.progress...
+DEBUG: Accessing completed_timesteps_phase1...
+❌ No completed timesteps found in Phase 1. Please run Phase 1 first.
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-13 09:25:15
+Log saved to: logs/20251013_092513_build_cov_parallel.txt
+================================================================================
+

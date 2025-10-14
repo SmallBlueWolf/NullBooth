@@ -168,15 +168,26 @@ def setup_model_for_training(unet, text_encoder, vae, config):
 
 
 def get_trainable_parameters(unet, text_encoder, train_text_encoder: bool):
-    """Get parameters to optimize."""
+    """Get parameters to optimize, grouped by module for custom learning rates."""
+
+    def _collect_trainable(params_iterable):
+        return [param for param in params_iterable if param.requires_grad]
+
+    param_groups = {
+        "unet": _collect_trainable(unet.parameters()),
+    }
+
     if train_text_encoder:
-        return itertools.chain(unet.parameters(), text_encoder.parameters())
-    else:
-        return unet.parameters()
+        param_groups["text_encoder"] = _collect_trainable(text_encoder.parameters())
+
+    return param_groups
 
 
 def setup_optimizer(params_to_optimize, config):
     """Setup optimizer based on configuration."""
+    if not isinstance(params_to_optimize, dict):
+        raise ValueError("Expected params_to_optimize to be a dict of parameter groups.")
+
     if config.use_8bit_adam:
         try:
             import bitsandbytes as bnb
@@ -188,8 +199,22 @@ def setup_optimizer(params_to_optimize, config):
     else:
         optimizer_class = torch.optim.AdamW
 
+    unet_lr = getattr(config, "learning_rate", 1e-4)
+    text_encoder_lr = getattr(config, "text_encoder_learning_rate", None)
+
+    optimizer_param_groups = []
+
+    unet_params = params_to_optimize.get("unet", [])
+    if unet_params:
+        optimizer_param_groups.append({"params": unet_params, "lr": unet_lr})
+
+    text_params = params_to_optimize.get("text_encoder", [])
+    if text_params:
+        lr = text_encoder_lr if text_encoder_lr is not None else unet_lr
+        optimizer_param_groups.append({"params": text_params, "lr": lr})
+
     optimizer = optimizer_class(
-        params_to_optimize,
+        optimizer_param_groups,
         lr=config.learning_rate,
         betas=(config.adam_beta1, config.adam_beta2),
         weight_decay=config.adam_weight_decay,

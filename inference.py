@@ -15,7 +15,7 @@ sys.path.append(str(Path(__file__).parent / "src"))
 
 from src import load_config
 from src.logger import log_script_execution
-from diffusers import DiffusionPipeline, DPMSolverMultistepScheduler, LatentConsistencyModelPipeline, LCMScheduler
+from diffusers import DiffusionPipeline, StableDiffusionPipeline, DPMSolverMultistepScheduler, LCMScheduler
 from peft import PeftModel
 
 
@@ -128,8 +128,8 @@ def load_pipeline(
     # Determine if base model is LCM
     is_lcm = model_type == "LCM" or is_lcm_model(base_model_path)
 
-    # Choose pipeline class based on model type
-    PipelineClass = LatentConsistencyModelPipeline if is_lcm else DiffusionPipeline
+    # For LCM, always use StableDiffusionPipeline with LCMScheduler
+    PipelineClass = StableDiffusionPipeline if is_lcm else DiffusionPipeline
 
     # Check if it's a full fine-tuned model
     if is_full_finetuned_model(model_path):
@@ -183,8 +183,15 @@ def load_pipeline(
 
     # Set scheduler based on model type
     if is_lcm:
-        # LCM uses its own scheduler - keep it as is
-        print("Using LCM scheduler")
+        # LCM uses LCMScheduler - ensure it's properly configured with best practices
+        pipeline.scheduler = LCMScheduler.from_config(
+            pipeline.scheduler.config,
+            beta_schedule="scaled_linear",  # Better for LCM
+            timestep_spacing="trailing",    # Better quality than leading
+            rescale_betas_zero_snr=False,   # Important for quality
+            set_alpha_to_one=True,           # LCM specific
+        )
+        print("Using LCM scheduler with optimized settings (trailing timesteps, scaled_linear)")
     else:
         # Use DPM Solver for faster inference (SD models)
         pipeline.scheduler = DPMSolverMultistepScheduler.from_config(pipeline.scheduler.config)
@@ -232,7 +239,7 @@ def generate_images(
 ) -> List:
     """
     Generate images using the pipeline.
-    
+
     Args:
         pipeline: The loaded DiffusionPipeline
         prompt: The prompt to generate images for
@@ -243,17 +250,36 @@ def generate_images(
         height: Height of generated images
         width: Width of generated images
         generator_seed: Seed for reproducible generation
-    
+
     Returns:
         List of generated PIL Images and the generator used
     """
     generator = None
     if generator_seed is not None:
         generator = torch.Generator(device=pipeline.device).manual_seed(generator_seed)
-    
+
+    # Check if using LCM scheduler and adjust parameters accordingly
+    is_lcm = isinstance(pipeline.scheduler, LCMScheduler)
+
+    if is_lcm:
+        # LCM specific optimizations based on research
+        # LCM actually works better with higher guidance_scale (6.0-8.0) contrary to early documentation
+        if guidance_scale < 6.0:
+            print(f"Warning: LCM works best with guidance_scale between 6.0-8.0. Current: {guidance_scale}")
+            print("Consider setting guidance_scale to 7.5-8.0 for optimal LCM quality")
+        elif guidance_scale > 10.0:
+            print(f"Warning: guidance_scale > 10 may cause oversaturation. Current: {guidance_scale}")
+
+        # Ensure num_inference_steps is reasonable for LCM (typically 2-8)
+        if num_inference_steps > 8:
+            print(f"Warning: LCM is optimized for 2-8 steps. Current: {num_inference_steps}")
+            print("Consider using 4 steps for optimal quality/speed balance")
+        elif num_inference_steps < 2:
+            print(f"Warning: Less than 2 steps may produce poor quality. Current: {num_inference_steps}")
+
     images = pipeline(
         prompt=prompt,
-        negative_prompt=negative_prompt,
+        negative_prompt=negative_prompt if not is_lcm or guidance_scale > 1.0 else "",  # LCM doesn't use negative prompt when guidance_scale=1.0
         num_inference_steps=num_inference_steps,
         guidance_scale=guidance_scale,
         num_images_per_prompt=num_images_per_prompt,
@@ -261,20 +287,32 @@ def generate_images(
         width=width,
         generator=generator,
     ).images
-    
+
     return images, generator
+
+
+def resolve_relative_path(base_dir: Path, value: str) -> str:
+    """Resolve a path relative to a base directory."""
+    path = Path(value).expanduser()
+    if not path.is_absolute():
+        path = (base_dir / path).resolve(strict=False)
+    else:
+        path = path.resolve(strict=False)
+    return str(path)
 
 
 def main(config_path: str = "configs/config.yaml"):
     """Main inference function."""
     # Setup logging
     with log_script_execution("inference"):
-        print(f"Loading configuration from: {config_path}")
-        config = load_config(config_path)
-        
+        config_path_obj = Path(config_path).expanduser().resolve(strict=False)
+        print(f"Loading configuration from: {config_path_obj}")
+        config = load_config(str(config_path_obj))
+        config_dir = config_path_obj.parent
+
         # Setup paths
-        base_model_path = config.pretrained_model_name_or_path
-        lora_model_path = config.output_dir
+        base_model_path = resolve_relative_path(config_dir, config.pretrained_model_name_or_path)
+        lora_model_path = resolve_relative_path(config_dir, config.output_dir)
         
         print(f"Base model: {base_model_path}")
         print(f"Fine-tuned model path: {lora_model_path}")
@@ -300,7 +338,7 @@ def main(config_path: str = "configs/config.yaml"):
         print(f"Will generate images for {len(prompts)} prompts")
         
         # Create timestamped output directory
-        output_dir = create_output_directory(config_path)
+        output_dir = create_output_directory(str(config_path_obj))
         print(f"Output directory: {output_dir}")
 
         # Get model type from config
@@ -321,13 +359,19 @@ def main(config_path: str = "configs/config.yaml"):
         base_pipeline = None
         if hasattr(inference_config, 'compare_with_base_model') and inference_config.compare_with_base_model:
             print("Loading base model pipeline for comparison...")
-            PipelineClass = LatentConsistencyModelPipeline if model_type == "LCM" else DiffusionPipeline
+            # Use StableDiffusionPipeline for LCM models
+            PipelineClass = StableDiffusionPipeline if model_type == "LCM" else DiffusionPipeline
             base_pipeline = PipelineClass.from_pretrained(
                 base_model_path,
                 torch_dtype=torch_dtype,
                 safety_checker=None,
                 requires_safety_checker=False,
             ).to(device)
+
+            # Set appropriate scheduler for base model
+            if model_type == "LCM":
+                base_pipeline.scheduler = LCMScheduler.from_config(base_pipeline.scheduler.config)
+                print("Base model using LCM scheduler")
         
         # Generate images for each prompt
         total_images = 0
@@ -416,12 +460,14 @@ def interactive_mode(config_path: str = "configs/config.yaml"):
     """Interactive mode for generating images with custom prompts."""
     # Setup logging
     with log_script_execution("inference_interactive"):
-        print(f"Loading configuration from: {config_path}")
-        config = load_config(config_path)
+        config_path_obj = Path(config_path).expanduser().resolve(strict=False)
+        print(f"Loading configuration from: {config_path_obj}")
+        config = load_config(str(config_path_obj))
+        config_dir = config_path_obj.parent
         
         # Setup paths and device
-        base_model_path = config.pretrained_model_name_or_path
-        lora_model_path = config.output_dir
+        base_model_path = resolve_relative_path(config_dir, config.pretrained_model_name_or_path)
+        lora_model_path = resolve_relative_path(config_dir, config.output_dir)
         device = "cuda" if torch.cuda.is_available() else "cpu"
         torch_dtype = torch.float16 if device == "cuda" else torch.float32
 
@@ -440,7 +486,7 @@ def interactive_mode(config_path: str = "configs/config.yaml"):
         print("Pipeline loaded! Enter prompts to generate images (type 'quit' to exit):")
         
         # Create timestamped output directory for interactive mode
-        output_dir = create_output_directory(config_path, "inference_results/interactive")
+        output_dir = create_output_directory(str(config_path_obj), "inference_results/interactive")
         print(f"Output directory: {output_dir}")
         
         image_counter = 0

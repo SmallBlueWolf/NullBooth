@@ -1,0 +1,25 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: train
+Start Time: 2025-10-14 09:38:28
+Log File: logs/20251014_093828_train.txt
+================================================================================
+
+
+🔍 Logging started for 'train' script
+📝 Output will be saved to: logs/20251014_093828_train.txt
+--------------------------------------------------------------------------------
+Loading configuration from: configs/nullbooth-LCM-dog-dreambooth-fast.yaml
+10/14/2025 09:38:28 - INFO - src.training_utils - Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cpu
+
+Mixed precision type: no
+
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  83%|########3 | 5/6 [00:00<00:00, 32.88it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00, 26.31it/s]
+10/14/2025 09:38:29 - INFO - src.trainer - Number of class images to sample: 50.
+Generating class images:   0%|          | 0/13 [00:00<?, ?it/s]Generating class images:   8%|7         | 1/13 [00:37<07:31, 37.60s/it]Generating class images:  15%|#5        | 2/13 [01:15<06:55, 37.75s/it]Generating class images:  23%|##3       | 3/13 [01:50<06:03, 36.35s/it]

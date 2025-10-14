@@ -1,0 +1,63 @@
+
+================================================================================
+NullBooth Script Execution Log
+================================================================================
+Script: inference
+Start Time: 2025-10-14 08:40:34
+Log File: logs/20251014_084034_inference.txt
+================================================================================
+
+
+🔍 Logging started for 'inference' script
+📝 Output will be saved to: logs/20251014_084034_inference.txt
+--------------------------------------------------------------------------------
+Loading configuration from: /root/bluewolf/NullBooth/configs/nullbooth-LCM-dog-dreambooth-fast.yaml
+Base model: /root/bluewolf/NullBooth/LCM
+Fine-tuned model path: /root/bluewolf/NullBooth/configs/outputs/nullbooth-lcm-dreambooth-fast-dog
+Using device: cuda
+Using dtype: torch.float16
+Will generate images for 3 prompts
+Output directory: inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast
+Model type: LCM
+Loading fine-tuned pipeline...
+Detected LoRA model at: /root/bluewolf/NullBooth/configs/outputs/nullbooth-lcm-dreambooth-fast-dog
+Loading base LCM pipeline and applying LoRA weights...
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  17%|#6        | 1/6 [00:00<00:00,  6.73it/s]Loading pipeline components...:  50%|#####     | 3/6 [00:00<00:00,  9.43it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00,  7.92it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00,  8.02it/s]
+Loading UNet LoRA from: /root/bluewolf/NullBooth/configs/outputs/nullbooth-lcm-dreambooth-fast-dog/unet
+Using LCM scheduler with optimized settings (trailing timesteps, scaled_linear)
+Loading base model pipeline for comparison...
+Loading pipeline components...:   0%|          | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  33%|###3      | 2/6 [00:00<00:00, 13.63it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00,  8.06it/s]Loading pipeline components...: 100%|##########| 6/6 [00:00<00:00,  8.40it/s]
+Base model using LCM scheduler
+
+[1/3] Generating images for prompt: 'A portrait of sks dog, high quality, detailed fur'
+  -> Generating with fine-tuned model...
+  0%|          | 0/6 [00:00<?, ?it/s] 17%|#6        | 1/6 [00:00<00:02,  1.99it/s]100%|##########| 6/6 [00:00<00:00, 12.46it/s]100%|##########| 6/6 [00:00<00:00,  9.86it/s]
+     Saved: inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast/finetuned_prompt00_img00.png
+  -> Generating with base model...
+  0%|          | 0/6 [00:00<?, ?it/s] 83%|########3 | 5/6 [00:00<00:00, 49.49it/s]100%|##########| 6/6 [00:00<00:00, 49.53it/s]
+     Saved: inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast/base_prompt00_img00.png
+
+[2/3] Generating images for prompt: 'A photo of sks dog running on the beach'
+  -> Generating with fine-tuned model...
+  0%|          | 0/6 [00:00<?, ?it/s] 83%|########3 | 5/6 [00:00<00:00, 49.95it/s]100%|##########| 6/6 [00:00<00:00, 49.93it/s]
+     Saved: inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast/finetuned_prompt01_img00.png
+  -> Generating with base model...
+  0%|          | 0/6 [00:00<?, ?it/s]100%|##########| 6/6 [00:00<00:00, 50.23it/s]100%|##########| 6/6 [00:00<00:00, 50.17it/s]
+     Saved: inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast/base_prompt01_img00.png
+
+[3/3] Generating images for prompt: 'A photo of sks dog wearing a red bandana'
+  -> Generating with fine-tuned model...
+  0%|          | 0/6 [00:00<?, ?it/s] 83%|########3 | 5/6 [00:00<00:00, 49.99it/s]100%|##########| 6/6 [00:00<00:00, 50.01it/s]
+     Saved: inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast/finetuned_prompt02_img00.png
+  -> Generating with base model...
+  0%|          | 0/6 [00:00<?, ?it/s] 83%|########3 | 5/6 [00:00<00:00, 47.63it/s]100%|##########| 6/6 [00:00<00:00, 47.90it/s]
+     Saved: inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast/base_prompt02_img00.png
+
+Generated 6 images successfully in inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast!
+Summary saved to: inference_results/20251014_084034_nullbooth-LCM-dog-dreambooth-fast/generation_summary.txt
+
+--------------------------------------------------------------------------------
+Script execution completed: 2025-10-14 08:40:39
+Log saved to: logs/20251014_084034_inference.txt
+================================================================================
+

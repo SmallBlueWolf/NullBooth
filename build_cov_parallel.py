@@ -18,7 +18,9 @@ import os
 import json
 import argparse
 import hashlib
+import tempfile
 from math import ceil
+from concurrent.futures import ThreadPoolExecutor
 
 # Accelerate imports for multi-GPU support
 from accelerate import Accelerator, InitProcessGroupKwargs
@@ -233,6 +235,122 @@ class ModernSamplers:
         return timesteps.tolist()
 
 
+class DataPrefetcher:
+    """数据预取器，实现CPU/GPU流水线并行"""
+
+    def __init__(self, file_paths, safe_key, batch_size=2000, num_workers=16, device='cuda'):
+        self.file_paths = file_paths
+        self.safe_key = safe_key
+        self.batch_size = batch_size
+        self.num_workers = num_workers
+        self.device = device
+        self.current_idx = 0
+        self.executor = ThreadPoolExecutor(max_workers=num_workers)
+        self.prefetch_future = None
+
+    def _load_feature(self, file_info):
+        """加载单个特征文件"""
+        file_path, key = file_info
+        try:
+            # 使用mmap_mode='r'减少内存占用
+            data = np.load(file_path, mmap_mode='r')
+            if key in data.files:
+                feature_data = np.array(data[key])  # 转换为常规数组
+                return feature_data
+            return None
+        except Exception as e:
+            print(f"Warning: Failed to load {file_path}: {e}")
+            return None
+
+    def _load_batch(self, batch_paths):
+        """并行加载一批数据"""
+        from concurrent.futures import as_completed
+        batch_features = []
+        original_shape = None
+
+        # 提交所有加载任务
+        futures = {self.executor.submit(self._load_feature, fp): fp for fp in batch_paths}
+
+        # 收集结果
+        for future in as_completed(futures):
+            feature_data = future.result()
+            if feature_data is not None:
+                if original_shape is None:
+                    original_shape = feature_data.shape
+
+                # Reshape to (n_samples, feature_dim)
+                if feature_data.ndim > 2:
+                    feature_data = feature_data.reshape(-1, feature_data.shape[-1])
+
+                batch_features.append(feature_data)
+
+        if batch_features:
+            # 在CPU上合并数据
+            batch_array = np.concatenate(batch_features, axis=0)
+            return batch_array, original_shape
+        return None, None
+
+    def prefetch_next(self):
+        """异步预取下一批数据"""
+        if self.current_idx < len(self.file_paths):
+            batch_end = min(self.current_idx + self.batch_size, len(self.file_paths))
+            batch_paths = [(self.file_paths[i], self.safe_key) for i in range(self.current_idx, batch_end)]
+            self.prefetch_future = self.executor.submit(self._load_batch, batch_paths)
+            self.current_idx = batch_end
+
+    def get_next_batch(self):
+        """获取下一批数据（可能已经预取）"""
+        if self.prefetch_future is None:
+            self.prefetch_next()
+
+        if self.prefetch_future:
+            # 等待预取完成
+            batch_data, original_shape = self.prefetch_future.result()
+
+            # 立即开始预取下一批
+            self.prefetch_next()
+
+            if batch_data is not None:
+                # 将数据转换为GPU张量
+                batch_tensor = torch.tensor(batch_data, dtype=torch.float32, device=self.device)
+                return batch_tensor, original_shape
+
+        return None, None
+
+    def cleanup(self):
+        """清理资源"""
+        self.executor.shutdown(wait=False)
+
+
+class AsyncWriter:
+
+    def __init__(self, max_workers: int = 0):
+        self.max_workers = max_workers if max_workers and max_workers > 0 else 0
+        self.executor = ThreadPoolExecutor(max_workers=self.max_workers) if self.max_workers > 0 else None
+        self.futures = []
+
+    def submit(self, fn, *args, **kwargs):
+        if self.executor:
+            future = self.executor.submit(fn, *args, **kwargs)
+            self.futures.append(future)
+            return future
+        fn(*args, **kwargs)
+        return None
+
+    def wait(self):
+        if not self.executor:
+            return
+        for future in self.futures:
+            future.result()
+        self.futures.clear()
+
+    def shutdown(self):
+        if not self.executor:
+            return
+        self.wait()
+        self.executor.shutdown(wait=True)
+
+
 class TimestepAverager:
     """Streaming averager for timestep sequences across prompts."""
     
@@ -290,16 +408,17 @@ def generate_alpha_filename(index: int, timestep_value: float) -> str:
 class ProgressTracker:
     """Tracks computation progress with JSON-based persistence and parameter validation."""
     
-    def __init__(self, run_dir: Path, config: Dict, accelerator: Accelerator):
+    def __init__(self, run_dir: Path, config: Dict, accelerator: Accelerator, resume: bool = True):
         self.run_dir = Path(run_dir)
         self.config = config
         self.accelerator = accelerator
+        self.resume = resume  # Store resume flag
         self.progress_file = self.run_dir / "computation_progress.json"
         self.parameters_hash = self._compute_parameters_hash()
-        
+
         # Initialize progress tracking
         self.progress = {
-            "version": "1.0",
+            "version": "1.1",  # Updated version for new features
             "parameters_hash": self.parameters_hash,
             "parameters": self._extract_parameters(),
             "timestamps": {
@@ -309,19 +428,33 @@ class ProgressTracker:
             "phase1_features": {
                 "status": "not_started",
                 "completed_timesteps": {},
+                "partial_timesteps": {},  # New: track partially completed timesteps
                 "total_prompts": 0,
                 "completed_prompts": 0
             },
             "phase2_covariance": {
-                "status": "not_started", 
+                "status": "not_started",
                 "completed_timesteps": [],
                 "total_timesteps": 0,
                 "completed_matrices": 0
             }
         }
-        
-        # Load existing progress if available
-        self._load_existing_progress()
+
+        # Load existing progress if available AND resume is enabled
+        if self.resume:
+            self._load_existing_progress()
+        else:
+            if accelerator.is_main_process and self.progress_file.exists():
+                print("⚠️  Found existing progress file but --resume not specified")
+                print("   Starting fresh computation (use --resume to continue from checkpoint)")
+                self._backup_old_progress()
+
+        # Always scan cache for Phase 1 if incomplete, regardless of resume flag
+        # This allows Phase 2 to detect completed Phase 1 results
+        phase1_status = self.progress.get('phase1_features', {}).get('status', 'not_started')
+        if phase1_status != 'completed':
+            # Scan cache directory to update progress if needed
+            self._scan_and_update_progress()
     
     def _compute_parameters_hash(self) -> str:
         """Compute hash of critical parameters for cache validation."""
@@ -379,8 +512,15 @@ class ProgressTracker:
                 self.progress = existing_progress
                 self.progress["timestamps"]["last_loaded"] = datetime.now().isoformat()
 
-                # Scan cache directory to update progress if needed
-                self._scan_and_update_progress()
+                # Only scan cache for Phase 1 if incomplete
+                # Skip scanning for Phase 2 to avoid performance issues with 22k prompts
+                phase1_status = self.progress.get('phase1_features', {}).get('status', 'not_started')
+                if phase1_status != 'completed':
+                    # Scan cache directory to update progress if needed
+                    self._scan_and_update_progress()
+                else:
+                    if self.accelerator.is_main_process:
+                        print(f"   Phase 1 already completed, skipping cache scan")
 
                 if self.accelerator.is_main_process:
                     print(f"✅ Loaded compatible progress from {self.progress_file}")
@@ -404,25 +544,34 @@ class ProgressTracker:
         if not self.accelerator.is_main_process:
             return
 
+        print(f"DEBUG: Starting _scan_and_update_progress...")
         cache_dir = self.run_dir / "cache"
         if not cache_dir.exists():
+            print(f"DEBUG: Cache dir does not exist: {cache_dir}")
             return
 
+        print(f"DEBUG: Cache dir exists: {cache_dir}")
         # Scan for existing prompt directories and timestep files
         timestep_completion = {}
         total_prompts_found = 0
 
         try:
+            print(f"DEBUG: Starting to scan prompt directories...")
+            prompt_dirs_list = []
             for prompt_dir in cache_dir.iterdir():
                 if prompt_dir.is_dir() and prompt_dir.name.startswith("prompt_"):
-                    total_prompts_found += 1
+                    prompt_dirs_list.append(prompt_dir)
 
-                    # Check which timesteps exist for this prompt with integrity validation
-                    for timestep_file in prompt_dir.iterdir():
-                        if (timestep_file.suffix == '.npz' and
-                            'attention' not in timestep_file.name and
-                            (timestep_file.stem.startswith('timestep_') or
-                             timestep_file.stem.startswith('alpha_'))):
+            total_prompts_found = len(prompt_dirs_list)
+            print(f"DEBUG: Found {total_prompts_found} prompt directories to scan")
+
+            for prompt_dir in prompt_dirs_list:
+                # Check which timesteps exist for this prompt with integrity validation
+                for timestep_file in prompt_dir.iterdir():
+                    if (timestep_file.suffix == '.npz' and
+                        'attention' not in timestep_file.name and
+                        (timestep_file.stem.startswith('timestep_') or
+                         timestep_file.stem.startswith('alpha_'))):
 
                             # Verify file integrity before counting with enhanced validation
                             try:
@@ -579,6 +728,38 @@ class ProgressTracker:
             timestep_key = f"timestep_{timestep:04d}"
             return timestep_key in self.progress["phase1_features"]["completed_timesteps"]
     
+    def mark_prompt_completed_phase1(self, timestep: int, prompt_idx: int, timestep_key: str = None):
+        """Mark a specific prompt as completed for a timestep."""
+        if not self.accelerator.is_main_process:
+            return
+
+        try:
+            if timestep_key is None:
+                timestep_key = f"timestep_{timestep:04d}"
+
+            # Initialize partial tracking if needed
+            if timestep_key not in self.progress["phase1_features"]["partial_timesteps"]:
+                self.progress["phase1_features"]["partial_timesteps"][timestep_key] = {
+                    "completed_prompts": [],
+                    "last_updated": datetime.now().isoformat()
+                }
+
+            # Add prompt if not already recorded
+            if prompt_idx not in self.progress["phase1_features"]["partial_timesteps"][timestep_key]["completed_prompts"]:
+                self.progress["phase1_features"]["partial_timesteps"][timestep_key]["completed_prompts"].append(prompt_idx)
+                self.progress["phase1_features"]["partial_timesteps"][timestep_key]["last_updated"] = datetime.now().isoformat()
+
+        except Exception as e:
+            print(f"⚠️  Warning: Failed to mark prompt {prompt_idx} for timestep {timestep}: {e}")
+
+    def get_completed_prompts_for_timestep(self, timestep: int, timestep_key: str = None) -> List[int]:
+        """Get list of completed prompt indices for a timestep."""
+        if timestep_key is None:
+            timestep_key = f"timestep_{timestep:04d}"
+
+        partial_data = self.progress["phase1_features"].get("partial_timesteps", {}).get(timestep_key, {})
+        return partial_data.get("completed_prompts", [])
+
     def mark_timestep_completed_phase1(self, timestep: int, num_prompts: int, timestep_key: str = None):
         """Mark a timestep as completed in phase 1 with error handling."""
         if not self.accelerator.is_main_process:
@@ -591,6 +772,9 @@ class ProgressTracker:
                 "completed_at": datetime.now().isoformat(),
                 "num_prompts": num_prompts
             }
+            # Clean up partial tracking when fully complete
+            if timestep_key in self.progress["phase1_features"].get("partial_timesteps", {}):
+                del self.progress["phase1_features"]["partial_timesteps"][timestep_key]
             self.save_progress()
         except Exception as e:
             print(f"⚠️  Warning: Failed to mark timestep {timestep} as completed: {e}")
@@ -753,6 +937,7 @@ class ParallelAttentionFeatureCollector:
 
         # Collect INPUT features (stored with simple names for consistency)
         with torch.no_grad():
+            batch_size = hidden_states.shape[0] if hasattr(hidden_states, 'shape') and len(hidden_states.shape) >= 1 else 1
             # Input to to_q: hidden_states (from image latents)
             if self.collect_q:
                 q_input = hidden_states.detach()
@@ -801,7 +986,12 @@ class ParallelAttentionFeatureCollector:
 
                 # Store attention map for visualization if requested
                 if self.visual_attention_map:
-                    self.attention_maps_cache[timestep_key][layer_name] = attention_probs.detach().cpu().numpy()
+                    try:
+                        attention_maps = attention_probs.detach().cpu().numpy()
+                        attention_maps = attention_maps.reshape(batch_size, module.heads, attention_maps.shape[-2], attention_maps.shape[-1])
+                    except Exception:
+                        attention_maps = attention_probs.detach().cpu().numpy()
+                    self.attention_maps_cache[timestep_key][layer_name] = attention_maps
 
         # Store features for this layer
         if layer_name not in self.feature_cache[timestep_key]:
@@ -817,86 +1007,108 @@ class ParallelAttentionFeatureCollector:
     def set_current_prompt(self, prompt_idx: int):
         """Set current prompt index for caching."""
         self.current_prompt_idx = prompt_idx
-    
-    def save_prompt_features_to_disk(self, timestep_mapping: dict = None):
-        """Save current prompt's features to disk and clear memory cache."""
+
+    def _atomic_write_npz(self, file_path: Path, data: Dict[str, np.ndarray], async_writer: Optional[AsyncWriter] = None):
+        if not data:
+            return
+
+        file_path = Path(file_path)
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        def write():
+            tmp_fd, tmp_path = tempfile.mkstemp(suffix=".npz", dir=file_path.parent)
+            os.close(tmp_fd)
+            np.savez_compressed(tmp_path, **data)
+            os.replace(tmp_path, file_path)
+
+        if async_writer:
+            async_writer.submit(write)
+        else:
+            write()
+
+    def save_batch_features_to_disk(
+        self,
+        prompt_indices: List[int],
+        timestep_mapping: Optional[dict] = None,
+        async_writer: Optional[AsyncWriter] = None,
+    ):
+        """Save features for a batch of prompts to disk."""
+
         if not self.feature_cache:
-            raise RuntimeError(f"No features collected for prompt {self.current_prompt_idx}. "
-                             f"This indicates hooks were not triggered or UNet forward pass failed.")
+            raise RuntimeError(
+                "No features collected for current batch. This indicates hooks were not triggered or UNet forward pass failed."
+            )
 
-        # Use global prompt index for consistent naming across runs
-        # This ensures cache files are named consistently regardless of process distribution
-        global_prompt_idx = self.current_prompt_idx
-        prompt_cache_dir = self.cache_dir / f"prompt_{global_prompt_idx:04d}"
-        prompt_cache_dir.mkdir(exist_ok=True)
-        
-        # Save features for each timestep with atomic write to prevent corruption
-        for timestep_key, timestep_features in self.feature_cache.items():
-            # Use alpha naming if timestep_mapping is provided
-            if timestep_mapping and timestep_key in timestep_mapping:
-                filename_base = timestep_mapping[timestep_key]
-            else:
-                filename_base = timestep_key
-            
-            timestep_file = prompt_cache_dir / f"{filename_base}.npz"
+        num_samples = len(prompt_indices)
 
-            # Flatten the nested dictionary structure for saving
-            save_dict = {}
-            for layer_name, layer_features in timestep_features.items():
-                for feature_type, feature_data in layer_features.items():
-                    # feature_data is a list, check if it has valid elements
-                    if feature_data and len(feature_data) > 0:
-                        safe_key = f"{layer_name.replace('.', '_').replace('/', '_')}_{feature_type}"
-                        save_dict[safe_key] = feature_data[-1] if isinstance(feature_data, list) else feature_data
+        for sample_pos, global_prompt_idx in enumerate(prompt_indices):
+            self.current_prompt_idx = global_prompt_idx
+            prompt_cache_dir = self.cache_dir / f"prompt_{global_prompt_idx:04d}"
+            prompt_cache_dir.mkdir(parents=True, exist_ok=True)
 
-            if save_dict:
-                # Skip if file already exists (avoid overwriting completed work)
+            for timestep_key, timestep_features in self.feature_cache.items():
+                filename_base = timestep_mapping.get(timestep_key, timestep_key) if timestep_mapping else timestep_key
+                timestep_file = prompt_cache_dir / f"{filename_base}.npz"
+
                 if timestep_file.exists():
                     continue
-                # Atomic write: save to temp file first, then rename
-                # Note: np.savez_compressed adds .npz suffix automatically
-                temp_file_base = prompt_cache_dir / f"{filename_base}.tmp"
-                np.savez_compressed(temp_file_base, **save_dict)
-                # The actual temp file will be temp_file_base.npz
-                actual_temp_file = prompt_cache_dir / f"{filename_base}.tmp.npz"
-                actual_temp_file.rename(timestep_file)
-            else:
-                # No valid features to save for this timestep - this should not happen
-                raise RuntimeError(f"No valid features collected for {timestep_key} in prompt {global_prompt_idx}. "
-                                 f"Available timestep features: {list(timestep_features.keys())}. "
-                                 f"Feature counts: {[(layer, {k: len(v) for k, v in features.items()}) for layer, features in timestep_features.items()]}")
-        
-        # Save attention maps if enabled
-        if self.visual_attention_map and self.attention_maps_cache:
-            for timestep_key, timestep_maps in self.attention_maps_cache.items():
-                # Use alpha naming if timestep_mapping is provided
-                if timestep_mapping and timestep_key in timestep_mapping:
-                    filename_base = timestep_mapping[timestep_key]
-                else:
-                    filename_base = timestep_key
-                
-                attention_file = prompt_cache_dir / f"{filename_base}_attention.npz"
+
                 save_dict = {}
-                for layer_name, attention_data in timestep_maps.items():
-                    if attention_data is not None:
-                        safe_key = layer_name.replace(".", "_").replace("/", "_")
-                        save_dict[safe_key] = attention_data
+                for layer_name, layer_features in timestep_features.items():
+                    for feature_type, feature_data in layer_features.items():
+                        if not feature_data:
+                            continue
+
+                        feature_array = feature_data[-1] if isinstance(feature_data, list) else feature_data
+                        feature_array = np.asarray(feature_array)
+
+                        if feature_array.ndim >= 1 and feature_array.shape[0] == num_samples:
+                            sample_feature = np.array(feature_array[sample_pos], copy=True)
+                        else:
+                            sample_feature = np.array(feature_array, copy=True)
+
+                        safe_key = f"{layer_name.replace('.', '_').replace('/', '_')}_{feature_type}"
+                        save_dict[safe_key] = sample_feature
+
                 if save_dict:
-                    # Skip if file already exists (avoid overwriting completed work)
+                    self._atomic_write_npz(timestep_file, save_dict, async_writer)
+                else:
+                    raise RuntimeError(
+                        f"No valid features collected for {timestep_key} in prompt {global_prompt_idx}."
+                    )
+
+            if self.visual_attention_map and self.attention_maps_cache:
+                for timestep_key, timestep_maps in self.attention_maps_cache.items():
+                    filename_base = timestep_mapping.get(timestep_key, timestep_key) if timestep_mapping else timestep_key
+                    attention_file = prompt_cache_dir / f"{filename_base}_attention.npz"
+
                     if attention_file.exists():
                         continue
-                    # Atomic write for attention maps
-                    # Note: np.savez_compressed adds .npz suffix automatically
-                    temp_file_base = prompt_cache_dir / f"{filename_base}_attention.tmp"
-                    np.savez_compressed(temp_file_base, **save_dict)
-                    # The actual temp file will be temp_file_base.npz
-                    actual_temp_file = prompt_cache_dir / f"{filename_base}_attention.tmp.npz"
-                    actual_temp_file.rename(attention_file)
-                # Note: We don't error on missing attention maps as they're optional
-        
-        # Clear memory cache after saving
+
+                    attention_dict = {}
+                    for layer_name, attention_data in timestep_maps.items():
+                        if attention_data is None:
+                            continue
+                        attention_array = np.asarray(attention_data)
+                        if attention_array.ndim >= 1 and attention_array.shape[0] == num_samples:
+                            sample_attention = np.array(attention_array[sample_pos], copy=True)
+                        else:
+                            sample_attention = np.array(attention_array, copy=True)
+
+                        safe_key = layer_name.replace('.', '_').replace('/', '_')
+                        attention_dict[safe_key] = sample_attention
+
+                    if attention_dict:
+                        self._atomic_write_npz(attention_file, attention_dict, async_writer)
+
         self.feature_cache.clear()
         self.attention_maps_cache.clear()
+
+    def save_prompt_features_to_disk(self, timestep_mapping: dict = None, async_writer: Optional[AsyncWriter] = None):
+        """Backward compatible single-prompt save wrapper."""
+        if self.current_prompt_idx is None:
+            raise RuntimeError("Current prompt index not set before saving features.")
+        self.save_batch_features_to_disk([self.current_prompt_idx], timestep_mapping, async_writer)
     
     def set_current_timestep(self, timestep: int):
         """Set the current denoising timestep."""
@@ -933,11 +1145,16 @@ class ParallelCovarianceMatrixComputer:
     def gather_all_features_from_processes(self, run_dir: Path) -> Dict:
         """Gather features from unified cache directory."""
         if self.accelerator.is_main_process:
+            print("DEBUG: Inside gather_all_features_from_processes")
             print("Analyzing unified cache directory...")
 
         # Wait for all processes to finish feature collection with error handling
         try:
+            if self.accelerator.is_main_process:
+                print("DEBUG: Waiting for all processes to sync...")
             self.accelerator.wait_for_everyone()
+            if self.accelerator.is_main_process:
+                print("DEBUG: All processes synced successfully")
         except Exception as sync_error:
             print(f"⚠️  Process {self.accelerator.process_index}: Feature collection sync failed: {sync_error}")
             print(f"   Continuing with cache analysis - some processes may be out of sync")
@@ -946,13 +1163,19 @@ class ParallelCovarianceMatrixComputer:
         cache_dir = run_dir / "cache"
 
         if self.accelerator.is_main_process:
-            if cache_dir.exists():
-                print(f"Found unified cache directory: {cache_dir}")
-                return self._merge_features_from_cache_dirs([cache_dir])
-            else:
-                print(f"❌ Cache directory not found: {cache_dir}")
-                return {}
+            print(f"DEBUG: Cache directory path: {cache_dir}")
+            print(f"DEBUG: Cache directory exists: {cache_dir.exists()}")
+
+        # ALL processes should analyze the cache directory
+        # This ensures everyone has the same cache_structure for proper synchronization
+        if cache_dir.exists():
+            print(f"Process {self.accelerator.process_index}: Found unified cache directory: {cache_dir}")
+            print(f"Process {self.accelerator.process_index}: Calling _merge_features_from_cache_dirs...")
+            result = self._merge_features_from_cache_dirs([cache_dir])
+            print(f"Process {self.accelerator.process_index}: _merge_features_from_cache_dirs returned with {len(result)} keys")
+            return result
         else:
+            print(f"❌ Process {self.accelerator.process_index}: Cache directory not found: {cache_dir}")
             return {}
     
     def _merge_features_from_cache_dirs(self, cache_dirs: List[Path]) -> Dict:
@@ -961,31 +1184,51 @@ class ParallelCovarianceMatrixComputer:
         all_layer_feature_pairs = set()
         total_prompt_dirs = 0
 
+        print(f"DEBUG: _merge_features_from_cache_dirs called with {len(cache_dirs)} cache dirs")
+
         # Optimized approach: analyze structure from first prompt directory only
         # Since all prompts have the same structure, we can infer the complete structure
         for cache_dir in cache_dirs:
             if not cache_dir.exists():
+                print(f"DEBUG: Cache dir {cache_dir} does not exist, skipping")
                 continue
 
-            # Count all prompt directories
-            prompt_dirs = [p for p in cache_dir.iterdir()
-                          if p.is_dir() and p.name.startswith("prompt_")]
-            total_prompt_dirs = len(prompt_dirs)
+            print(f"DEBUG: Scanning cache dir: {cache_dir}")
 
-            if not prompt_dirs:
+            # OPTIMIZATION: Only count directories, don't iterate through all
+            # Use a faster method to count prompt directories
+            prompt_count = 0
+            first_prompt = None
+
+            # Quick count using os.scandir which is faster than pathlib
+            import os
+            with os.scandir(cache_dir) as entries:
+                for entry in entries:
+                    if entry.is_dir() and entry.name.startswith("prompt_"):
+                        prompt_count += 1
+                        if first_prompt is None:
+                            first_prompt = Path(entry.path)
+
+            total_prompt_dirs = prompt_count
+            print(f"DEBUG: Found {total_prompt_dirs} prompt directories (counted quickly)")
+
+            if not first_prompt:
+                print("DEBUG: No prompt directories found")
                 continue
 
             # Use the first prompt directory to infer the complete structure
-            first_prompt = prompt_dirs[0]
             print(f"Analyzing cache structure from {first_prompt.name} (assuming uniform structure)...")
 
             # First, collect all timestep keys from filenames
+            print(f"DEBUG: Scanning timestep files in {first_prompt}...")
             for timestep_file in first_prompt.iterdir():
                 # Skip temporary and attention files
                 if timestep_file.suffix == '.tmp' or 'attention' in timestep_file.name:
                     continue
                 if timestep_file.suffix == '.npz':
                     all_timestep_keys.add(timestep_file.stem)
+
+            print(f"DEBUG: Found {len(all_timestep_keys)} timestep keys")
 
             # Then, analyze layer/feature combinations from just one file
             for timestep_file in first_prompt.iterdir():
@@ -1016,102 +1259,326 @@ class ParallelCovarianceMatrixComputer:
         }
     
     def compute_covariance_matrices_from_merged_features(self, cache_structure: Dict) -> Dict:
-        """Compute covariance matrices using streaming processing to avoid OOM."""
+        """Compute covariance matrices using optimized batch processing."""
         cov_matrices = {}
-        
+
         cache_dirs = cache_structure['cache_dirs']
         timestep_keys = cache_structure['timestep_keys']
         layer_feature_pairs = cache_structure['layer_feature_pairs']
-        
-        print(f"Process {self.accelerator.process_index}: Computing covariance matrices with streaming processing...")
+
+        print(f"Process {self.accelerator.process_index}: Computing covariance matrices with optimized batch processing...")
         print(f"Process {self.accelerator.process_index}: Processing {len(timestep_keys)} timesteps × {len(layer_feature_pairs)} layer/feature combinations")
-        
+
+        # Main progress bar for timesteps
+        timestep_pbar = tqdm(
+            timestep_keys,
+            desc=f"Process {self.accelerator.process_index}: Computing timesteps",
+            position=self.accelerator.process_index,
+            disable=not self.accelerator.is_local_main_process,
+            leave=True,
+            colour='green' if self.accelerator.is_main_process else 'yellow'
+        )
+
         # Process each timestep
-        for timestep_key in tqdm(timestep_keys, desc=f"Process {self.accelerator.process_index} timesteps", leave=False):
+        for timestep_key in timestep_pbar:
             cov_matrices[timestep_key] = {}
-            
-            # Process each layer/feature combination
-            for layer_name, feature_type in tqdm(layer_feature_pairs, desc=f"Process {self.accelerator.process_index} {timestep_key}", leave=False):
+
+            # Update timestep description
+            if self.accelerator.is_local_main_process:
+                timestep_pbar.set_description(f"Process {self.accelerator.process_index}: {timestep_key}")
+
+            # MEMORY OPTIMIZATION: Process one layer/feature at a time
+            print(f"\n    Processing {len(layer_feature_pairs)} layer/feature combinations for {timestep_key}...")
+
+            # Nested progress bar for layer/feature pairs
+            layer_pbar = tqdm(
+                layer_feature_pairs,
+                desc=f"  └─ Layers for {timestep_key}",
+                position=self.accelerator.process_index + self.accelerator.num_processes,
+                disable=not self.accelerator.is_local_main_process,
+                leave=False,
+                colour='magenta'
+            )
+
+            # Process each layer/feature combination with streaming
+            for layer_name, feature_type in layer_pbar:
+                # Update layer progress description
+                if self.accelerator.is_local_main_process:
+                    layer_pbar.set_description(f"  └─ {layer_name}/{feature_type}")
+
                 # Initialize nested dictionary structure
                 if layer_name not in cov_matrices[timestep_key]:
                     cov_matrices[timestep_key][layer_name] = {}
-                
-                # Streaming computation for this specific timestep/layer/feature combination
+
+                # Compute covariance using streaming (one layer at a time)
                 cov_info = self._compute_covariance_streaming(
                     cache_dirs, timestep_key, layer_name, feature_type
                 )
-                
+
                 if cov_info is not None:
                     cov_matrices[timestep_key][layer_name][feature_type] = cov_info
-                    # Always only compute covariance matrix
-                    print(f"Process {self.accelerator.process_index}: {timestep_key}/{layer_name}/{feature_type}: "
-                          f"cov_shape={cov_info['covariance_matrix'].shape} (K₀K₀ᵀ only, no SVD)")
-        
+                    # Update postfix with matrix shape
+                    if self.accelerator.is_local_main_process:
+                        layer_pbar.set_postfix(shape=str(cov_info['covariance_matrix'].shape))
+
+                # Clear GPU cache after each layer
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+
+            # Close layer progress bar
+            layer_pbar.close()
+
+            # Update timestep postfix with completion status
+            if self.accelerator.is_local_main_process:
+                num_computed = sum(len(layer_data) for layer_data in cov_matrices[timestep_key].values())
+                timestep_pbar.set_postfix(matrices=num_computed)
+
+        # Close timestep progress bar
+        timestep_pbar.close()
+
         return cov_matrices
-    
-    def _compute_covariance_streaming(self, cache_dirs: List[Path], timestep_key: str,
-                                    layer_name: str, feature_type: str) -> Dict:
-        """Compute covariance for a single timestep/layer/feature using streaming with GPU acceleration."""
-        batch_size = self.gpu_memory_batch_size  # Use GPU-optimized batch size from config
-        device = self.accelerator.device  # Use GPU device
 
-        # Safe key for file lookup
-        safe_key = f"{layer_name.replace('.', '_')}_{feature_type}"
+    def _load_all_features_for_timestep(self, cache_dirs: List[Path], timestep_key: str,
+                                        layer_feature_pairs: List[Tuple[str, str]]) -> Dict:
+        """Load all features for a timestep at once to avoid repeated file I/O."""
+        all_features = {}
+        batch_size = getattr(self.config.nullbooth, 'gpu_memory_batch_size', 1500)
+        num_io_workers = getattr(self.config.nullbooth, 'async_io_workers', 4)
 
-        # First pass: collect all file paths and compute data statistics
+        # Collect all file paths once
         file_paths = []
         for cache_dir in cache_dirs:
             if not cache_dir.exists():
                 continue
-            for prompt_dir in cache_dir.iterdir():
-                if prompt_dir.is_dir() and prompt_dir.name.startswith("prompt_"):
-                    timestep_file = prompt_dir / f"{timestep_key}.npz"
-                    if timestep_file.exists() and timestep_file.suffix == '.npz':
-                        data = np.load(timestep_file)
-                        if safe_key in data.files:
-                            file_paths.append((timestep_file, safe_key))
-                        data.close()
-        
+            prompt_dirs = [d for d in cache_dir.iterdir() if d.is_dir() and d.name.startswith("prompt_")]
+            for prompt_dir in prompt_dirs:
+                timestep_file = prompt_dir / f"{timestep_key}.npz"
+                if timestep_file.exists():
+                    file_paths.append(timestep_file)
+
+        if not file_paths:
+            return {}
+
+        print(f"        Loading {len(file_paths)} files for timestep {timestep_key}...")
+
+        # Load files in batches with parallel I/O
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        def load_all_features_from_file(file_path):
+            """Load all features from a single file."""
+            features_dict = {}
+            try:
+                data = np.load(file_path)
+                for layer_name, feature_type in layer_feature_pairs:
+                    safe_key = f"{layer_name.replace('.', '_')}_{feature_type}"
+                    if safe_key in data.files:
+                        features_dict[(layer_name, feature_type)] = np.array(data[safe_key])
+                data.close()
+                return features_dict
+            except Exception as e:
+                print(f"        WARNING: Failed to load {file_path}: {e}")
+                return {}
+
+        # Process files in batches with progress bar
+        file_pbar = tqdm(
+            range(0, len(file_paths), batch_size),
+            desc=f"        Loading batches",
+            disable=not self.accelerator.is_local_main_process,
+            leave=False,
+            colour='yellow'
+        )
+
+        # Initialize feature collectors
+        for layer_name, feature_type in layer_feature_pairs:
+            all_features[(layer_name, feature_type)] = []
+
+        for i in file_pbar:
+            batch_paths = file_paths[i:i+batch_size]
+
+            # Update progress bar description
+            if self.accelerator.is_local_main_process:
+                file_pbar.set_description(f"        Batch {i//batch_size + 1}/{(len(file_paths) + batch_size - 1)//batch_size}")
+
+            # Parallel load current batch
+            with ThreadPoolExecutor(max_workers=num_io_workers) as executor:
+                futures = [executor.submit(load_all_features_from_file, fp) for fp in batch_paths]
+
+                for future in as_completed(futures):
+                    try:
+                        features_dict = future.result(timeout=30)
+                        # Accumulate features
+                        for key, feature_data in features_dict.items():
+                            if key in all_features:
+                                all_features[key].append(feature_data)
+                    except Exception as e:
+                        continue
+
+        file_pbar.close()
+
+        # Convert lists to numpy arrays
+        print(f"        Concatenating features...")
+        final_features = {}
+        for key, feature_list in all_features.items():
+            if feature_list:
+                # Store both concatenated features and original shape
+                concatenated = np.concatenate([
+                    f.reshape(-1, f.shape[-1]) if f.ndim > 2 else f
+                    for f in feature_list
+                ], axis=0)
+                final_features[key] = {
+                    'features': concatenated,
+                    'original_shape': feature_list[0].shape if feature_list else None,
+                    'n_samples': len(feature_list)
+                }
+
+        return final_features
+
+    def _compute_covariance_from_features(self, feature_data: Dict) -> Dict:
+        """Compute covariance from pre-loaded features."""
+        if not feature_data or 'features' not in feature_data:
+            return None
+
+        features = feature_data['features']
+        original_shape = feature_data['original_shape']
+        n_samples = feature_data['n_samples']
+
+        # Move to GPU for computation
+        device = self.accelerator.device
+        features_tensor = torch.tensor(features, dtype=torch.float32, device=device)
+
+        # Compute covariance
+        feature_dim = features_tensor.shape[1]
+        mean_x = torch.mean(features_tensor, dim=0)
+        centered = features_tensor - mean_x
+        cov_matrix = torch.matmul(centered.T, centered) / max(features_tensor.shape[0] - 1, 1)
+
+        # Store result
+        cov_info = {
+            'covariance_matrix': cov_matrix.cpu().numpy(),
+            'original_shape': original_shape,
+            'n_samples': n_samples,
+            'feature_dim': feature_dim,
+            'projection_matrix': None,  # Skip SVD computation
+            'null_space_dim': 0,
+            'singular_values': None
+        }
+
+        # Clear GPU memory
+        del features_tensor, cov_matrix
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
+        return cov_info
+
+    def _compute_covariance_streaming(self, cache_dirs: List[Path], timestep_key: str,
+                                    layer_name: str, feature_type: str) -> Dict:
+        """Compute covariance for a single timestep/layer/feature using streaming with GPU acceleration."""
+        # 获取批处理大小配置
+        batch_size = getattr(self.config.nullbooth, 'gpu_memory_batch_size', 1500)
+        device = self.accelerator.device
+        num_io_workers = getattr(self.config.nullbooth, 'async_io_workers', 4)
+
+        # Safe key for file lookup
+        safe_key = f"{layer_name.replace('.', '_')}_{feature_type}"
+
+        # First pass: collect all file paths WITHOUT opening files
+        if self.accelerator.is_local_main_process:
+            # Add progress bar for file path collection
+            print(f"        Collecting file paths for {layer_name}/{feature_type}...")
+
+        file_paths = []
+        for cache_dir in cache_dirs:
+            if not cache_dir.exists():
+                continue
+            # Use list comprehension for faster collection
+            prompt_dirs = [d for d in cache_dir.iterdir() if d.is_dir() and d.name.startswith("prompt_")]
+            for prompt_dir in prompt_dirs:
+                timestep_file = prompt_dir / f"{timestep_key}.npz"
+                if timestep_file.exists():
+                    file_paths.append(timestep_file)
+
         if not file_paths:
             return None
-        
-        print(f"    Processing {layer_name}/{feature_type}: {len(file_paths)} samples (batch_size={batch_size})")
 
-        # Optimization: if all samples fit in one batch, process at once for better GPU utilization
-        if len(file_paths) <= batch_size:
-            print(f"    🚀 All samples fit in memory - processing in single batch for maximum speed")
-            batch_size = len(file_paths)  # Process all at once
-        
+        if self.accelerator.is_local_main_process:
+            print(f"        Found {len(file_paths)} files to process")
+
+        # 快速验证第一个文件是否包含所需的key
+        try:
+            data = np.load(file_paths[0])
+            if safe_key not in data.files:
+                data.close()
+                return None
+            data.close()
+        except:
+            return None
+
+        # Silent processing - no print needed as progress is shown in tqdm
+
         # Initialize accumulators for streaming computation
         sum_x = None
         sum_xx = None
         n_samples = 0
         feature_dim = None
         original_shape = None
-        
-        # Process data in batches
-        for i in range(0, len(file_paths), batch_size):
+
+        # Simple parallel loading function
+        def load_feature(file_path):
+            """Load a single feature file."""
+            try:
+                data = np.load(file_path)
+                if safe_key in data.files:
+                    feature_data = np.array(data[safe_key])
+                    data.close()
+                    return feature_data
+                data.close()
+                return None
+            except Exception as e:
+                return None
+
+        # Process data in batches with simple parallel I/O
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        # 添加文件处理进度条
+        file_pbar = tqdm(
+            range(0, len(file_paths), batch_size),
+            desc=f"      Processing batches",
+            disable=not self.accelerator.is_local_main_process,
+            leave=False,
+            colour='yellow'
+        )
+
+        for i in file_pbar:
             batch_paths = file_paths[i:i+batch_size]
             batch_features = []
-            
-            # Load current batch
-            for file_path, key in batch_paths:
-                data = np.load(file_path)
-                feature_data = data[key]
-                
-                # Store original shape from first sample
-                if original_shape is None:
-                    original_shape = feature_data.shape
-                
-                # Reshape to (n_samples, feature_dim)
-                if feature_data.ndim > 2:
-                    feature_data = feature_data.reshape(-1, feature_data.shape[-1])
-                
-                batch_features.append(feature_data)
-            
+
+            # 更新进度条描述
+            if self.accelerator.is_local_main_process:
+                file_pbar.set_description(f"      Batch {i//batch_size + 1}/{(len(file_paths) + batch_size - 1)//batch_size}")
+
+            # Parallel load current batch
+            with ThreadPoolExecutor(max_workers=num_io_workers) as executor:
+                futures = [executor.submit(load_feature, fp) for fp in batch_paths]
+
+                for future in as_completed(futures):
+                    try:
+                        feature_data = future.result(timeout=30)  # 30 second timeout
+                        if feature_data is not None:
+                            # Store original shape from first sample
+                            if original_shape is None:
+                                original_shape = feature_data.shape
+
+                            # Reshape to (n_samples, feature_dim)
+                            if feature_data.ndim > 2:
+                                feature_data = feature_data.reshape(-1, feature_data.shape[-1])
+
+                            batch_features.append(feature_data)
+                    except Exception:
+                        continue
+
             if not batch_features:
-                raise RuntimeError(f"No valid features loaded from batch starting at index {i}")
-            
+                continue
+
             # Concatenate current batch and move to GPU
             batch_tensor = torch.tensor(np.concatenate(batch_features, axis=0),
                                       dtype=torch.float32, device=device)
@@ -1119,8 +1586,8 @@ class ParallelCovarianceMatrixComputer:
             # Initialize accumulators on GPU on first batch
             if sum_x is None:
                 feature_dim = batch_tensor.shape[1]
-                sum_x = torch.zeros(feature_dim, device=device)
-                sum_xx = torch.zeros(feature_dim, feature_dim, device=device)
+                sum_x = torch.zeros(feature_dim, device=device, dtype=torch.float32)
+                sum_xx = torch.zeros(feature_dim, feature_dim, device=device, dtype=torch.float32)
 
             # Update statistics on GPU (use more efficient batch operations)
             n_samples += batch_tensor.shape[0]
@@ -1132,24 +1599,21 @@ class ParallelCovarianceMatrixComputer:
             # More efficient covariance accumulation: X^T @ X
             sum_xx += torch.matmul(batch_tensor.T, batch_tensor)
 
-            # Clear memory
-            del batch_tensor, batch_features
-            
-            # Force garbage collection every few batches to manage memory
-            if (i // batch_size) % 5 == 0:
-                import gc
-                gc.collect()
-                if torch.cuda.is_available():
-                    torch.cuda.empty_cache()
-        
+            # Clear batch tensor to free GPU memory
+            del batch_tensor
+
+            # Periodically clear GPU cache
+            if (i // batch_size) % 5 == 0 and torch.cuda.is_available():
+                torch.cuda.empty_cache()
+
         if n_samples == 0 or sum_x is None:
             return None
-        
+
         # Compute covariance matrix from accumulated statistics
         mean_x = sum_x / n_samples
         # Cov = E[XX^T] - E[X]E[X]^T = (sum_xx - n*mean*mean^T) / (n-1)
-        cov_matrix = (sum_xx - n_samples * torch.outer(mean_x, mean_x)) / (n_samples - 1)
-        
+        cov_matrix = (sum_xx - n_samples * torch.outer(mean_x, mean_x)) / max(n_samples - 1, 1)
+
         # Store covariance matrix and compute null space projection
         cov_info = {
             'covariance_matrix': cov_matrix.cpu().numpy(),  # Move back to CPU for saving
@@ -1163,11 +1627,11 @@ class ParallelCovarianceMatrixComputer:
         cov_info['projection_matrix'] = None
         cov_info['null_space_dim'] = 0
         cov_info['singular_values'] = None
-        
+
         # Clear GPU memory
         del cov_matrix, sum_x, sum_xx
         torch.cuda.empty_cache() if torch.cuda.is_available() else None
-        
+
         return cov_info
 
 
@@ -1311,15 +1775,15 @@ def save_covariance_matrices(cov_matrices: Dict, output_dir: Path, only_covarian
                     json.dump(metadata, f, indent=2)
 
 
-def distribute_prompts(prompts: List[str], accelerator: Accelerator) -> List[str]:
-    """Distribute prompts across processes."""
+def distribute_prompts(prompts: List[str], accelerator: Accelerator) -> List[Tuple[int, str]]:
+    """Distribute prompts across processes and return (global_index, prompt)."""
     total_prompts = len(prompts)
     prompts_per_process = ceil(total_prompts / accelerator.num_processes)
     
     start_idx = accelerator.process_index * prompts_per_process
     end_idx = min(start_idx + prompts_per_process, total_prompts)
-    
-    process_prompts = prompts[start_idx:end_idx]
+
+    process_prompts = [(idx, prompts[idx]) for idx in range(start_idx, end_idx)]
     
     if accelerator.is_main_process:
         print(f"Distributing {total_prompts} prompts across {accelerator.num_processes} processes")
@@ -1469,6 +1933,11 @@ def main():
             print(f"Loading configuration from: {args.config}")
         config = load_config(args.config)
 
+        if accelerator.is_main_process:
+            print(f"DEBUG: Configuration loaded successfully")
+            print(f"DEBUG: args.phase = {args.phase}")
+            print(f"DEBUG: args.resume = {args.resume}")
+
         # Verify system configuration before proceeding
         config_ok, critical_issues, warnings = verify_system_configuration(config, accelerator)
 
@@ -1516,8 +1985,13 @@ def main():
                     print(f"❌ Process {accelerator.process_index}: Failed to sync after directory creation. Continuing anyway.")
                     break
         
-        # Initialize progress tracker
-        progress_tracker = ProgressTracker(run_dir, config, accelerator)
+        # Initialize progress tracker with resume flag
+        progress_tracker = ProgressTracker(run_dir, config, accelerator, resume=args.resume)
+
+        if accelerator.is_main_process:
+            print(f"DEBUG: ProgressTracker initialized")
+            print(f"DEBUG: Phase 1 status: {progress_tracker.progress['phase1_features']['status']}")
+            print(f"DEBUG: Phase 1 completed timesteps: {list(progress_tracker.progress['phase1_features']['completed_timesteps'].keys())}")
         
         # Load prompts
         prompts = load_prompts_from_file(config.nullbooth.original_knowledge_prompts)
@@ -1558,16 +2032,28 @@ def main():
             # For Phase 2 only, get timesteps from completed Phase 1 cache
             if accelerator.is_main_process:
                 print("Phase 2: Detecting timesteps from completed Phase 1 cache...")
+                print(f"DEBUG: args.phase = {args.phase}")
+                print(f"DEBUG: About to access progress_tracker.progress...")
+                import time
+                time.sleep(0.5)  # Small delay to ensure print buffers flush
+
+            # Synchronize before accessing progress data
+            accelerator.wait_for_everyone()
 
             # Get timesteps from progress tracker
+            if accelerator.is_main_process:
+                print(f"DEBUG: Accessing completed_timesteps_phase1...")
             completed_timesteps_phase1 = progress_tracker.progress["phase1_features"]["completed_timesteps"]
             if completed_timesteps_phase1:
-                # Extract timestep values from completed Phase 1
+                # Extract timestep values and maintain original alpha keys
                 timesteps = []
+                timestep_to_alpha_mapping = {}
+
                 for timestep_key in completed_timesteps_phase1.keys():
                     if timestep_key.startswith('timestep_'):
                         timestep_val = int(timestep_key.split('_')[1])
                         timesteps.append(timestep_val)
+                        timestep_to_alpha_mapping[f"timestep_{timestep_val:04d}"] = timestep_key
                     elif timestep_key.startswith('alpha_'):
                         # Parse alpha format: alpha_xx_xxxx -> xxxx
                         parts = timestep_key.split('_')
@@ -1575,13 +2061,17 @@ def main():
                             # Parse exact timestep value from format alpha_xx_xxxx
                             timestep_val = int(parts[2])
                             timesteps.append(timestep_val)
+                            # Map timestep value to original alpha key
+                            timestep_to_alpha_mapping[f"timestep_{timestep_val:04d}"] = timestep_key
 
                 timesteps = sorted(timesteps, reverse=True)  # Sort in descending order
-                timestep_to_alpha_mapping = {f"timestep_{t:04d}": f"timestep_{t:04d}" for t in timesteps}
 
                 if accelerator.is_main_process:
                     print(f"Phase 2: Found {len(timesteps)} completed timesteps from Phase 1")
                     print(f"Timesteps: {timesteps[:5]}{'...' if len(timesteps) > 5 else ''}")
+                    print(f"DEBUG: Alpha mapping created:")
+                    for ts_key, alpha_key in timestep_to_alpha_mapping.items():
+                        print(f"  {ts_key} -> {alpha_key}")
             else:
                 if accelerator.is_main_process:
                     print("❌ No completed timesteps found in Phase 1. Please run Phase 1 first.")
@@ -1753,15 +2243,15 @@ def main():
 
 def run_phase1_feature_collection(accelerator, config, run_dir, progress_tracker, prompts, timesteps, timestep_to_alpha_mapping=None, use_alpha_naming=False):
     """Phase 1: Parallel feature collection with timestep-level progress tracking."""
-    
+
     if accelerator.is_main_process:
         print(f"\n{'='*60}")
         print(f"PHASE 1: FEATURE COLLECTION")
         print(f"{'='*60}")
-    
+
     # Update progress
     progress_tracker.update_phase1_status("running", total_prompts=len(prompts))
-    
+
     # Check which timesteps need processing
     # For Phase 1, we get alpha keys from existing progress if available
     all_alpha_keys = None
@@ -1771,128 +2261,209 @@ def run_phase1_feature_collection(accelerator, config, run_dir, progress_tracker
         all_alpha_keys = [key for key in existing_completed.keys() if key.startswith('alpha_')]
 
     remaining_timesteps = progress_tracker.get_remaining_timesteps_phase1(timesteps, use_alpha_naming, all_alpha_keys)
-    
+
     if not remaining_timesteps:
         if accelerator.is_main_process:
             print("✅ All timesteps already completed in Phase 1. Skipping feature collection.")
         progress_tracker.update_phase1_status("completed")
         return True
-    
+
     if accelerator.is_main_process:
         print(f"Processing {len(remaining_timesteps)}/{len(timesteps)} remaining timesteps")
         print(f"Skipping {len(timesteps) - len(remaining_timesteps)} completed timesteps")
-    
+
     # Load models
     if accelerator.is_main_process:
         print("Loading diffusion models...")
-    
+
     tokenizer, text_encoder, unet, pipeline = load_diffusion_models(config, accelerator)
-    
+
     # Initialize feature collector
     collector = ParallelAttentionFeatureCollector(config, accelerator, cache_dir=run_dir)
     collector.register_hooks(unet)
-    
+
     if accelerator.is_main_process:
         print(f"Total {len(collector.hooks)} cross-attention hooks registered.")
-    
+
     # Distribute prompts across processes
     process_prompts = distribute_prompts(prompts, accelerator)
-    
+    prompt_batch_size = max(1, getattr(config.nullbooth, 'prompt_batch_size', 1))
+    async_writer = AsyncWriter(getattr(config.nullbooth, 'async_io_workers', 0))
+    prompt_embedding_cache: Dict[str, torch.Tensor] = {}
+    unet_module = unet.module if hasattr(unet, 'module') else unet
+    text_encoder_module = text_encoder.module if hasattr(text_encoder, 'module') else text_encoder
+    sample_param = next(iter(unet_module.parameters()), None)
+    unet_dtype = sample_param.dtype if sample_param is not None else torch.float32
+    latent_channels = unet_module.config.in_channels
+    latent_height = config.resolution // 8
+    latent_width = config.resolution // 8
+
     try:
         if accelerator.is_main_process:
-            print("Processing prompts to collect features in parallel...")
-        
+            print("\n📊 Starting parallel feature collection...")
+            print(f"   Total timesteps: {len(remaining_timesteps)}")
+            print(f"   Prompts per process: {len(process_prompts)}")
+            print(f"   Batch size: {prompt_batch_size}\n")
+
         with torch.no_grad():
-            # Process each timestep separately for progress tracking
-            for timestep_idx, target_timestep in enumerate(tqdm(remaining_timesteps, desc="Processing timesteps", disable=not accelerator.is_main_process)):
+            # Create main progress bar for timesteps (only on main process)
+            timestep_pbar = tqdm(
+                remaining_timesteps,
+                desc=f"Process {accelerator.process_index}: Phase 1 Timesteps",
+                position=accelerator.process_index,
+                disable=not accelerator.is_local_main_process,
+                leave=True,
+                colour='green' if accelerator.is_main_process else 'blue'
+            )
 
-                if accelerator.is_main_process:
-                    print(f"\nProcessing timestep {target_timestep} ({timestep_idx+1}/{len(remaining_timesteps)})")
+            for timestep_idx, target_timestep in enumerate(timestep_pbar):
+                # Update timestep progress description
+                if accelerator.is_local_main_process:
+                    timestep_pbar.set_description(f"Process {accelerator.process_index}: Timestep {target_timestep}")
 
+                # Check for partially completed timestep
+                timestep_key_check = timestep_to_alpha_mapping.get(f"timestep_{target_timestep:04d}") if use_alpha_naming and timestep_to_alpha_mapping else f"timestep_{target_timestep:04d}"
+                completed_prompts_for_timestep = progress_tracker.get_completed_prompts_for_timestep(target_timestep, timestep_key_check)
+
+                collector.set_current_timestep(target_timestep)
                 timestep_success = True
                 timestep_error_count = 0
-                max_errors_per_timestep = min(10, len(process_prompts) // 4)  # Allow up to 25% failures
+                max_errors_per_timestep = max(1, min(10, len(process_prompts) // 4))
 
-                # Process all prompts for this timestep with error recovery
-                for prompt_idx, prompt in enumerate(tqdm(process_prompts, desc=f"GPU {accelerator.process_index} processing prompts", disable=not accelerator.is_local_main_process)):
-                    try:
-                        # Global prompt index for consistent naming
-                        global_prompt_idx = accelerator.process_index * ceil(len(prompts) / accelerator.num_processes) + prompt_idx
+                # Filter out already completed prompts for this timestep
+                remaining_prompts = [(idx, prompt) for idx, prompt in process_prompts
+                                   if idx not in completed_prompts_for_timestep]
 
-                        # Set current prompt for caching
-                        collector.set_current_prompt(global_prompt_idx)
-                        collector.set_current_timestep(target_timestep)
+                if not remaining_prompts:
+                    if accelerator.is_local_main_process:
+                        timestep_pbar.set_postfix_str(f"✅ Already completed")
+                    continue
 
-                        # Encode prompt
-                        text_inputs = tokenizer(
-                            prompt,
-                            padding="max_length",
-                            max_length=tokenizer.model_max_length,
-                            truncation=True,
-                            return_tensors="pt",
-                        )
-                        text_embeddings = (text_encoder.module if hasattr(text_encoder, 'module') else text_encoder)(text_inputs.input_ids.to(accelerator.device))[0]
-                        collector.set_current_encoder_hidden_states(text_embeddings)
+                total_prompts = len(remaining_prompts)
+                batch_start = 0
+                batch_step = 0
 
-                        # Generate base latents
-                        base_latents = torch.randn(
-                            (1, (unet.module if hasattr(unet, 'module') else unet).config.in_channels, config.resolution // 8, config.resolution // 8),
-                            device=accelerator.device
-                        )
+                # Create nested progress bar for prompts within this timestep
+                prompt_pbar = tqdm(
+                    total=total_prompts,
+                    desc=f"  └─ Prompts for timestep {target_timestep} (resuming {len(completed_prompts_for_timestep)} completed)",
+                    position=accelerator.process_index + accelerator.num_processes,
+                    disable=not accelerator.is_local_main_process,
+                    leave=False,
+                    colour='cyan'
+                )
 
-                        # Generate noise for adding to latents
-                        noise = torch.randn_like(base_latents)
+                while batch_start < total_prompts:
+                    current_batch_size = min(prompt_batch_size, total_prompts - batch_start)
+                    batch_processed = False
 
-                        # Process only the target timestep
-                        t = torch.tensor([target_timestep], dtype=torch.long, device=accelerator.device)
+                    while current_batch_size >= 1 and not batch_processed:
+                        batch_entries = remaining_prompts[batch_start:batch_start + current_batch_size]
+                        batch_indices = [idx for idx, _ in batch_entries]
+                        batch_prompts = [prompt for _, prompt in batch_entries]
 
-                        # Add noise corresponding to this timestep
-                        noisy_latents = pipeline.scheduler.add_noise(base_latents, noise, t)
+                        try:
+                            uncached_prompts = [p for p in batch_prompts if p not in prompt_embedding_cache]
+                            if uncached_prompts:
+                                text_inputs = tokenizer(
+                                    uncached_prompts,
+                                    padding="max_length",
+                                    max_length=tokenizer.model_max_length,
+                                    truncation=True,
+                                    return_tensors="pt",
+                                )
+                                input_ids = text_inputs.input_ids.to(accelerator.device)
+                                new_embeddings = text_encoder_module(input_ids)[0]
+                                for prompt_text, embedding in zip(uncached_prompts, new_embeddings):
+                                    prompt_embedding_cache[prompt_text] = embedding.detach().cpu().to(torch.float16)
 
-                        # Prepare latent model input
-                        latent_model_input = noisy_latents
-                        latent_model_input = pipeline.scheduler.scale_model_input(latent_model_input, t)
+                            embedding_tensors = [
+                                prompt_embedding_cache[prompt_text].to(device=accelerator.device, dtype=unet_dtype)
+                                for prompt_text in batch_prompts
+                            ]
+                            batch_embeddings = torch.stack(embedding_tensors, dim=0)
+                            collector.set_current_encoder_hidden_states(batch_embeddings)
 
-                        # Predict noise - this triggers the hooks to collect features
-                        _ = (unet.module if hasattr(unet, 'module') else unet)(
-                            latent_model_input,
-                            t,
-                            encoder_hidden_states=text_embeddings,
-                            return_dict=False
-                        )[0]
+                            base_latents = torch.randn(
+                                (len(batch_entries), latent_channels, latent_height, latent_width),
+                                device=accelerator.device,
+                                dtype=unet_dtype,
+                            )
+                            noise = torch.randn_like(base_latents)
+                            t = torch.full((len(batch_entries),), target_timestep, dtype=torch.long, device=accelerator.device)
+                            noisy_latents = pipeline.scheduler.add_noise(base_latents.to(torch.float32), noise.to(torch.float32), t)
+                            latent_model_input = pipeline.scheduler.scale_model_input(noisy_latents, t).to(unet_dtype)
 
-                        # Save features for this prompt
-                        collector.save_prompt_features_to_disk(timestep_to_alpha_mapping)
+                            _ = unet_module(
+                                latent_model_input,
+                                t,
+                                encoder_hidden_states=batch_embeddings,
+                                return_dict=False,
+                            )[0]
 
-                        # Clear CUDA cache periodically to prevent OOM
-                        if prompt_idx % 50 == 0 and torch.cuda.is_available():
-                            torch.cuda.empty_cache()
+                            collector.save_batch_features_to_disk(batch_indices, timestep_to_alpha_mapping, async_writer)
 
-                    except Exception as e:
-                        timestep_error_count += 1
-                        print(f"⚠️  GPU {accelerator.process_index}: Error processing prompt {global_prompt_idx} for timestep {target_timestep}: {e}")
+                            # Mark individual prompts as completed after successful save
+                            if accelerator.is_main_process:
+                                for prompt_idx in batch_indices:
+                                    progress_tracker.mark_prompt_completed_phase1(target_timestep, prompt_idx, timestep_key_check)
 
-                        # Clear memory and try to recover
-                        if torch.cuda.is_available():
-                            torch.cuda.empty_cache()
+                            if (batch_step + 1) % 10 == 0 and torch.cuda.is_available():
+                                torch.cuda.empty_cache()
 
-                        # If too many errors, mark timestep as failed
-                        if timestep_error_count > max_errors_per_timestep:
-                            timestep_success = False
-                            print(f"❌ GPU {accelerator.process_index}: Too many errors ({timestep_error_count}) for timestep {target_timestep}. Skipping remaining prompts.")
-                            break
+                            # Update prompt progress bar
+                            prompt_pbar.update(current_batch_size)
 
-                        # Clear collector cache on error to prevent corruption
-                        collector.feature_cache.clear()
-                        collector.attention_maps_cache.clear()
-                        continue
+                            batch_processed = True
+                        except (RuntimeError, MemoryError) as e:
+                            message = str(e).lower()
+                            is_oom = any(token in message for token in ["out of memory", "cublas_status_alloc_failed", "cuda error"])
+                            if is_oom and current_batch_size > 1:
+                                if accelerator.is_local_main_process:
+                                    timestep_pbar.set_postfix_str(f"OOM! Reducing batch: {current_batch_size}→{current_batch_size//2}")
+                                current_batch_size = max(1, current_batch_size // 2)
+                                if torch.cuda.is_available():
+                                    torch.cuda.empty_cache()
+                                async_writer.wait()
+                                collector.feature_cache.clear()
+                                collector.attention_maps_cache.clear()
+                                continue
+
+                            timestep_error_count += 1
+                            if accelerator.is_local_main_process:
+                                timestep_pbar.set_postfix_str(f"Errors: {timestep_error_count}")
+
+                            if torch.cuda.is_available():
+                                torch.cuda.empty_cache()
+
+                            collector.feature_cache.clear()
+                            collector.attention_maps_cache.clear()
+
+                            if timestep_error_count > max_errors_per_timestep:
+                                timestep_success = False
+                                if accelerator.is_local_main_process:
+                                    timestep_pbar.set_postfix_str(f"Failed! Too many errors: {timestep_error_count}")
+                                current_batch_size = 0
+                                break
+
+                            batch_processed = True
+
+                    if not batch_processed:
+                        break
+
+                    batch_start += current_batch_size if current_batch_size else prompt_batch_size
+                    batch_step += 1
+                    async_writer.wait()
+
+                # Close prompt progress bar
+                prompt_pbar.close()
 
                 # Synchronize across all processes before marking completion
                 try:
                     accelerator.wait_for_everyone()
                 except Exception as sync_error:
-                    print(f"⚠️  GPU {accelerator.process_index}: Synchronization error for timestep {target_timestep}: {sync_error}")
-                    print(f"   Continuing without synchronization - some processes may be out of sync")
+                    if accelerator.is_local_main_process:
+                        timestep_pbar.set_postfix_str(f"Sync error!")
                     timestep_success = False
 
                 # Only mark as completed if this process succeeded and we're main process
@@ -1903,19 +2474,20 @@ def run_phase1_feature_collection(accelerator, config, run_dir, progress_tracker
                     else:
                         timestep_key = f"timestep_{target_timestep:04d}"
                     progress_tracker.mark_timestep_completed_phase1(target_timestep, len(prompts), timestep_key)
-                    if timestep_error_count > 0:
-                        print(f"✅ Timestep {target_timestep} completed with {timestep_error_count} errors")
-                    else:
-                        print(f"✅ Timestep {target_timestep} completed successfully")
+                    timestep_pbar.set_postfix_str(f"✅ Completed")
                 elif accelerator.is_main_process:
-                    print(f"❌ Timestep {target_timestep} failed - will retry on next run")
-        
+                    timestep_pbar.set_postfix_str(f"❌ Failed")
+
+            # Close main progress bar
+            timestep_pbar.close()
+
         # Final status update
         progress_tracker.update_phase1_status("completed", completed_prompts=len(prompts))
-        
+
         if accelerator.is_main_process:
-            print(f"✅ Phase 1 completed: All {len(remaining_timesteps)} timesteps processed")
-        
+            print(f"\n✅ Phase 1 completed: All {len(remaining_timesteps)} timesteps processed")
+            print(f"   Features saved to: {run_dir / 'cache'}")
+
         return True
         
     except Exception as e:
@@ -1926,6 +2498,7 @@ def run_phase1_feature_collection(accelerator, config, run_dir, progress_tracker
             traceback.print_exc()
         return False
     finally:
+        async_writer.shutdown()
         # Clean up hooks
         collector.remove_hooks()
 
@@ -1937,30 +2510,48 @@ def run_phase2_covariance_computation(accelerator, config, run_dir, progress_tra
         print(f"\n{'='*60}")
         print(f"PHASE 2: PARALLEL COVARIANCE MATRIX COMPUTATION")
         print(f"{'='*60}")
-        print(f"DEBUG: Received timesteps: {timesteps[:10]}{'...' if len(timesteps) > 10 else ''}")
-        print(f"DEBUG: Total timesteps to process: {len(timesteps)}")
+        print(f"DEBUG: Starting Phase 2 with {len(timesteps)} timesteps")
         print(f"DEBUG: Use alpha naming: {use_alpha_naming}")
 
     # Update progress
     progress_tracker.update_phase2_status("running", total_timesteps=len(timesteps))
 
     # Create covariance computer and get cache structure first (needed for timestep resolution)
+    if accelerator.is_main_process:
+        print("DEBUG: Creating ParallelCovarianceMatrixComputer...")
     computer = ParallelCovarianceMatrixComputer(config, accelerator)
 
     # Get cache structure (all processes need this)
     if accelerator.is_main_process:
-        print("Gathering cache structure...")
+        print("DEBUG: Gathering cache structure from all processes...")
+        print(f"DEBUG: Run directory: {run_dir}")
     cache_structure = computer.gather_all_features_from_processes(run_dir)
 
-    # Broadcast cache_structure to all processes
-    cache_structure = gather_object([cache_structure])[0] if accelerator.is_main_process else gather_object([{}])[0]
+    if accelerator.is_main_process:
+        print(f"DEBUG: Cache structure gathered successfully")
+
+    # Properly gather cache_structure from all processes
+    # All processes must participate in gather_object with the same operation
+    all_cache_structures = gather_object([cache_structure])
+
+    # Only the main process has the actual cache_structure, others have empty dict
+    # Use the first non-empty cache_structure (from main process)
+    if accelerator.is_main_process:
+        # Main process should have the actual data in its own structure
+        final_cache_structure = cache_structure if cache_structure else {}
+    else:
+        # Non-main processes get the structure from the gathered data
+        final_cache_structure = {}
+        for cs in all_cache_structures:
+            if cs and cs.get('cache_dirs'):
+                final_cache_structure = cs
+                break
+
+    cache_structure = final_cache_structure
 
     # Check which timesteps need processing
     all_alpha_keys = cache_structure.get('timestep_keys', []) if use_alpha_naming else None
     remaining_timesteps = progress_tracker.get_remaining_timesteps_phase2(timesteps, use_alpha_naming, all_alpha_keys)
-
-    if accelerator.is_main_process:
-        print(f"DEBUG: Remaining timesteps after filtering: {remaining_timesteps[:10]}{'...' if len(remaining_timesteps) > 10 else ''}")
 
     if not remaining_timesteps:
         if accelerator.is_main_process:
@@ -1969,9 +2560,10 @@ def run_phase2_covariance_computation(accelerator, config, run_dir, progress_tra
         return True
 
     if accelerator.is_main_process:
-        print(f"Processing {len(remaining_timesteps)}/{len(timesteps)} remaining timesteps")
-        print(f"Skipping {len(timesteps) - len(remaining_timesteps)} completed timesteps")
-        print(f"Using {accelerator.num_processes} GPUs for parallel covariance computation")
+        print(f"\n📊 Starting parallel covariance computation...")
+        print(f"   Total timesteps: {len(remaining_timesteps)}/{len(timesteps)}")
+        print(f"   Skipping: {len(timesteps) - len(remaining_timesteps)} completed")
+        print(f"   Using: {accelerator.num_processes} GPUs\n")
 
     # Distribute timesteps evenly across all processes
     # Use simple round-robin distribution to ensure all timesteps are processed
@@ -1991,21 +2583,35 @@ def run_phase2_covariance_computation(accelerator, config, run_dir, progress_tra
     print(f"Process {accelerator.process_index}: Processing {len(process_timesteps)} timesteps")
 
     try:
-        
+
         if not cache_structure or not cache_structure.get('cache_dirs'):
             if accelerator.is_main_process:
                 print("❌ No cache directories found. Phase 1 may not have completed successfully.")
             return False
-        
+
         if accelerator.is_main_process:
             print(f"Found {len(cache_structure['timestep_keys'])} timesteps in cache")
-            print(f"Found {len(cache_structure['layer_feature_pairs'])} layer/feature combinations")
-        
+            print(f"Found {len(cache_structure['layer_feature_pairs'])} layer/feature combinations\n")
+
         # Each process computes covariance matrices for its assigned timesteps
         process_cov_matrices = {}
         process_failed_timesteps = []
 
-        for timestep in tqdm(process_timesteps, desc=f"GPU {accelerator.process_index} computing covariance", disable=not accelerator.is_local_main_process):
+        # Create progress bar for this process's timesteps
+        process_pbar = tqdm(
+            process_timesteps,
+            desc=f"GPU {accelerator.process_index}: Phase 2 Timesteps",
+            position=accelerator.process_index,
+            disable=not accelerator.is_local_main_process,
+            leave=True,
+            colour='green' if accelerator.is_main_process else 'cyan'
+        )
+
+        for timestep in process_pbar:
+            # Update progress description
+            if accelerator.is_local_main_process:
+                process_pbar.set_description(f"GPU {accelerator.process_index}: Timestep {timestep}")
+
             # Use correct timestep key based on naming strategy
             if use_alpha_naming:
                 # Find all alpha keys that match this timestep value
@@ -2022,17 +2628,14 @@ def run_phase2_covariance_computation(accelerator, config, run_dir, progress_tra
                 if matching_alpha_keys:
                     # Use the first matching alpha key for this timestep
                     timestep_key = matching_alpha_keys[0]
-                    if accelerator.is_main_process and timestep == process_timesteps[0]:  # Debug info for first timestep only
-                        print(f"DEBUG: Found {len(matching_alpha_keys)} alpha keys for timestep {timestep}, using {timestep_key}")
                 else:
                     timestep_key = f"timestep_{timestep:04d}"
-                    if accelerator.is_main_process:
-                        print(f"DEBUG: No alpha key found for timestep {timestep}, using fallback {timestep_key}")
             else:
                 timestep_key = f"timestep_{timestep:04d}"
 
             if timestep_key not in cache_structure['timestep_keys']:
-                print(f"⚠️  Process {accelerator.process_index}: Timestep {timestep} not found in cache. Skipping.")
+                if accelerator.is_local_main_process:
+                    process_pbar.set_postfix_str(f"⚠️ Not in cache")
                 process_failed_timesteps.append(timestep)
                 continue
 
@@ -2064,18 +2667,22 @@ def run_phase2_covariance_computation(accelerator, config, run_dir, progress_tra
                         'saved': True,
                         'num_layers': len(cov_matrices[timestep_key])
                     }
-                    print(f"Process {accelerator.process_index}: ✅ Timestep {timestep} completed and saved")
+
+                    if accelerator.is_local_main_process:
+                        process_pbar.set_postfix_str(f"✅ Saved {len(cov_matrices[timestep_key])} layers")
 
                     # Clear memory after each timestep to prevent accumulation
                     if torch.cuda.is_available():
                         torch.cuda.empty_cache()
 
                 else:
-                    print(f"Process {accelerator.process_index}: ❌ Failed to compute covariance matrices for timestep {timestep}")
+                    if accelerator.is_local_main_process:
+                        process_pbar.set_postfix_str(f"❌ Failed")
                     process_failed_timesteps.append(timestep)
 
             except Exception as e:
-                print(f"Process {accelerator.process_index}: ❌ Error computing timestep {timestep}: {e}")
+                if accelerator.is_local_main_process:
+                    process_pbar.set_postfix_str(f"❌ Error: {str(e)[:20]}")
                 process_failed_timesteps.append(timestep)
 
                 # Clear memory and try to recover from OOM or other errors
@@ -2087,7 +2694,10 @@ def run_phase2_covariance_computation(accelerator, config, run_dir, progress_tra
                 gc.collect()
 
                 continue
-        
+
+        # Close progress bar
+        process_pbar.close()
+
         # Wait for all processes to finish their computations with robust error handling
         sync_success = True
         max_sync_retries = 3
